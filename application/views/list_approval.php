@@ -31,9 +31,7 @@
                         <th width="30">S.No</th>
                         <th>Name</th>
                         <th>Login ID</th>
-                        <th>Vehicle Type</th>
-                        <th>Vehicle No</th>
-                        <th>ACRA / UN</th>
+                        <th>Phone Number</th>
                         <th>CreateOn</th>
                         <th width="250">Action</th>
                       </tr>
@@ -46,21 +44,19 @@
                         foreach($Users as $row)
                         {
                           $logid = array();
-                          $logid[] = $row->UserName;
+                          $logid[] = $row->FullName;
                           $logid[] = $row->EmailAddress1;
-                          $logid[] = $row->UniqueID;
+                          $logid[] = $row->UserName;
                           $loginid = array_filter($logid);
                           $login = implode(" <b>(or)</b> ", $loginid);
 
                           echo '<tr>
                             <td>'.$i++.'</td>
+                            <td>'.$row->FullName.'</td>
                             <td>'.$row->UserName.'</td>
-                            <td>'.$row->UniqueID.'</td>
-                            <td>'.$row->Type.'</td>
-                            <td>'.$row->VNo.'</td>
-                            <td>'.$row->UAN.'</td>
-                            <td class="center">'.date('d/m/Y H:i',strtotime($row->CreatedOn)).'</td> 
-                            <td class="center">
+                            <td>'.$row->PhoneNumber.'</td>
+                            <td>'.date('d/m/Y H:i',strtotime($row->CreatedOn)).'</td> 
+                            <td>
                             <a href="javascript:void(0);" data-toggle="modal" data-target="#view'.$row->UserUID.'" class="btn btn-space btn-sm  btn-info"><i class="icon icon-left mdi mdi-eye"></i> View</a>
                             <a href="'.base_url('Users/Approve/'.$row->UserUID).'" class="btn btn-space btn-sm  btn-success"><i class="icon icon-left mdi mdi-check"></i> Approve</a>
                             <a href="'.base_url('Users/Reject/'.$row->UserUID).'" class="btn btn-space btn-sm btn-danger"><i class="icon icon-left mdi mdi-close"></i> Reject</a>
@@ -79,7 +75,7 @@
                                    <h4><span class="mdi mdi-account"></span> &nbsp; Name </h4>
                                  </div>
                                  <div class="col-md-8">
-                                   <h5>'.$row->UserName.'</h5>
+                                   <h5>'.$row->FullName.'</h5>
                                  </div>
                                 </div>
                                 <div class="col-md-12">  
@@ -112,22 +108,6 @@
                                  </div>
                                  <div class="col-md-8">
                                    <h5>'.$login.'</h5>
-                                 </div>
-                                </div>
-                                <div class="col-md-12">  
-                                 <div class="col-md-4">
-                                   <h4><span class="mdi mdi-car"></span> &nbsp; Vehicle Type </h4>
-                                 </div>
-                                 <div class="col-md-8">
-                                   <h5>'.$row->Type.'</h5>
-                                 </div>
-                                </div>
-                                <div classtable-striped table-hover table-fw-widget="col-md-12">  
-                                 <div class="col-md-4">
-                                   <h4><span class="mdi mdi-car"></span> &nbsp; Vehicle No </h4>
-                                 </div>
-                                 <div class="col-md-8">
-                                   <h5>'.$row->VNo.'</h5>
                                  </div>
                                 </div>
                                 <div class="col-md-12">  

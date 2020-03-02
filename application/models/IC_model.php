@@ -7,9 +7,9 @@ class IC_model extends CI_Model
     public function getAll()
     {
         $this->db->join('visatypes', 'visatypes.TypeID = IC_Details.ICTypeID', 'LEFT');
-        $this->db->join('users', 'users.UserUID = IC_Details.CreatedBy', 'LEFT');
+        $this->db->join('users', 'users.UserUID = IC_Details.FullName', 'LEFT');
         if (in_array($this->session->userdata('Role'), array(2))) {
-            $this->db->where('IC_Details.CreatedBy', $this->session->userdata('UserUID'));
+            $this->db->where('IC_Details.FullName', $this->session->userdata('UserUID'));
         }
         return $this->db->get('IC_Details')->result();
     }
@@ -29,7 +29,9 @@ class IC_model extends CI_Model
 
     public function getDataById($id)
     {
+        $this->db->select('*, users.FullName');
         $this->db->where('ID', $id);
+        $this->db->join('users', 'users.UserUID = IC_Details.FullName', 'LEFT');
         return $this->db->get('IC_Details')->row();
     }
 

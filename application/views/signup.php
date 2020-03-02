@@ -62,7 +62,7 @@
           <div class="splash-container">
             <div class="panel panel-default panel-border-color panel-border-color-primary be-loading">
               <div class="panel-heading"><img src="<?php echo base_url('assets/img/EZLogo.png');?>" width="100"><br>
-                <strong>Employee Registration System <br> New Employee Registration</strong>
+                <strong>Staff Scheduling System <br> New Employee Registration</strong>
               </div>
               <div class="panel-body" style="padding: 0 20px;">
                 <?php if($this->session->flashdata('error')==1) { ?>
@@ -94,7 +94,10 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="text" required="" placeholder="Employee Name" name="UserName" class="form-control">
+                        <input type="text" required="" placeholder="Full Name as per IC" name="Name" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" required="" placeholder="Login Name" name="UserName" class="form-control">
                     </div>
                     <div class="form-group">
                         <input type="email" parsley-type="email" placeholder="E-mail address 1" name="EmailAddress1" class="form-control">
@@ -105,9 +108,6 @@
                     <div class="form-group">
                         <input data-parsley-type="number" name="PhoneNumber" maxlength="15" type="text" placeholder="Phone Number" class="form-control" required="">
                     </div>
-                    <!-- <div class="form-group">
-                      <input type="text" name="Supplier" placeholder="Supplier Name" class="form-control">
-                    </div> -->
                     <div class="form-group">
                         <input id="pass2" type="password" name="Password" required="" placeholder="New Password" class="form-control">
                     </div>
@@ -115,15 +115,9 @@
                       <input type="password" name="Password" required="" data-parsley-equalto="#pass2" placeholder="Re-Type Password" class="form-control">
                       <input type="hidden" name="Role" value="2">
                     </div>
-                    <!-- <div class="form-group">
-                      <div class="be-checkbox">
-                        <input id="termschk" type="checkbox" required="true">
-                        <label for="termschk">I agree to <a href="#" data-target="#terms" data-toggle="modal">Term & conditions</a></label>
-                      </div>
-                    </div> -->
                     <div class="form-group row login-submit">
                       <div class="col-xs-6">
-                        <a href="<?php echo base_url(); ?>" class="btn btn-default btn-lg">Login</a>
+                        <a href="<?php echo base_url('Login'); ?>" class="btn btn-default btn-lg">Login</a>
                       </div>
                       <div class="col-xs-6">
                         <button type="submit" class="btn btn-primary btn-lg">Sign up</button>
@@ -138,7 +132,7 @@
                 </svg>
               </div>
             </div>
-          </div>#zoom
+          </div>
         </div>
       </div>
     </div>

@@ -37,11 +37,11 @@
                                     foreach ($AirportPass as $row) {
                                         echo '<tr>
                                         <td>' . $row->PassNumber . '</td>
-                                        <td>' . $row->AirportPassName . '</td>
+                                        <td>' . $row->FullName . '</td>
                                         <td>' . $row->DateOfExpiry . '</td>
                                         <td>' . $row->AccessControlAreas . '</td>'; ?>
                                         <td><a href="<?php echo base_url('AirportPass/') ?>editPassDetails/<?php echo $row->PassID ?>" class="btn btn-space btn-warning">Edit</a>
-                                            <a href="<?php echo base_url() ?>delete/<?php echo $row->PassID ?>" onclick="return confirm('Are you sure to delete')" class="btn btn-space btn-danger">Delete</a></td>
+                                            <a href="<?php echo base_url('AirportPass/') ?>delete/<?php echo $row->PassID ?>" onclick="return confirm('Are you sure to delete')" class="btn btn-space btn-danger">Delete</a></td>
                                 <?php
                                     }
                                 }

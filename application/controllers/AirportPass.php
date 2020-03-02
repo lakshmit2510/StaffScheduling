@@ -26,6 +26,7 @@ class AirportPass extends CI_Controller
   {
     $data['Title'] = 'Add New Airport Pass Details';
     $data['Page'] = 'AddAirportPass';
+    $data['Users'] = $this->Common_model->getTableData('users');
     $this->load->view('add_airportpass_details', $data);
   }
 
@@ -53,7 +54,7 @@ class AirportPass extends CI_Controller
     $data['Title'] = 'AirportPass';
     $data['Page'] = 'AirportPass';
     $data['passDetails'] = $this->AirportPass_model->getDataById($pass_id);
-    $data['slottype'] = $this->Common_model->getTableData('slottypes', 'Active');
+    // $data['slottype'] = $this->Common_model->getTableData('slottypes', 'Active');
     $this->load->view('edit_airportPass_Details', $data);
   }
 
@@ -73,22 +74,22 @@ class AirportPass extends CI_Controller
   }
 
 
-  public function deleteSlots($slots_id)
+  public function delete($pass_id)
   {
-    $delete = $this->AirportPass_model->delete($slots_id);
-    $this->session->set_flashdata('done', 'Docks deleted');
-    redirect('Docks');
+    $delete = $this->AirportPass_model->delete($pass_id);
+    $this->session->set_flashdata('done', 'Airport Pass details deleted Successfully');
+    redirect('AirportPass/update');
   }
 
 
-  public function changeStatus($slots_id)
-  {
-    $edit = $this->AirportPass_model->changeStatus($slots_id);
-    if (empty($edit)) {
-      $this->session->set_flashdata('done', 'Docks closed Successfully');
-    } else {
-      $this->session->set_flashdata('done', 'Docks opened Successfully');
-    }
-    redirect('Docks');
-  }
+  // public function changeStatus($slots_id)
+  // {
+  //   $edit = $this->AirportPass_model->changeStatus($slots_id);
+  //   if (empty($edit)) {
+  //     $this->session->set_flashdata('done', 'Docks closed Successfully');
+  //   } else {
+  //     $this->session->set_flashdata('done', 'Docks opened Successfully');
+  //   }
+  //   redirect('Docks');
+  // }
 }

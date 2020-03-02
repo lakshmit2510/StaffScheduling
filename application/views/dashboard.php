@@ -2,9 +2,13 @@
 $Activeusr = $this->Dashboard_model->GetUserCount('Active');
 $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
 ?>
-<div class="mt-5">
-  <button type="button" style="float: right;" class="btn btn-warning" data-toggle="modal" data-target="#addShiftModal"><i class="fa fa-plus"></i> New Shift Timings</button>
-</div>
+
+<?php if (!in_array($this->session->userdata('Role'), array(2))) { ?>
+  <div class="mt-5">
+    <button type="button" style="float: right;" class="btn btn-warning" data-toggle="modal" data-target="#addShiftModal"><i class="fa fa-plus"></i> New Shift Timings</button>
+  </div>
+<?php } ?>
+
 <div class="modal fade" id="addShiftModal" tabindex="-1" role="dialog" aria-labelledby="addShiftModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -15,7 +19,7 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form id="booking-form">
           <div class="form-group">
             <label for="avaialableBookingsField">Available Bookings</label>
             <input type="number" class="form-control" name="Bookingscount" id="avaialableBookingsField" aria-describedby="availableBookingsHelp" placeholder="Enter available bookings">
@@ -33,31 +37,45 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary save-booking">Save changes</button>
       </div>
     </div>
   </div>
 </div>
 <!-- Card stats -->
 <div class="row mb-5 pt-5">
-  <div class="col-xl-3 col-lg-6 card">
-    <div>
-      <a style="float:right" href="<?= base_url('') ?>"><i style="float: right;" class="fas fa-times"></i></a>
-      <a style="float:left; margin-right:10px" href="<?= base_url('') ?>"><i class="far fa-edit"></i>edit</a>
-    </div>
-    <div class="card-body">
-      <div>
-        <h3 class="card-title">Available Bookings (22)</h3>
-      </div>
-      <div class="row pt-3 pb-3">
-        <div class="col">
-          <span class="h2 font-weight-bold">05:00 AM - 09:00 AM</span>
+  <?php
+  foreach ($Shifts as $value) {
+  ?>
+    <div class="col-xl-3 col-lg-6 card mt-3 mb-4" style="margin: 1rem">
+
+      <?php if (!in_array($this->session->userdata('Role'), array(2))) { ?>
+        <div class="card-header">
+          <a href="<?php echo base_url('Shifts/') ?>deleteShifts/<?php echo $value->ShiftID ?>" onclick="return confirm('Are you sure to delete')"><i style="float: right;" class="fas fa-times"></i></a>
+          <a href="<?= base_url('Shifts/') ?>editShiftDetails/<?php echo $value->ShiftID ?>"><i class="far fa-edit"></i>edit</a>
+        </div>
+      <?php } ?>
+
+      <div class="card-body">
+        <div>
+          <h3 class="card-title">Available Bookings (<?php echo $value->AvailableBookings ?>)</h3>
+        </div>
+        <div class="row pt-3 pb-3">
+          <div class="col">
+            <span class="h2 font-weight-bold"><?php echo $value->StartTime ?> - <?php echo $value->EndTime ?></span>
+          </div>
+        </div>
+        <div>
+          <a class="btn btn-primary" style="margin-left: 20px;" href="<?= base_url('Booking/Add/' . $value->ShiftID) ?>">Start Booking</a>
         </div>
       </div>
-      <a style="margin-left: 50px;" href="<?= base_url('Booking/Add') ?>">Start Booking</a>
     </div>
-  </div>
-  <div class="col-xl-3 col-lg-6">
+
+  <?php
+  }
+  ?>
+
+  <!-- <div class="col-xl-3 col-lg-6">
     <a href="<?= base_url('Booking/Add') ?>" class="card card-hover card-stats mb-4 mb-xl-0">
       <div class="card-body">
         <h3 class="card-title">Available Bookings (4)</h3>
@@ -84,7 +102,7 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
         </div>
       </div>
     </a>
-  </div>
+  </div> -->
 </div>
 
 <!-- <div class="row">
@@ -97,7 +115,7 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
 <script type="text/javascript">
   $(document).ready(function() {
     $('.timepicker').timepicker({
-      timeFormat: 'h:mm p',
+      timeFormat: 'HH:mm',
       interval: 60,
       // minTime: '10',
       // maxTime: '6:00pm',
@@ -106,6 +124,19 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
       dynamic: false,
       dropdown: true,
       scrollbar: true
+    });
+    $('.save-booking').on('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      $.ajax({
+        type: 'post',
+        url: '<?php echo base_url('Shifts/addShiftsPost/') ?>',
+        data: $('#booking-form').serialize(),
+        success: function(res) {
+          console.log(res);
+          window.location.reload();
+        }
+      });
     });
 
   });

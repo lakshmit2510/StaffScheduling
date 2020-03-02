@@ -20,7 +20,15 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Full Name</label>
                                 <div class="col-sm-6">
-                                    <input type="text" required="" name="PassName" placeholder="Name as for Pass" class="form-control">
+                                    <select class="form-control" required="true" name="PassName">
+                                        <option value="">--- Choose Employee Name ----</option>
+                                        <?php
+                                        foreach ($Users as $key => $value) {
+                                            echo '<option value="' . $value->UserUID . '">' . $value->FullName . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                    <!-- <input type="text" required="" name="PassName" placeholder="Name as for Pass" class="form-control"> -->
                                 </div>
                             </div>
                             <div class="form-group">

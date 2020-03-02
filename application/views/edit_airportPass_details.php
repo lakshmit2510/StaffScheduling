@@ -21,7 +21,7 @@
               <div class="form-group">
                 <label class="col-sm-3 control-label">Full Name</label>
                 <div class="col-sm-6">
-                  <input type="text" required="" name="PassName" value="<?php echo $passDetails->AirportPassName; ?>" placeholder="Name as for Pass" class="form-control">
+                  <input type="text" required="" name="PassName" value="<?php echo $passDetails->FullName; ?>" placeholder="Name as for Pass" class="form-control">
                 </div>
               </div>
               <div class="form-group">
@@ -34,7 +34,7 @@
                 <div class="col-sm-3"></div>
                 <div class="col-sm-6">
                   <button type="submit" class="btn btn-space btn-primary">Submit</button>
-                  <a href="<?php echo base_url(''); ?>" class="btn btn-space btn-default">Cancel</a>
+                  <a href="<?php echo base_url('AirportPass/update'); ?>" class="btn btn-space btn-default">Cancel</a>
                 </div>
               </div>
             </form>

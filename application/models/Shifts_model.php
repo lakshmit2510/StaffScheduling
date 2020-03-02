@@ -7,10 +7,10 @@ class Shifts_model extends CI_Model
     public function getAll()
     {
         $this->db->where('Active', 1);
-        $this->db->join('users', 'users.UserUID = Shifts.CreatedBy', 'LEFT');
-        if (in_array($this->session->userdata('Role'), array(2))) {
-            $this->db->where('Shifts.CreatedBy', $this->session->userdata('UserUID'));
-        }
+        // $this->db->join('users', 'users.UserUID = Shifts.CreatedBy', 'LEFT');
+        // if (in_array($this->session->userdata('Role'), array(2))) {
+        //     $this->db->where('Shifts.CreatedBy', $this->session->userdata('UserUID'));
+        // }
         return $this->db->get('Shifts')->result();
     }
 
@@ -22,20 +22,20 @@ class Shifts_model extends CI_Model
 
     public function getDataById($id)
     {
-        $this->db->where('ID', $id);
+        $this->db->where('ShiftID', $id);
         return $this->db->get('Shifts')->row();
     }
 
     public function update($id, $data)
     {
-        $this->db->where('ID', $id);
+        $this->db->where('ShiftID', $id);
         $this->db->update('Shifts', $data);
         return true;
     }
 
     public function delete($id)
     {
-        $this->db->where('ID', $id);
+        $this->db->where('ShiftID', $id);
         $this->db->delete('Shifts');
         return true;
     }

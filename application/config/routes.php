@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 $route['default_controller'] = 'Login';
+$route['default_controller'] = 'HomeScreen';
 $route['Docks'] = 'Slots';
 $route['Docks/add'] = 'Slots/add';
 $route['Docks/addSlotsPost'] = 'Slots/addSlotsPost';

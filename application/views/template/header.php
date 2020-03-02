@@ -17,8 +17,7 @@
   <!-- Library -->
   <link href="<?= base_url() ?>assets/lib/datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
   <link href="<?= base_url() ?>assets/lib/datatables/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css" />
-
-
+  
   <!-- CSS Files -->
   <link href="<?= base_url() ?>assets/v2/css/argon-dashboard.css?v=1.1.0" rel="stylesheet" />
   <link href="<?= base_url() ?>assets/v2/css/custom.css" rel="stylesheet" />
@@ -114,13 +113,13 @@
         $navigations[] = ['text' => 'Dashboard', "url" => base_url('Dashboard'), 'icon' => 'ni ni-tv-2', 'title' => 'Dashboard', 'color' => "#5e72e4"];
 
         if (in_array($role, [1, 2])) {
-          $subs = array();
+          // $subs = array();
 
-          $subs[] = ['text' => "Today's Shift Details", "url" => base_url('Booking/Today'), 'icon' => 'fa fa-calendar', 'title' => "Today's Shift Details"];
+          // $subs[] = ['text' => "Today's Shift Details", "url" => base_url('Booking/Today'), 'icon' => 'fa fa-calendar', 'title' => "Today's Shift Details"];
           
-          $subs[] = ['text' => 'Upcoming Shift Details', "url" => base_url('Booking/Upcoming'), 'icon' => 'fa fa-calendar', 'title' => 'Upcoming Shipments'];
+          // $subs[] = ['text' => 'Upcoming Shift Details', "url" => base_url('Booking/Upcoming'), 'icon' => 'fa fa-calendar', 'title' => 'Upcoming Shipments'];
 
-          $navigations[] = ['text' => 'Shift Booking Details', "url" => base_url('Booking'), 'icon' => 'fa fa-plus-square', 'title' => 'Booking details', 'color' => "#2dce89", 'sub' => $subs];
+          $navigations[] = ['text' => 'Shift Booking Details', "url" => base_url('Booking'), 'icon' => 'fa fa-plus-square', 'title' => 'Booking details', 'color' => "#2dce89"];
         } 
 
         if (in_array($role, [1, 2])) {
@@ -142,14 +141,15 @@
           $navigations[] = ['text' => 'Airport Pass Details', "url" => base_url('AirportPass'), 'icon' => 'fa fa-user-friends', 'title' => 'Airport Pass Details', 'color' => "#fb6340", 'sub' => $subs];
         }
 
-        if (in_array($role, [1, 3])) {
-          $subs = array();
-          if ($role == 1) {
-            $subs[] = ['text' => 'Supplier Groups', "url" => base_url('Supplier/Groups'), 'icon' => 'fa fa-users', 'title' => 'Supplier Groups'];
-          }
+        // if (in_array($role, [1, 3])) {
+        //   $subs = array();
+        //   if ($role == 1) {
+        //     $subs[] = ['text' => 'Supplier Groups', "url" => base_url('Supplier/Groups'), 'icon' => 'fa fa-users', 'title' => 'Supplier Groups'];
+        //   }
 
-          $navigations[] = ['text' => 'My Suppliers', "url" => base_url('Supplier'), 'icon' => 'fa fa-users', 'title' => 'List of Users', 'color' => "#fb6340", 'sub' => $subs];
-        }
+        //   $navigations[] = ['text' => 'My Suppliers', "url" => base_url('Supplier'), 'icon' => 'fa fa-users', 'title' => 'List of Users', 'color' => "#fb6340", 'sub' => $subs];
+        // }
+        $navigations[] = ['text' => 'KPI Details', "url" => base_url(''), 'icon' => 'fa fa-list', 'title' => 'KPI Details', 'color' => "#5e72e4"];
 
         if (!in_array($role, array(5, 2, 6))) {
           $subs = array();
@@ -159,17 +159,14 @@
             $subs[] = ['text' => 'Approvals Pending', "url" => base_url('Users/Approval'), 'icon' => 'fa fa-building', 'title' => 'Approvals Pending'];
           }
 
-          $navigations[] = ['text' => 'Admin', "url" => base_url(), 'icon' => 'fa fa-user-lock', 'title' => 'Admin', 'color' => "#812388", 'sub' => $subs];
-        }
-        if (in_array($role, array(5, 6))) {
-          $navigations[] = ['text' => 'Update Security Details', "url" => base_url('Update/Security'), 'icon' => 'fa fa-user-shield', 'title' => 'Update Security', 'color' => "#A83C92"];
+          $navigations[] = ['text' => 'Admin', "url" => base_url('Company'), 'icon' => 'fa fa-user-lock', 'title' => 'Admin', 'color' => "#812388", 'sub' => $subs];
         }
 
-        if (in_array($role, array(1, 3))) {
-          $navigations[] = ['text' => 'Statistics & Reports', "url" => base_url('Reports'), 'icon' => 'fa fa-chart-pie', 'title' => 'Reports', 'color' => "#D9AA11"];
-        } else {
-          $navigations[] = ['text' => 'Help', "url" => base_url('Dashboard/Help'), 'icon' => 'fa fa-question-circle', 'title' => 'Help', 'color' => "#55AAFA"];
-        }
+        // if (in_array($role, array(2))) {
+        //   $navigations[] = ['text' => 'Statistics & Reports', "url" => base_url('Reports'), 'icon' => 'fa fa-chart-pie', 'title' => 'Reports', 'color' => "#D9AA11"];
+        // } else {
+        //   $navigations[] = ['text' => 'Help', "url" => base_url('Dashboard/Help'), 'icon' => 'fa fa-question-circle', 'title' => 'Help', 'color' => "#55AAFA"];
+        // }
 
 
         ?>

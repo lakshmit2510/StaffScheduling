@@ -23,6 +23,7 @@ class IC_Details extends CI_Controller {
       $data['Title'] = 'Add IC Details';
       $data['Page'] = 'IC';
       $data['vtype'] = $this->IC_model->getVisaType();
+      $data['Users'] = $this->Common_model->getTableData('users');
       $this->load->view('add-ic-details', $data);
     }
 
@@ -96,11 +97,11 @@ class IC_Details extends CI_Controller {
         redirect(base_url('IC_Details/update'));
     }
     
-    public function changeStatusVehicle($vehicle_id) 
-    {
-        $edit = $this->IC_model->changeStatus($vehicle_id);
-        $this->session->set_flashdata('done', 'vehicle '.$edit.' Successfully');
-        redirect(base_url('IC_Details'));
-    }
+    // public function changeStatusVehicle($vehicle_id) 
+    // {
+    //     $edit = $this->IC_model->changeStatus($vehicle_id);
+    //     $this->session->set_flashdata('done', 'vehicle '.$edit.' Successfully');
+    //     redirect(base_url('IC_Details'));
+    // }
     
 }

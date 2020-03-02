@@ -4989,7 +4989,7 @@ input[type="button"].btn-block {
 }
 
 .card-header {
-  padding: 1.25rem 1.5rem;
+  padding: 0.5rem 0.5rem;
   margin-bottom: 0;
   background-color: #fff;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
@@ -16077,7 +16077,7 @@ textarea[resize="horizontal"] {
 
 .input-group-alternative {
   box-shadow: 0 1px 3px rgba(50, 50, 93, 0.15), 0 1px 0 rgba(0, 0, 0, 0.02);
-  border: 0;
+  border: 1px solid #a5a9ad;
   transition: box-shadow .15s ease;
 }
 

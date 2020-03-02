@@ -31,8 +31,50 @@ class Shifts extends CI_Controller
     $data['StartTime'] = $this->input->post('StartTime');
     $data['EndTime'] = $this->input->post('Endtime');
     $data['Active'] = 1;
-    $this->Shifts_model->insert($data);
-    $this->session->set_flashdata('done', 'New Card added Successfully');
-    redirect(base_url(''));
+    $data['CreatedBy'] = $this->session->userdata('UserUID');
+    $bookingCreated = $this->Shifts_model->insert($data);
+    if ($bookingCreated) {
+      $msg = array('success' => 200, 'Msg' => 'Booking created successfully.');
+      echo json_encode($msg);
+    } else {
+      $msg = array('error' => 100, 'Msg' => 'Error while creating the Booking.');
+      echo json_encode($msg);
+    }
   }
+  public function getAllShifts()
+  {
+    return $this->Shifts_model->getAll();
+  }
+
+  public function editShiftDetails($Id){
+    $data['Title'] = 'Edit Shift Details';
+    $data['Page'] = 'Dashboard';
+    $data['IC_id'] = $Id;
+    $data["shift_Details"] = $this->Shifts_model->getDataById($Id);
+    $this->load->view('edit_shift_details', $data);
+  }
+
+  public function deleteShifts($ShiftID){
+    $delete = $this->Shifts_model->delete($ShiftID);
+    $this->session->set_flashdata('done', 'Shift details deleted Successfully');
+    redirect('Dashboard');
+  }
+
+  public function editShiftsPost()
+  {
+    $ShiftId = $this->input->post('Shift_Id');
+    $Shift_Details = $this->Shifts_model->getDataById($ShiftId);
+    $data['AvailableBookings'] = $this->input->post('Bookingscount');
+    $data['StartTime'] = $this->input->post('StartTime');
+    $data['EndTime'] = $this->input->post('Endtime');
+    $data['Active'] = 1;
+    $data['CreatedBy'] = $this->session->userdata('UserUID');
+    $bookingUpdated = $this->Shifts_model->update($ShiftId,$data);
+    if ($bookingUpdated) {
+      $this->session->set_flashdata('done', 'Shift Details updated Successfully');
+      redirect('Dashboard');
+    }
+    
+  }
+
 }

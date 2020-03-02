@@ -162,28 +162,49 @@
         <?php } ?>
 
         <form action="<?= base_url('Booking/save') ?>" class="form-horizontal" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="Shift_Id" value="<?php echo $shiftDetails->ShiftID ?>">
           <div class="row">
             <div class="col-sm-4">
               <div class="form-group">
                 <label class="control-label required-star">Full Name</label>
-                <input type="text" name="Fullname" data-parsley-trigger="keyup" required="true" id="PONumber" placeholder="Name" class="form-control required">
+                <select class="form-control" required="true" name="Fullname">
+                    <option value="">--- Choose Employee Name ----</option>
+                    <?php
+                    foreach ($Users as $key => $value) {
+                      echo '<option value="' . $value->FullName . '">' . $value->FullName . '</option>';
+                    }
+                    ?>
+                  </select>
+                <!-- <input type="text" name="Fullname" data-parsley-trigger="keyup" required="true" placeholder="Name" class="form-control required"> -->
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group ">
+                <label class="control-label required-star">Company Name</label>
+                <select class="form-control required" required="true" name="CompanyName">
+                  <option value="">--- Choose Company ----</option>
+                  <?php
+                  foreach ($company as $key => $value) {
+                    echo '<option selected value="' . $value->CompanyUID . '">' . $value->CompanyName . '</option>';
+                  }
+                  ?>
+                </select>
               </div>
             </div>
 
-            <div class="col-sm-4">
+            <!-- <div class="col-sm-4">
               <div class="form-group">
                 <label class="control-label">Email Id</label>
                 <input type="text" name="emailid" placeholder="Email Address" class="form-control">
               </div>
-            </div>
-
+            </div> -->
           </div>
           <div class="row">
 
             <div class="col-sm-4">
               <div class="form-group">
                 <label class="control-label">IC Number</label>
-                <select class="form-control required" required="true" name="DeliveryTo">
+                <select class="form-control required" required="true" name="IC_Id">
                   <option value="">--- Choose IC Number ----</option>
                   <?php
                   foreach ($ICDetails as $key => $value) {
@@ -197,18 +218,53 @@
             <div class="col-sm-4">
               <div class="form-group">
                 <label class="control-label">Airport Pass Number</label>
-                <select class="form-control required" required="true" name="DeliveryTo">
+                <select class="form-control required" required="true" name="Pass_Id">
                   <option value="">--- Choose Airport Pass Number ----</option>
                   <?php
-                  foreach ($company as $key => $value) {
-                    echo '<option value="' . $value->CompanyUID . '">' . $value->ICNo . '</option>';
+                  foreach ($PassDetails as $key => $value) {
+                    echo '<option value="' . $value->PassID . '">' . $value->PassNumber . '</option>';
                   }
                   ?>
                 </select>
               </div>
             </div>
           </div>
+          <!--  Select Date -->
           <div class="row mt-5">
+            <div class="col-sm-8 selectDockGroup">
+              <div class="row">
+                <div class="col-sm-6 form-group">
+                  <label class="control-label required-star">Select From Date</label>
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                    </div>
+                    <input class="form-control Date" required="true" placeholder="dd/mm/yyyy" name="Startdate" type="text" style="background:white;">
+                  </div>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label class="control-label required-star">To Date</label>
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                    </div>
+                    <input class="form-control Date" required="true" placeholder="dd/mm/yyyy" name="Enddate" type="text" style="background:white;">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6 form-group">
+                  <label class="control-label required-star">Shift Start Time </label>
+                  <input class="form-control" value="<?php echo $shiftDetails->StartTime; ?>" required="true" placeholder="Start time" readonly="readonly" name="StartTime" type="text">
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label class="control-label required-star">End Time</label>
+                  <input class="form-control" value="<?php echo $shiftDetails->EndTime; ?>" required="true" placeholder="End Time" readonly="readonly" name="EndTime" type="text">
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="row mt-5">
             <div class="col-sm-4">
               <label class="control-label required-star">Select Shift Timings : </label>
               <div class="form-group" style="margin-left: 30px;">
@@ -222,43 +278,15 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <!--Upload file input-->
-          <div class="row mt-5">
+          <!-- <div class="row mt-5">
             <div class="col-sm-4 form-group">
               <label class="control-label">Attatch Documents</label>
               <input type="file" name="upload_file" multiple />
             </div>
-          </div>
-
-          <div class="row mt-4">
-            <div class="col-sm-8">
-              <div class="alert alert-warning font-weight-300" id="mismatchError" style="display:none;">
-                <i class="fa fa-info-circle"></i> <span></span>
-              </div>
-
-            </div>
-          </div>
-
-          <!--  Booking Details -->
-          <div class="row mt-4" id="bookingSummary" style="display:none;">
-            <div class="col-sm-8">
-
-              <h2 class="text-primary">Booking Summary</h2>
-              <table class="table shadow-sm border">
-                <thead class="thead-light">
-                  <th class="text-primary">No. </th>
-                  <th class="text-primary">PO Number / Do </th>
-                  <th class="text-primary">Date</th>
-                  <th class="text-primary">Time</th>
-                </thead>
-                <tbody class="list">
-
-                </tbody>
-              </table>
-            </div>
-          </div>
+          </div> -->
 
           <!-- Hidden Data -->
 
@@ -279,7 +307,7 @@
           <div class="row mt-4">
             <div class="col-sm-12">
               <div class="col-sm-10" style="padding: 15px 0;">
-                <button type="submit" class="btn btn-success btn-lg" id="submitButton" disabled>Confirm & Proceed to Book <i class="fa fa-check-circle fa-big ml-2" style="font-size: 18px; "></i></button>
+                <button type="submit" class="btn btn-success btn-lg" id="submitButton">Confirm & Proceed to Book <i class="fa fa-check-circle fa-big ml-2" style="font-size: 18px; "></i></button>
               </div>
             </div>
           </div>
@@ -303,7 +331,7 @@
   <script src="<?php echo base_url(); ?>assets/lib/bootstrap-slider/js/bootstrap-slider.js" type="text/javascript"></script>
   <script src="<?php echo base_url(); ?>assets/lib/parsley/parsley.min.js" type="text/javascript"></script>
   <script src="<?php echo base_url(); ?>assets/lib/jquery.gritter/js/jquery.gritter.js" type="text/javascript"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+  <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script> -->
 
 
 
@@ -325,8 +353,8 @@
       var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
 
-      $('#Date').datepicker({
-        startDate: '+1d',
+      $('.Date').datepicker({
+        startDate: 'd',
         format: 'dd/mm/yyyy'
       });
 
@@ -336,19 +364,19 @@
         return this;
       }
 
-      var date = new Date();
-      var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-      $('.timepicker').datetimepicker({
-        startDate: new Date(),
-        minTime: 0,
-        minView: 1,
-        autoclose: !0,
-        componentIcon: ".mdi.mdi-calendar",
-        navIcons: {
-          rightIcon: "mdi mdi-chevron-right",
-          leftIcon: "mdi mdi-chevron-left"
-        },
-      });
+      // var date = new Date();
+      // var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+      // $('.timepicker').datetimepicker({
+      //   startDate: new Date(),
+      //   minTime: 0,
+      //   minView: 1,
+      //   autoclose: !0,
+      //   componentIcon: ".mdi.mdi-calendar",
+      //   navIcons: {
+      //     rightIcon: "mdi mdi-chevron-right",
+      //     leftIcon: "mdi mdi-chevron-left"
+      //   },
+      // });
 
     });
   </script>

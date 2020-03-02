@@ -35,7 +35,7 @@ class Login extends CI_Controller
   function forgot()
   {
     if($this->session->userdata('is_loggin')==TRUE)
-    { 
+    {   
       redirect(base_url('Dashboard')); 
     } else {
       $this->load->view('forgot',$data);
@@ -87,7 +87,7 @@ class Login extends CI_Controller
       $supplier = $this->Common_model->getMax('users');
       // $data['UserType'] = $this->input->post('UserType');
       $data['CompanyUID'] = $this->input->post('Company');
-      /*$data['Name'] = $this->input->post('Name');*/
+      $data['FullName'] = $this->input->post('Name');
       $data['EmailAddress1'] = $this->input->post('EmailAddress1');
       $data['EmailAddress2'] = $this->input->post('EmailAddress2');
       $data['PhoneNumber'] = $this->input->post('PhoneNumber');

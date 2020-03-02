@@ -25,6 +25,8 @@
     <script src="<?= base_url() ?>assets/lib/select2/js/select2.min.js" type="text/javascript"></script>
     <script src="<?= base_url() ?>assets/lib/moment.js/min/moment.min.js" type="text/javascript"></script>
     <script src="<?= base_url() ?>assets/lib/datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+    <!-- <script src="<?= base_url() ?>assets/js/daterangepicker.js" type="text/javascript"></script> -->
+
 
     <script src="<?php echo base_url(); ?>assets/v2/js/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script src="<?= base_url() ?>assets/v2/js/argon-dashboard.min.js?v=1.1.0"></script>
