@@ -21,9 +21,9 @@ class AirportPass_model extends CI_Model
 
     public function getDataById($id)
     {
-        $this->db->select('*, users.FullName');
+        // $this->db->select('*, users.FullName');
         $this->db->where('PassID', $id);
-        $this->db->join('users', 'users.UserUID = Airport_Pass_Details.AirportPassName', 'LEFT');
+        // $this->db->join('users', 'users.UserUID = Airport_Pass_Details.AirportPassName', 'LEFT');
         return $this->db->get('Airport_Pass_Details')->row();
     }
 

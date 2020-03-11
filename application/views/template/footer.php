@@ -26,12 +26,16 @@
     <script src="<?= base_url() ?>assets/lib/moment.js/min/moment.min.js" type="text/javascript"></script>
     <script src="<?= base_url() ?>assets/lib/datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
     <!-- <script src="<?= base_url() ?>assets/js/daterangepicker.js" type="text/javascript"></script> -->
-
+    <script src="<?php echo base_url(); ?>assets/lib/multi-select/jquery.multi-select.min.js" type="text/javascript"></script>
 
     <script src="<?php echo base_url(); ?>assets/v2/js/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script src="<?= base_url() ?>assets/v2/js/argon-dashboard.min.js?v=1.1.0"></script>
     <!-- Jquery timepicker script -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+    <!-- Ag grid -->
+
+    <script src="<?= base_url() ?>assets/js/ag-grid-community.min.noStyle.js" type="text/javascript"></script>
+    <!-- <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script> -->
 
     </body>
 

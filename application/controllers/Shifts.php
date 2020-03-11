@@ -15,14 +15,15 @@ class Shifts extends CI_Controller
       exit;
     }
     $this->load->model('Shifts_model');
+    $this->load->model('Dashboard_model');
   }
 
   public function index()
   {
-    $data['Title'] = '';
-    $data['Page'] = 'Dashboard';
-    $data["shift_Details"] = $this->Shifts_model->getAll();
-    $this->load->view('', $data);
+    $data['Title'] = 'Shift Details';
+    $data['Page'] = 'Shifts';
+    $data['Shifts'] = $this->Shifts_model->getAll();
+    $this->load->view('shift_details', $data);
   }
 
   public function addShiftsPost()
@@ -57,7 +58,7 @@ class Shifts extends CI_Controller
   public function deleteShifts($ShiftID){
     $delete = $this->Shifts_model->delete($ShiftID);
     $this->session->set_flashdata('done', 'Shift details deleted Successfully');
-    redirect('Dashboard');
+    redirect('Shifts');
   }
 
   public function editShiftsPost()
@@ -72,7 +73,7 @@ class Shifts extends CI_Controller
     $bookingUpdated = $this->Shifts_model->update($ShiftId,$data);
     if ($bookingUpdated) {
       $this->session->set_flashdata('done', 'Shift Details updated Successfully');
-      redirect('Dashboard');
+      redirect('Shifts');
     }
     
   }

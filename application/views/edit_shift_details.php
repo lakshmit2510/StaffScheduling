@@ -34,7 +34,7 @@
                                 <div class="col-sm-3"></div>
                                 <div class="col-sm-6">
                                     <button type="submit" class="btn btn-space btn-primary">Submit</button>
-                                    <a href="<?php echo base_url('Dashboard'); ?>" class="btn btn-space btn-default">Cancel</a>
+                                    <a href="<?php echo base_url('Shifts'); ?>" class="btn btn-space btn-default">Cancel</a>
                                 </div>
                             </div>
                         </form>

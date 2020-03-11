@@ -40,9 +40,12 @@ class AirportPass extends CI_Controller
 
   public function addAirportPass()
   {
+    $fileUploaded = $this->upload_IC('AirportPass_Doc', false, 'upload_file');
     $data['PassNumber'] = $this->input->post('PassNumber');
     $data['AirportPassName'] = $this->input->post('PassName');
     $data['DateOfExpiry'] = $this->input->post('DOE');
+    $data['AccessControlAreas'] = implode( ",", $this->input->post('AccessAreas[]') );
+    $data['Attachments'] = $fileUploaded['file_path'];
     $this->AirportPass_model->insert($data);
     $this->session->set_flashdata('done', 'New Airport Pass Number added Successfully');
     redirect('AirportPass');
@@ -54,6 +57,7 @@ class AirportPass extends CI_Controller
     $data['Title'] = 'AirportPass';
     $data['Page'] = 'AirportPass';
     $data['passDetails'] = $this->AirportPass_model->getDataById($pass_id);
+    $data['Users'] = $this->Common_model->getTableData('users');
     // $data['slottype'] = $this->Common_model->getTableData('slottypes', 'Active');
     $this->load->view('edit_airportPass_Details', $data);
   }
@@ -81,15 +85,44 @@ class AirportPass extends CI_Controller
     redirect('AirportPass/update');
   }
 
+  public function upload_IC($sub_folder, $extensions, $name)
+  {
 
-  // public function changeStatus($slots_id)
-  // {
-  //   $edit = $this->AirportPass_model->changeStatus($slots_id);
-  //   if (empty($edit)) {
-  //     $this->session->set_flashdata('done', 'Docks closed Successfully');
-  //   } else {
-  //     $this->session->set_flashdata('done', 'Docks opened Successfully');
-  //   }
-  //   redirect('Docks');
-  // }
+    $uploadData = array();
+    if (!empty($_FILES[$name]['name'])) {
+      $filesCount = count($_FILES[$name]);
+      $root_folder = $this->config->item('upload_file_path');
+      $root_extensions = $this->config->item('upload_file_extensions');
+      $root_file_size = $this->config->item('upload_file_size');
+      $config = array(
+        'upload_path' => $root_folder . $sub_folder,
+        'allowed_types' => $extensions ? $extensions : $root_extensions,
+        'overwrite' => TRUE,
+        'remove_spaces' => FALSE,
+        'max_size' => $root_file_size,
+      );
+      $this->load->library('upload', $config);
+      if ($this->upload->do_upload($name)) {
+        $fileData = $this->upload->data();
+        if ($fileData) {
+          $uploadData['file_path'] = $sub_folder . '/' . $_FILES[$name]['name'];
+        }
+      } else {
+        $error = array('error' => $this->upload->display_errors());
+      }
+    }
+    return $uploadData;
+  }
+
+  function downloadFile()
+  {
+    $this->load->helper('download');
+    $filePath = $this->input->get('filePath');
+    $root_folder = $this->config->item('upload_file_path');
+    $fullFilePath = $root_folder . $filePath;
+    $data = file_get_contents($fullFilePath); // Read the file's contents
+    $name = explode('/', $filePath);
+    force_download($name[count($name) - 1], $data);
+    exit;
+  }
 }

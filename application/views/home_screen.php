@@ -276,7 +276,7 @@
                                     </div>
                                 </div>
                                 <div class="vc_row-full-width"></div>
-                                <div class="vc_row wpb_row vc_row-fluid">
+                                <!-- <div class="vc_row wpb_row vc_row-fluid">
                                     <div class="wpb_column vc_column_container vc_col-sm-12">
                                         <div class="vc_column-inner vc_custom_1475066123130">
                                             <div class="wpb_wrapper">
@@ -361,13 +361,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="vc_row wpb_row vc_row-fluid">
                                     <div class="wpb_column vc_column_container vc_col-sm-12">
                                         <div class="vc_column-inner ">
                                             <div class="wpb_wrapper">
                                                 <div class="sc_section sc_section_block margin_top_huge margin_bottom_huge aligncenter" data-animation="animated fadeInUp normal">
-                                                    <div class="sc_section_inner">
+                                                    <!-- <div class="sc_section_inner">
                                                         <h2 class="sc_section_title sc_item_title sc_item_title_without_descr">Products<span></span></h2>
                                                         <div class="sc_section_content_wrap">
                                                             <div class="columns_wrap sc_columns columns_nofluid sc_columns_count_4">
@@ -424,10 +424,10 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="sc_section_button sc_item_button">
+                                                        </div> -->
+                                                        <!-- <div class="sc_section_button sc_item_button">
                                                             <a href="#" class="sc_button sc_button_square sc_button_style_filled sc_button_size_large">view all products</a>
-                                                        </div>
+                                                        </div> -->
                                                     </div>
                                                 </div>
                                             </div>

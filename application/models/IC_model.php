@@ -29,9 +29,9 @@ class IC_model extends CI_Model
 
     public function getDataById($id)
     {
-        $this->db->select('*, users.FullName');
+        // $this->db->select('*, users.FullName');
         $this->db->where('ID', $id);
-        $this->db->join('users', 'users.UserUID = IC_Details.FullName', 'LEFT');
+        // $this->db->join('users', 'users.UserUID = IC_Details.FullName', 'LEFT');
         return $this->db->get('IC_Details')->row();
     }
 

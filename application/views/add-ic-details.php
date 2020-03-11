@@ -10,7 +10,7 @@
           <h1 class="my-3 panel-heading panel-heading-divider"><i class="icon mdi mdi-car"></i> <?php echo $Title; ?></h1>
           <hr />
           <div class="panel-body">
-            <form action="<?php echo base_url('IC_Details/addICDetailsPost'); ?>" class="form-horizontal" method="post">
+            <form action="<?php echo base_url('IC_Details/addICDetailsPost'); ?>" class="form-horizontal" method="post" enctype="multipart/form-data">
               <div class="form-group">
                 <label class="col-sm-3 control-label">IC Number</label>
                 <div class="col-sm-6">
@@ -53,13 +53,13 @@
               <div class="form-group">
                 <label class="col-sm-3 control-label">Country Of Birth</label>
                 <div class="col-sm-6">
-                  <input type="text" name="Nationality" placeholder="Country of Birth" class="form-control">
+                  <input type="text" required="" name="Nationality" placeholder="Country of Birth" class="form-control">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label">Date of Issue</label>
                 <div class="col-sm-6">
-                  <input type="date" name="DateofIssue" placeholder="dd/mm/yyyy" class="form-control">
+                  <input type="date" required="" name="DateofIssue" placeholder="dd/mm/yyyy" class="form-control">
                 </div>
               </div>
               <div class="form-group">
@@ -81,7 +81,7 @@
               <div class="form-group">
                 <label class="col-sm-3 control-label">Attatch IC</label>
                 <div class="col-sm-6">
-                  <input type="file" name="upload_file" />
+                  <input required="" type="file" name="upload_file" />
                 </div>
               </div>
               <div class="form-group">

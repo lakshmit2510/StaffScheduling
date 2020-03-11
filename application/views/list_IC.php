@@ -35,9 +35,9 @@
                 <td>' . $row->DateOfBirth . '</td>
                 <td>' . $row->Gender . '</td>
                 <td>' . $row->Race . '</td>
-                <td>' . $row->CountryOfBirth . '</td>';?>
-                <td><a href="<?php ?><?php echo $row->ID ?>" class="btn btn-info"><i class="fas fa-download"></i>Get IC</a></td>
-                <?php
+                <td>' . $row->CountryOfBirth . '</td>'; ?>
+                <td><a href='<?php echo base_url('IC_Details/') ?>downloadFile/?filePath= <?php echo $row->AttachedFiles ?>' target='_blank' class="btn btn-info"><i class="fas fa-download"></i>Get IC</a></td>
+              <?php
               }
             }
             ?>

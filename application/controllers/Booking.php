@@ -1,6 +1,10 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 class Booking extends CI_Controller
 {
 
@@ -21,9 +25,66 @@ class Booking extends CI_Controller
   {
     $data['Title'] = 'Booking Details';
     $data['Page'] = 'Booking';
-    // $data['booking'] = $this->Booking_model->getBookingDetail();
+    // $data['booking'] = $this->Booking_model->getBookingDetails();
+    // $shiftDetails = $this->getTableDetails($data['booking']);
     $data["shiftDetails"] = $this->Shifts_model->getAll();
     $this->load->view('list_booking', $data);
+  }
+  public function getShiftDetails()
+  {
+
+    $dateRange = explode('-', $this->input->get('dateRange'));
+    $fdate = date('Y-m-d', strtotime($dateRange[0]));
+    $tdate = date('Y-m-d', strtotime($dateRange[1]));
+    $data['booking'] = $this->Booking_model->getBookingDetails($fdate, $tdate);
+    $this->getTableDetails($data['booking']);
+  }
+
+  public function getTableDetails($shifData)
+  {
+
+    $columns = array(
+      array(
+        'headerName' => "Employee Name",
+        'field' => "employeeName",
+        'width' => 150
+      ),
+      array(
+        'headerName' => "IC Number",
+        'field' => "icNumber",
+        'width' => 150
+      ),
+    );
+    $rows = [];
+    foreach ($shifData as $key => $value) {
+      $column = array(
+        'headerName' => $value->StartDate,
+        'width' => 100,
+        'children' => array(array(
+          'headerName' => 'IN',
+          'field' => $value->StartDate . '_' . $value->ShiftStartTime,
+          'width' => 80
+        ), array(
+          'headerName' => 'OUT',
+          'field' => $value->StartDate . '_' . $value->ShiftEndTime,
+          'width' => 80
+        ))
+      );
+      if (isset($rows[$value->ICNumber])) {
+        $rows[$value->ICNumber][$value->StartDate . '_' . $value->ShiftStartTime] = $value->ShiftStartTime;
+        $rows[$value->ICNumber][$value->StartDate . '_' . $value->ShiftEndTime] = $value->ShiftEndTime;
+      } else {
+        $rows[$value->ICNumber] = array(
+          'employeeName' => $value->FullName,
+          'icNumber' => $value->ICNumber,
+          $value->StartDate . '_' . $value->ShiftStartTime => $value->ShiftStartTime,
+          $value->StartDate . '_' . $value->ShiftEndTime => $value->ShiftEndTime,
+        );
+      }
+
+      array_push($columns, $column);
+    }
+    echo json_encode(array('columns' => $columns, 'rows' => array_values($rows)));
   }
 
   function Add($Shift_Id)
@@ -48,22 +109,70 @@ class Booking extends CI_Controller
 
   function save()
   {
-    // $data['BookingRefNo'] = $this->input->post('');
-    $data['FullName'] = $this->input->post('Fullname');
-    $data['Emailaddress'] = $this->input->post('emailid');
-    $data['CompanyUID'] = $this->input->post('CompanyName');
-    $data['ShiftNumber'] = $this->input->post('Shift_Id');
-    $data['IC_Number'] = $this->input->post('IC_Id');
-    $data['AirportPassNumber'] = $this->input->post('Pass_Id');
-    $data['StartDate'] = $this->input->post('Startdate');
-    $data['EndDate'] = $this->input->post('Enddate');
-    $data['StartTime'] = $this->input->post('StartTime');
-    $data['EndTime'] = $this->input->post('EndTime');
+    $data['FullName'] = $this->input->post('FullName');
+    // $data['Emailaddress'] = $this->input->post('EmailAddress');
+    // $data['ShiftNumber'] = $this->input->post('Shift_Id');
+    $data['IC_Number'] = $this->input->post('ICNumber');
+    $data['UserID'] = $this->input->post('UserId');
     $data['Active'] = 1;
     $data['CreatedBy'] = $this->session->userdata('UserUID');
-    $this->Booking_model->SaveBooking($data);
+
+    $selectedDate = $this->input->post('Day');
+    // print_r($selectedDate);
+    // exit;
+    $shifts = $this->input->post('shiftSlot');
+    $bookingShiftId = $this->input->post('Shift_Id');
+    $confirm_page_data = array();
+
+    foreach ($selectedDate as $key => $value) {
+
+      $booked = $this->Booking_model->getMax();
+      $date = date('Y-m-d', strtotime(str_replace('/', '-', $value)));
+      // print_r($date);
+      // exit;
+      $data['BookingRefNo'] = 'EZ' . date('Y') . str_pad($booked, 4, '0', STR_PAD_LEFT);
+      $shiftTimings = explode('-', $shifts[$key]);
+      $data['StartDate'] = $date;
+      $data['ShiftStartTime'] = $shiftTimings[0];
+      $data['ShiftEndTime'] = $shiftTimings[1];
+      $data['ShiftNumber'] = $bookingShiftId[$key];
+      $store = $this->Booking_model->SaveBooking($data);
+      if (!empty($store)) {
+        array_push($confirm_page_data, $data['BookingRefNo']);
+      }
+    }
     $this->session->set_flashdata('done', 'Booking details added Successfully');
-    redirect(base_url(''));
+    redirect(base_url('Dashboard'));
+  }
+
+  public function SendEmail()
+  {
+    $config = array(
+      'protocol' => 'smtp', // 'mail', 'sendmail', or 'smtp'
+      'smtp_host' => 'smtp.gmail.com',
+      'smtp_port' => 465,
+      'smtp_user' => 'lakshmi.t2510@gmail.com',
+      'smtp_pass' => 'lovelylakshmi',
+      'smtp_crypto' => 'ssl', //can be 'ssl' or 'tls' for example
+      'mailtype' => 'text', //plaintext 'text' mails or 'html'
+      'smtp_timeout' => '4', //in seconds
+      'charset' => 'iso-8859-1',
+      'wordwrap' => TRUE
+    );
+    $this->load->library('email', $config);
+
+    $this->email->from('lakshmi.t2510@gmail.com', 'Test email');
+    $this->email->to('lakshmi.t2510@gmail.com');
+
+    $this->email->set_newline("\r\n");
+    $this->email->subject('Email Test');
+    $this->email->message('Testing the email class.');
+
+    if ($this->email->send()) {
+      echo 'Your Email has successfully been sent.';
+    } else {
+      show_error($this->email->print_debugger());
+    }
   }
 
   public function editBooking($Booking_id)

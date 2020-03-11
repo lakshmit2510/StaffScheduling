@@ -65,9 +65,9 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
             <span class="h2 font-weight-bold"><?php echo $value->StartTime ?> - <?php echo $value->EndTime ?></span>
           </div>
         </div>
-        <div>
+        <!-- <div>
           <a class="btn btn-primary" style="margin-left: 20px;" href="<?= base_url('Booking/Add/' . $value->ShiftID) ?>">Start Booking</a>
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -114,17 +114,15 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
 
 <script type="text/javascript">
   $(document).ready(function() {
+    
     $('.timepicker').timepicker({
       timeFormat: 'HH:mm',
       interval: 60,
-      // minTime: '10',
-      // maxTime: '6:00pm',
-      // defaultTime: '11',
-      // startTime: '10:00',
       dynamic: false,
       dropdown: true,
       scrollbar: true
     });
+
     $('.save-booking').on('click', function(e) {
       e.preventDefault();
       e.stopPropagation();

@@ -22,11 +22,19 @@ class Dashboard extends CI_Controller
     $data['Page'] = 'active';
     $UserUID = $this->session->userdata('UserUID');
     $data['UserData'] = $this->Dashboard_model->getUserdetailsById($UserUID);
-    // print_r($data['UserData']);
+    $data['Booking_data'] = $this->Booking_model->getBookingDetailByUserId($UserUID);
+    // print_r($data['Booking_data']);
     // exit;
-
     $data['Shifts'] = $this->Shifts_model->getAll();
     $this->load->view('new-dashboard', $data);
+  }
+
+  public function shiftDetails()
+  {
+    $data['Title'] = 'Shift Details';
+    $data['Page'] = 'Shifts';
+    $data['Shifts'] = $this->Shifts_model->getAll();
+    $this->load->view('shift_details', $data);
   }
 
   public function Profile()
@@ -44,15 +52,15 @@ class Dashboard extends CI_Controller
     $this->load->view('help', $data);
   }
 
-  public function Manual()
-  {
-    if (in_array($this->session->userdata('Role'), array(1, 3))) {
-      $data['file'] = base_url('assets/SATSDMS-UserManualCompany.pdf');
-    } else if ($this->session->userdata('Role') == 5) {
-      $data['file'] = base_url('assets/SecurityUserManual.pdf');
-    } else {
-      $data['file'] = base_url('assets/SATSDMS-UserManual.pdf');
-    }
-    $this->load->view('doc_help', $data);
-  }
+  // public function Manual()
+  // {
+  //   if (in_array($this->session->userdata('Role'), array(1, 3))) {
+  //     $data['file'] = base_url('assets/SATSDMS-UserManualCompany.pdf');
+  //   } else if ($this->session->userdata('Role') == 5) {
+  //     $data['file'] = base_url('assets/SecurityUserManual.pdf');
+  //   } else {
+  //     $data['file'] = base_url('assets/SATSDMS-UserManual.pdf');
+  //   }
+  //   $this->load->view('doc_help', $data);
+  // }
 }

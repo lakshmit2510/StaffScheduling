@@ -10,7 +10,7 @@
                     <h1 class="my-3 panel-heading panel-heading-divider"><i class="icon mdi mdi-car"></i> <?php echo $Title; ?></h1>
                     <hr />
                     <div class="panel-body">
-                        <form action="<?php echo base_url('AirportPass/addAirportPass'); ?>" class="form-horizontal" method="post">
+                        <form action="<?php echo base_url('AirportPass/addAirportPass'); ?>" class="form-horizontal" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Airport Pass Number</label>
                                 <div class="col-sm-6">
@@ -41,31 +41,31 @@
                                 <label class="col-sm-3 control-label">Access Control Areas : </label>
                                 <div class="col-sm-6" style="margin-left: 30px;">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                        <input class="form-check-input" name=AccessAreas[] type="checkbox" id="inlineCheckbox1" value="Red-(A)">
                                         <label class="form-check-label" for="inlineCheckbox1">Red - (A)- Apron with Baggage Sorting Area Access</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                        <input class="form-check-input" name=AccessAreas[] type="checkbox" id="inlineCheckbox2" value="Red/White-(A)">
                                         <label class="form-check-label" for="inlineCheckbox2">Red/White - (A)- Apron with no Baggage Sorting Area Access</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                                        <input class="form-check-input" name=AccessAreas[] type="checkbox" id="inlineCheckbox3" value="Blue-(B)">
                                         <label class="form-check-label" for="inlineCheckbox3">Blue - (B)- Baggage Claim Hall/Arrival Transit</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">
+                                        <input class="form-check-input" name=AccessAreas[] type="checkbox" id="inlineCheckbox4" value="Green-(C)">
                                         <label class="form-check-label" for="inlineCheckbox3">Green - (C)- Changi Airfreight Centre</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option5">
+                                        <input class="form-check-input" name=AccessAreas[] type="checkbox" id="inlineCheckbox5" value="Yellow-(D)">
                                         <label class="form-check-label" for="inlineCheckbox3">Yellow - (D)- Departure Transit</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="option6">
+                                        <input class="form-check-input" name=AccessAreas[] type="checkbox" id="inlineCheckbox6" value="Pink-(T)">
                                         <label class="form-check-label" for="inlineCheckbox3">Pink - (T)- Control Tower</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="option7">
+                                        <input class="form-check-input" name=AccessAreas[] type="checkbox" id="inlineCheckbox7" value="Brown-(V)">
                                         <label class="form-check-label" for="inlineCheckbox3">Brown - (V)- VIP Complex</label>
                                     </div>
                                 </div>
@@ -91,7 +91,6 @@
                             <circle fill="none" stroke-width="5" stroke-linecap="round" cx="33" cy="33" r="30" class="circle"></circle>
                         </svg>
                     </div>
-
                 </div>
             </div>
 

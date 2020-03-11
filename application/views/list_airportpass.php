@@ -42,8 +42,8 @@
                     <td>' . $row->FullName . '</td>
                     <td>' . $row->DateOfExpiry . '</td>
                     <td>' . $row->AccessControlAreas . '</td>'; ?>
-                    <td><a href="<?php ?><?php echo $row->PassID ?>" class="btn btn-info"><i class="fas fa-download"></i>Get Airport Pass</a></td>
-                <?php
+                    <td><a href="<?php echo base_url('AirportPass/') ?>downloadFile/?filePath= <?php echo $row->Attachments ?>" class="btn btn-info"><i class="fas fa-download"></i>Get Airport Pass</a></td>
+                  <?php
                   }
                 }
                 ?>

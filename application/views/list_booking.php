@@ -44,7 +44,7 @@
                 </div>
               </div>
 
-              <div class="form-group col-sm-4">
+              <!-- <div class="form-group col-sm-4">
                 <label class="col-sm-6 control-label">Select Schedule</label>
                 <div class="col-sm-9">
                   <select class="form-control required" required="true" name="ShiftTimings">
@@ -56,50 +56,15 @@
                     ?>
                   </select>
                 </div>
-              </div>
+              </div> -->
 
             </div>
             <div class="table-responsive">
               <!-- <div class="text-right">
                 <a href="<?php echo base_url('Booking/add') ?>" class="btn btn-space btn-success"><i class="fa fa-plus"></i> Add New Booking</a>
               </div> -->
-              <table id="table3" class="table table-striped table-hover table-bordered table-fw-widget nowrap">
-                <thead>
-                  <tr>
-                    <!-- <th width="90"># Job Order No</th> -->
-                    <th>Employee Name</th>
-                    <!-- <th>Email Id</th> -->
-                    <th>IC Number</th>
-                    <!-- <th>Airport Pass Number</th> -->
-                    <th width="230">Action</th>
-                  </tr>
-                </thead>
-                <!-- <tbody>
-                  <?php
-                  if ($booking != 0) {
-                    foreach ($booking as $row) {
-                      echo '<tr>
-                        
-                        <td>' . $row->FullName . '</td> 
-                        <td>' . $row->ICNumber . '</td>
-                        <td>' . ($row->StartDate) . ' - ' . ($row->EndDate) . '</td>'; ?>
-                      <td class="center">
-                          <?php if (!in_array($this->session->userdata('Role'), array(5, 6))) {
-                          ?>
-                            <a href="<?php echo base_url('Booking/') ?>cancel/<?php echo $row->BookingID; ?>" class="btn btn-space btn-danger" onclick="return confirm('Are you sure to Cancel Booking ?')"><i class="icon icon-left mdi mdi-close"></i> Cancel</a>
-                            <a href="<?php echo base_url('Booking/Sendmail/' . $row->BookingID); ?>" class="btn btn-space btn-primary btn-loader"><i class="icon icon-left mdi mdi-email"></i> Email</a>
-                          <?php }
-                          ?>
-                          <a href="<?php echo base_url('Booking/BPrint/' . $row->BookingRefNo) ?>" class="btn btn-space btn-success btn-loader"><i class="icon icon-left mdi mdi-print"></i> Print</a>
-                          <a href="<?php echo base_url('Booking/editBooking/' . $row->BookingID); ?>" class="btn btn-space btn-primary btn-loader"><i class="icon icon-left mdi mdi-edit"></i> Edit</a>
-                        </td>
-                      </tr>
-                  <?php
-                    }
-                  }
-                  ?>
-                </tbody> -->
-              </table>
+
+              <div id="myGrid" style="height: 400px;" class="ag-theme-balham"></div>
             </div>
           </div>
           <div class="be-spinner">
@@ -124,16 +89,25 @@
 
       <script type="text/javascript">
         $(document).ready(function() {
-
+          var gridOptions = {
+            columnDefs: [],
+            rowData: []
+          };
+          var eGridDiv = document.querySelector('#myGrid');
+          new agGrid.Grid(eGridDiv, gridOptions);
           $('.weekMonthPicker').change(function() {
             var daterange = $('.weekMonthPicker').val();
-            // $.ajax({
-            //   type: 'POST',
-            //   url: 'getAvailableDocks',
-            //   data: datas,
-            //   success: function(data) {
-            //   }
-            // });
+
+            $.ajax({
+              type: 'GET',
+              url: '<?php echo base_url(); ?>Booking/getShiftDetails?dateRange=' + daterange,
+              success: function(data) {
+                var parsedData = JSON.parse(data);
+                gridOptions.api.setColumnDefs(parsedData.columns);
+                gridOptions.api.setRowData(parsedData.rows);
+                gridOptions.api.checkGridSize();
+              }
+            });
           });
 
           $('.btn-loader').click(function() {
@@ -142,32 +116,32 @@
 
           $('.weekMonthPicker').daterangepicker();
 
-          $("#table3").dataTable({
+          // $("#table3").dataTable({
 
-            buttons: ["copy",
-              {
-                extend: 'excel',
-                className: 'btn btn-default',
-                exportOptions: {
-                  columns: ['th:not(:last-child)']
-                }
-              }, "pdf"
-            ],
-            lengthMenu: [
-              [10, 25, 50, -1],
-              [6, 10, 25, 50, "All"]
-            ],
-            dom: "Bfrtip",
-            'scrollX': '500px',
-            'scrollCollapse': true,
-            'fixedColumns': {
-              'leftColumns': 1,
-              'rightColumns': 1
-            },
-            "order": [], //Initial no order.
-            "bSorting": [],
-            "pageLength": 20
-          });
+          //   buttons: ["copy",
+          //     {
+          //       extend: 'excel',
+          //       className: 'btn btn-default',
+          //       exportOptions: {
+          //         columns: ['th:not(:last-child)']
+          //       }
+          //     }, "pdf"
+          //   ],
+          //   lengthMenu: [
+          //     [10, 25, 50, -1],
+          //     [6, 10, 25, 50, "All"]
+          //   ],
+          //   dom: "Bfrtip",
+          //   'scrollX': '500px',
+          //   'scrollCollapse': true,
+          //   'fixedColumns': {
+          //     'leftColumns': 1,
+          //     'rightColumns': 1
+          //   },
+          //   "order": [], //Initial no order.
+          //   "bSorting": [],
+          //   "pageLength": 20
+          // });
 
           $('.buttons-html5').addClass('btn btn-default');
         });

@@ -11,10 +11,6 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
         margin-top: 100px;
     }
 
-    .card-margin {
-        margin-left: 20px importent;
-    }
-
     @media (min-width: 1200px) {
         .col-xl-3 {
             flex: 0 0 25%;
@@ -26,123 +22,213 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
         display: none;
     }
 
-    .highlight-available {
-        background: #3579e8;
+    .shiftslot {
+        background-color: #0b53ca;
+        display: inline-block;
+        width: 100%;
+        color: #fff;
+        text-align: center;
+        height: 60px;
+        margin: 0 5px;
+        border-radius: 8px;
+        padding: 13px;
+        cursor: pointer;
+        border: 1px dashed #b5b5b5;
     }
 
-    .highlight-Booked {
+    #shiftslots-div input[type=checkbox] {
+        display: none;
+    }
+
+    #shiftslots-div input[type=checkbox]:checked+.shiftslot {
+        background-color: #11ca11;
+        color: #fff;
+        border: 1px dashed #333;
+    }
+
+    #shiftslots-div input[type=checkbox]:disabled+.shiftslot {
+        background-color: #a350b1;
+        color: #fff;
+        border: 1px dashed #333;
+    }
+
+    #shiftslots-div input[type=checkbox]:disabled:not(.highlight-Booked)+.shiftslot {
+        background-color: #e60606;
+        color: #fff;
+        border: 1px dashed #333;
+    }
+
+
+
+    .docklegend {
+        /* display: inline-block; */
+        width: 35%;
+        position: relative;
+        float: right;
+        right: 0;
+        top: 0;
+    }
+
+    .docklegend>span {
+        width: 100px;
+        display: block;
+        float: left;
+        font-size: 15px;
+    }
+
+    .docklegend>span::before {
+        content: '';
+        width: 26px;
+        display: block;
+        height: 13px;
+        float: left;
+        margin: 4px 5px;
+        padding: 0px;
+    }
+
+    .docklegend>span.free::before {
+        background: #0b53ca;
+    }
+
+    .docklegend>span.NotAvailable::before {
         background: #e60606;
     }
 
-    .highlight-available .h2 {
-        color: #f6f6f9 !important;
+    .docklegend>span.booked::before {
+        background: #a350b1;
+    }
+
+    .docklegend>span.select::before {
+        background: #11ca11;
     }
 </style>
 
-<div class="row booking">
-    <div id="evoCalendar" class="sidebar-hide"></div>
+<div class="mt-5"></div>
+<?php $this->load->view('template/card-head'); ?>
 
-</div>
-<div class="modal fade" id="addBookingModal" tabindex="-1" role="dialog" aria-labelledby="addShiftModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Add Booking Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="booking-details-form">
-                    <!-- <div class="form-group">
-                        <label for="avaialableBookingsField">Available Bookings</label>
-                        <input type="number" class="form-control" name="Bookingscount" id="avaialableBookingsField" aria-describedby="availableBookingsHelp" placeholder="Enter available bookings">
-                        <small id="availableBookingsHelp" class="form-text text-muted">Please enter the no of bookings available.</small>
-                    </div> -->
-                    <input type="hidden" name="FullName" value="<?php echo $UserData->FullName ?>">
-                    <input type="hidden" name="ICNumber" value="<?php echo $UserData->ICNumber ?>">
-                    <div class="form-group">
-                        <label>Email Address</label>
-                        <input class="form-control emailAddress" name="EmailAddress" placeholder="Please Enter Email address">
+<div class="be-content">
+    <div class="main-content container-fluid">
+        <div class="row wizard-row">
+            <div class="col-md-12 fuelux">
+                <?php if ($this->session->flashdata('type') == 'done') { ?>
+                    <div role="alert" class="alert alert-success alert-dismissible">
+                        <div class="message">
+                            <button type="button" data-dismiss="alert" aria-label="Close" class="close"><span aria-hidden="true" class="mdi mdi-close"></span></button><strong>Success!</strong> <?php echo $this->session->flashdata('msg'); ?>.
+                        </div>
                     </div>
-                    <!-- <div class="form-group">
-                        <label for="endTime">End Time</label>
-                        <input class="form-control timepicker" name="Endtime" id="endTime" placeholder="Enter end time">
-                    </div> -->
+                <?php } else if ($this->session->flashdata('type') == 'error') { ?>
+                    <div role="alert" class="alert alert-danger alert-dismissible">
+                        <div class="message">
+                            <button type="button" data-dismiss="alert" aria-label="Close" class="close"><span aria-hidden="true" class="mdi mdi-close"></span></button><strong>Error!</strong> <?php echo $this->session->flashdata('msg'); ?>.
+                        </div>
+                    </div>
+                <?php } ?>
+                <h3 class="panel-heading panel-heading-divider my-3">Please Select Date to Create Booking </h3>
+
+                <!-- calender  -->
+                <div class="row booking">
+                    <div id="evoCalendar" class="sidebar-hide"></div>
+                </div>
+
+                <form action="<?= base_url('Booking/Save') ?>" class="form-horizontal" method="post" enctype="multipart/form-data" id="booking-form">
+
+                    <input type="hidden" name="FullName" value="<?php echo $UserData->FullName ?>">
+                    <input type="hidden" name="UserId" value="<?php echo $UserData->UserUID ?>">
+                    <input type="hidden" name="ICNumber" value="<?php echo $UserData->ID ?>">
+                    <input type="hidden" name="EmailAddress" value="<?php echo $UserData->EmailAddress1 ?>">
+
+                    <!-- Card stats -->
+                    <div id="ShiftDetails">
+                        <h3>Please Select Shift</h3>
+                        <div class=" row docklegend"><span class="free"> Available</span><span class="booked"> Booked</span><span class="select">Selected</span><span class="NotAvailable" style="width: 116px">NotAvailable</span>
+                        </div>
+                        <div class="row mb-5 pt-5">
+                            <?php foreach ($Shifts as $value) { ?>
+                                <div class="col-xl-3 col-lg-6" id="highlight" style="margin-bottom: 15px">
+                                    <div id="shiftslots-div" data-shift-id="<?php echo $value->ShiftID; ?>">
+                                        <input type="checkbox" name="shiftTiming" class="freeslots" id="<?php echo $value->ShiftID; ?>" value="<?php echo $value->StartTime ?> - <?php echo $value->EndTime ?>" disabled="true">
+                                        <label class="shiftslot" for="<?php echo $value->ShiftID; ?>"><?php echo $value->StartTime ?> - <?php echo $value->EndTime ?></label>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <!-- table data -->
+                    <div class="row mt-4" id="booking-detail-Summary" style="display:none;">
+                        <div class="col-sm-8">
+                            <h2 class="text-primary">Booking Summary</h2>
+                            <table class="table shadow-sm border">
+                                <thead class="thead-light">
+                                    <th class="text-primary">Date</th>
+                                    <th class="text-primary">Time</th>
+                                    <th class="text-primary">Action</th>
+                                </thead>
+                                <tbody class="list">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- <?php
+                            // $data = array();
+                            // $data = "<?php echo $Booking_data->StartDate; 
+                            ?>";
+                    ?> -->
+                    <div class="row mt-4">
+                        <div class="col-sm-12">
+                            <div class="col-sm-10" style="padding: 15px 0;">
+                                <button type="submit" class="btn btn-success btn-lg" id="submitButton" disabled>Confirm & Proceed to Book <i class="fa fa-check-circle fa-big ml-2" style="font-size: 18px; "></i></button>
+                            </div>
+                        </div>
+                    </div>
+
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary save-booking" id="booking_details">Save changes</button>
             </div>
         </div>
     </div>
 </div>
-<!-- Card stats -->
-<div id="ShiftDetails">
-    <div class="row mb-5 pt-5">
-        <?php
-        foreach ($Shifts as $value) {
-        ?>
-            <div class="col-xl-3 col-lg-6" id="highlight" style="margin-bottom: 15px">
-                <a href="#" data-toggle="modal" data-target="#addBookingModal" class="card card-hover card-stats highlight-available mb-4 mb-xl-0" data-shift-id="<?php echo $value->ShiftID; ?>">
-                    <div class="card-body card-margin">
-                        <div class="row pt-3">
-                            <div class="col">
-                                <span class="h2 font-weight-bold"><?php echo $value->StartTime ?> - <?php echo $value->EndTime ?></span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        <?php
-        }
-        ?>
-    </div>
-</div>
-
-<div class="row mt-4" id="booking-detail-Summary" style="display:none;">
-    <div class="col-sm-8">
-
-        <h2 class="text-primary">Booking Summary</h2>
-        <table class="table shadow-sm border">
-            <thead class="thead-light">
-                <th class="text-primary">Name. </th>
-                <th class="text-primary">IC Number</th>
-                <th class="text-primary">Email Address</th>
-                <th class="text-primary">Date</th>
-                <th class="text-primary">Time</th>
-            </thead>
-            <tbody class="list">
-
-            </tbody>
-        </table>
-    </div>
-</div>
-
 
 <?php $this->load->view('template/footer'); ?>
 <script src="<?php echo base_url() ?>assets/js/evo-calendar.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/lib/parsley/parsley.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
+    String.prototype.hashCode = function() {
+        var hash = 0,
+            i, chr;
+        if (this.length === 0) return hash;
+        for (i = 0; i < this.length; i++) {
+            chr = this.charCodeAt(i);
+            hash = ((hash << 5) - hash) + chr;
+            hash |= 0; // Convert to 32bit integer
+        }
+        return hash;
+    };
+
     $(document).ready(function() {
 
-        // function updateShifts() {
-        //     datas = new FormData();
-        //     if (!moment($('#evoCalendar').val(), 'DD/MM/YYYY', true).isValid()) {
-        //         return true;
-        //     }
-        // }
+        $('#ShiftDetails').hide();
+        $('#shiftslots-div input,#evoCalendar').on("change", tableData);
+        var bookingDate = <?php echo (json_encode($Booking_data)) ?>;
+        var myEvents = [];
+        $.each(bookingDate, function(key, item) {
+            myEvents.push({
+                name: "Working Day",
+                date: item.StartDate,
+                type: "event",
+                everyYear: true
+            });
+        });
+
 
         $('#evoCalendar').evoCalendar({
             format: 'mm/dd/yyyy',
             titleFormat: 'MM yyyy',
             eventHeaderFormat: 'MM d, yyyy',
             todayHighlight: true,
-            // calendarEvents: myEvents,
+            calendarEvents: myEvents,
             onSelectDate: function(date) {
-
+                var UserID = $("input[name=UserId]").val();
                 var selectedDate = $(date.currentTarget).attr('date-val');
                 var dateArr = selectedDate.split('/');
                 var newDate = dateArr[2] + '-' + dateArr[0] + '-' + dateArr[1];
@@ -160,17 +246,25 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
                     },
                     success: function(data) {
                         var parseData = JSON.parse(data);
-                        $('.be-loading').removeClass('be-loading-active');
-                        $('highlight-available').removeClass('highlight-available');
-                        $('.card').removeClass('highlight-Booked');
+                        $('.be-loading').addClass('be-loading-active');
+                        $('.freeslots').prop("disabled", false);
+                        $('#ShiftDetails').find('.freeslots').prop('checked', false);
+                        $('#ShiftDetails').find('.freeslots').prop('disabled', false);
+                        $('#ShiftDetails').find('.freeslots').removeClass('highlight-Booked');
                         if (parseData.length > 0) {
                             $.each(parseData, function(idx, item) {
-                                var ele = $("[data-shift-id='" + item.ShiftID + "']");
+                                var ele = $("[id='" + item.ShiftID + "']");
+
                                 if (parseInt(item.AvailableBookings) == parseInt(item.Count)) {
-                                    ele.addClass('highlight-Booked');
+                                    ele.prop("disabled", true);
                                 } else {
-                                    ele.removeClass('highlight-Booked');
-                                    // $('.card').addClass('highlight-available');
+                                    if (item.StartDate == newDate && parseInt(item.UserID) == UserID) {
+                                        ele.prop("disabled", true);
+                                        ele.addClass('highlight-Booked');
+                                    } else {
+                                        ele.prop("disabled", false);
+                                        ele.removeClass('highlight-Booked');
+                                    }
                                 }
                             });
                         }
@@ -180,73 +274,80 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
             },
         });
 
-        $('#ShiftDetails').hide();
+        var prevDate = '';
+        var prevSlot = '';
 
-        // $('.save-booking').on('click', function(e) {
-        //     e.preventDefault();
-        //     e.stopPropagation();
-        //     $.ajax({
-        //         type: 'post',
-        //         url: '<?php echo base_url('Shifts/addShiftsPost/') ?>',
-        //         data: $('#booking-form').serialize(),
-        //         success: function(res) {
-        //             console.log(res);
-        //             window.location.reload();
-        //         }
-        //     });
-        // });
+        function tableData() {
+            var date = $('.calendar-active').attr('date-val');
+            var shiftSlot = $('.freeslots:checked').val();
+            var bookingShiftId = $(".freeslots:checked").attr("id");
 
-        $('#booking_details').on('click', function(e) {
-            $('#booking-details-form').parsley().validate();
-            if ($('#booking-details-form').parsley().isValid()) {
-                var isEditActive = $('#booking-detail-Summary .pono-edit-active');
-                var Name = $('[name="FullName"]').val();
-                var ICNo = $('[name="ICNumber"]').val();
-                var SelectedDay = $('#evoCalendar').attr('date-val');
-                var EmailAdd = $('.emailAddress').val();
+            $("#booking-detail-Summary").slideDown();
+            var isExists = $('#' + date.hashCode());
+            // if (isExists.length > 0) {
+            //     return;
+            // }
+            var tableRow = '<tr id="' + date.hashCode() + '" >';
 
-                // var table = $("#booking-detail-Summary tbody").html('');
-                // table.append('<tr>');
-                //     table.append('<td>' + Name + '</td>'); // Purchase Order
-                //     table.append('<td>' + ICNo + '</td>'); // Purchase Order
-                //     table.append('<td>' + EmailAdd + '</td>'); // Purchase Order
-                //     table.append('<td>' + SelectedDay + '</td>'); // Purchase Order
-                // table.append('</tr>');
+            tableRow += '<input type="hidden" value="' + bookingShiftId + '" name="Shift_Id[]"/>';
+            tableRow += '<td class="name">' + date + '</td>';
+            tableRow += '<input type="hidden" value="' + date + '" name="Day[]"/>';
+            tableRow += '<td class="shiftSlot">' + shiftSlot + '</td>';
+            tableRow += '<input type="hidden" value="' + shiftSlot + '" name="shiftSlot[]"/>';
+            tableRow += '<td>';
+            tableRow += '<button type="button" class="btn btn-primary delete-shift" style="margin-left:10px"> Delete </button>';
+            tableRow += '</td>';
+            tableRow += '</tr>';
 
-                $("#booking-detail-Summary").slideDown();
-
-                var tableRow = '<tr>';
-                tableRow += '<td class="name">' + Name + '</td>';
-                tableRow += '<input type="hidden" value="' + Name + '" name="fullName[]"/>';
-                tableRow += '<td class="buildingname-td">' + ICNo + '</td>';
-                tableRow += '<input type="hidden" value="' + ICNo + '" name="IC_Number[]"/>';
-                tableRow += '<td class="name">' + EmailAdd + '</td>';
-                tableRow += '<input type="hidden" value="' + EmailAdd + '" name="EmailAddress[]"/>';
-                tableRow += '<td class="name">' + SelectedDay + '</td>';
-                tableRow += '<input type="hidden" value="' + SelectedDay + '" name="Day[]"/>';
-                tableRow += '<td>';
-                tableRow += '<button type="button" class="btn btn-primary edit-pono" data-toggle="modal" data-target="#exampleModal"> Edit </button>';
-                tableRow += '<button type="button" class="btn btn-primary delete-pono" style="margin-left:10px"> Delete </button>';
-                tableRow += '</td>';
-                tableRow += '</tr>';
-
-                // $("#booking-detail-Summary").slideDown();
-
-                if (Name !== '' && ICNo !== '' && EmailAdd !== '') {
-                    if (isEditActive.length > 0) {
-                        isEditActive.replaceWith(tableRow);
-                    } else {
-                        $('#booking-detail-Summary tbody').prepend(tableRow);
-                    }
-
-                    // $('.no-pono').hide();
-                }
-
-            } else {
-                e.stopPropagation();
+            if (prevDate === date && prevSlot !== shiftSlot) {
+                isExists.replaceWith(tableRow);
+            } else if (prevDate !== date) {
+                $('#booking-detail-Summary tbody').prepend(tableRow);
             }
+            prevDate = date;
+            prevSlot = shiftSlot;
+            $("#submitButton").prop('disabled', false);
+        }
 
+        $('#booking-detail-Summary').on('click', '.delete-shift', function() {
+            var trEle = $(this).parents('tr');
+            trEle.remove();
+            //   setTimeout(function() {
+            //     if ($('#booking-detail-Summary tbody tr').length === 1) {
+            //       $('.no-pono').show();
+            //     }
+            //   }, 100)
         });
 
+        $(document).on('click', '.freeslots', function() {
+            var limit = 1; //$('#SlotNos').val();
+            if (limit == '') {
+                $.gritter.add({
+                    title: 'Please choose Number of docs',
+                    time: 1000,
+                    class_name: "color danger"
+                });
+                return false;
+            }
+
+            if (limit == 1) {
+                $('.freeslots').not(this).prop('checked', false);
+                return true;
+            }
+        });
+
+        $('.submitButton').on('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $.ajax({
+                type: 'post',
+                url: '<?php echo base_url('Booking/Save/') ?>',
+                data: $('#booking-form').serialize(),
+                success: function(res) {
+                    console.log(res);
+                    window.location.reload();
+                }
+            });
+        });
     });
 </script>

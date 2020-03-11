@@ -131,32 +131,34 @@
                 </div>
             </div>
         </div>
-        <?php $this->load->view('template/footer'); ?>
-        <script src="<?php echo base_url(); ?>assets/lib/datatables/js/jquery.dataTables.min.js" type="text/javascript"></script>
-        <script src="<?php echo base_url('assets/js/datatable.js'); ?>" type="text/javascript"></script>
-        <script src="<?php echo base_url(); ?>assets/lib/datatables/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
-        <script src="<?php echo base_url(); ?>assets/lib/datatables/plugins/buttons/js/dataTables.buttons.js" type="text/javascript"></script>
+    </div>
+</div>
+<?php $this->load->view('template/footer'); ?>
+<script src="<?php echo base_url(); ?>assets/lib/datatables/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="<?php echo base_url('assets/js/datatable.js'); ?>" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/lib/datatables/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/lib/datatables/plugins/buttons/js/dataTables.buttons.js" type="text/javascript"></script>
 
-        <script type="text/javascript">
-            $(document).ready(function() {
+<script type="text/javascript">
+    $(document).ready(function() {
 
-                $("#table3").dataTable({
-                    buttons: ["copy",
-                        {
-                            extend: 'excel',
-                            className: 'btn btn-default',
-                            exportOptions: {
-                                columns: ['th:not(:last-child)']
-                            }
-                        }, "pdf"
-                    ],
-                    lengthMenu: [
-                        [10, 25, 50, -1],
-                        [6, 10, 25, 50, "All"]
-                    ],
-                    dom: "Bfrtip"
-                });
+        $("#table3").dataTable({
+            buttons: ["copy",
+                {
+                    extend: 'excel',
+                    className: 'btn btn-default',
+                    exportOptions: {
+                        columns: ['th:not(:last-child)']
+                    }
+                }, "pdf"
+            ],
+            lengthMenu: [
+                [10, 25, 50, -1],
+                [6, 10, 25, 50, "All"]
+            ],
+            dom: "Bfrtip"
+        });
 
-                $('.buttons-html5').addClass('btn btn-default');
-            });
-        </script>
+        $('.buttons-html5').addClass('btn btn-default');
+    });
+</script>

@@ -17,10 +17,13 @@
   <!-- Library -->
   <link href="<?= base_url() ?>assets/lib/datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
   <link href="<?= base_url() ?>assets/lib/datatables/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css" />
-  
+
   <!-- CSS Files -->
   <link href="<?= base_url() ?>assets/v2/css/argon-dashboard.css?v=1.1.0" rel="stylesheet" />
   <link href="<?= base_url() ?>assets/v2/css/custom.css" rel="stylesheet" />
+  <!-- Ag grid -->
+  <link rel="stylesheet" href="<?= base_url() ?>assets/css/ag-grid/ag-grid.css">
+  <link rel="stylesheet" href="<?= base_url() ?>assets/css/ag-grid/ag-theme-balham.css">
   <style>
     .ui-timepicker-container {
       z-index: 10000 !important;
@@ -116,11 +119,16 @@
           // $subs = array();
 
           // $subs[] = ['text' => "Today's Shift Details", "url" => base_url('Booking/Today'), 'icon' => 'fa fa-calendar', 'title' => "Today's Shift Details"];
-          
+
           // $subs[] = ['text' => 'Upcoming Shift Details', "url" => base_url('Booking/Upcoming'), 'icon' => 'fa fa-calendar', 'title' => 'Upcoming Shipments'];
 
-          $navigations[] = ['text' => 'Shift Booking Details', "url" => base_url('Booking'), 'icon' => 'fa fa-plus-square', 'title' => 'Booking details', 'color' => "#2dce89"];
-        } 
+          $navigations[] = ['text' => 'Booking Details', "url" => base_url('Booking'), 'icon' => 'fa fa-plus-square', 'title' => 'Booking details', 'color' => "#2dce89"];
+        }
+
+        if (in_array($role, [1])) {
+
+          $navigations[] = ['text' => 'Shift Details', "url" => base_url('Shifts'), 'icon' => 'fa fa-clock', 'title' => 'Shift details', 'color' => "#795548"];
+        }
 
         if (in_array($role, [1, 2])) {
           $subs = array();
@@ -141,6 +149,11 @@
           $navigations[] = ['text' => 'Airport Pass Details', "url" => base_url('AirportPass'), 'icon' => 'fa fa-user-friends', 'title' => 'Airport Pass Details', 'color' => "#fb6340", 'sub' => $subs];
         }
 
+        if (in_array($role, [1])) {
+
+          $navigations[] = ['text' => 'Projects List', "url" => base_url('Projects'), 'icon' => 'fa fa-building', 'title' => 'Project details', 'color' => "#019486"];
+        }
+
         // if (in_array($role, [1, 3])) {
         //   $subs = array();
         //   if ($role == 1) {
@@ -149,8 +162,11 @@
 
         //   $navigations[] = ['text' => 'My Suppliers', "url" => base_url('Supplier'), 'icon' => 'fa fa-users', 'title' => 'List of Users', 'color' => "#fb6340", 'sub' => $subs];
         // }
-        $navigations[] = ['text' => 'KPI Details', "url" => base_url(''), 'icon' => 'fa fa-list', 'title' => 'KPI Details', 'color' => "#5e72e4"];
+        if (in_array($role, [1])) {
 
+        $navigations[] = ['text' => 'KPI Details', "url" => base_url('KPI_Details'), 'icon' => 'fa fa-list', 'title' => 'KPI Details', 'color' => "#5e72e4"];
+        }
+        
         if (!in_array($role, array(5, 2, 6))) {
           $subs = array();
           if ($role == 1) {
