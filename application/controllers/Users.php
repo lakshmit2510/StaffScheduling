@@ -204,14 +204,14 @@ class Users extends CI_Controller
         }
         $data['url'] = base_url();
         $this->config_email();
-        $data['mail_title'] = 'Your Login Details - SATS Dock Management System';
-        $from_email = "support@satsez.com";
-        $this->email->from($from_email, 'Satsez.com');
+        $data['mail_title'] = 'Your Login Details - EZ Staff Scheduling System';
+        $from_email = "virgil@team-ez.com";
+        $this->email->from($from_email, '');
         $this->email->to($data['EmailAddress1']); #$Old->EmailAddress1;
         if (!empty($data['EmailAddress2'])) {
           $this->email->cc($data['EmailAddress2']);
         }
-        $this->email->subject('Thank you. Your Account is Created in SATS Dock Management System');
+        $this->email->subject('Thank you. Your Account is Created in EZ Staff Scheduling System');
         $mes_body = $this->load->view('email/user-template.php', $data, true); // load html templates
         $this->email->message($mes_body);
         $this->email->send();
@@ -241,20 +241,20 @@ class Users extends CI_Controller
       /*$data['Password'] = $this->input->post('Password');*/
       /*$data['VNo'] = $this->input->post('VNo');
      $data['VType'] = $this->input->post('VType');*/
-      $data['Supplier'] = $this->input->post('Supplier');
+      // $data['Supplier'] = $this->input->post('Supplier');
 
 
-      if ($this->session->userdata('Role') <> 2) {
-        $data['SupplierGroup'] = $this->input->post('SupplierGroup');
-        $data['SupplierGroup'] = $data['SupplierGroup'] == 0 ? NULL : $data['SupplierGroup'];
-      }
+      // if ($this->session->userdata('Role') <> 2) {
+      //   $data['SupplierGroup'] = $this->input->post('SupplierGroup');
+      //   $data['SupplierGroup'] = $data['SupplierGroup'] == 0 ? NULL : $data['SupplierGroup'];
+      // }
 
       if ($this->session->userdata('Role') == 2) {
         $data['Role'] = 4;
       } else {
         $data['Role'] = $this->input->post('Role');
       }
-      $data['UAN'] = $this->input->post('UAN');
+      // $data['UAN'] = $this->input->post('UAN');
       $store = $this->User_model->UpdateUser($data, $UserUID);
       if ($store == 1) {
         $this->session->set_flashdata('msg', $data['UserName'] . ' has been Updated Successfully');

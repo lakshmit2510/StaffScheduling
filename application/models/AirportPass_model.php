@@ -6,9 +6,9 @@ class AirportPass_model extends CI_Model
     public function getAll()
     {
         $this->db->select('*, users.FullName');
-        $this->db->join('users', 'users.UserUID = Airport_Pass_Details.AirportPassName', 'LEFT');
+        $this->db->join('users', 'users.UserUID = Airport_Pass_Details.UserID', 'LEFT');
         if (in_array($this->session->userdata('Role'), array(2))) {
-            $this->db->where('Airport_Pass_Details.AirportPassName', $this->session->userdata('UserUID'));
+            $this->db->where('Airport_Pass_Details.UserID', $this->session->userdata('UserUID'));
         }
         return $this->db->get('Airport_Pass_Details')->result();
     }

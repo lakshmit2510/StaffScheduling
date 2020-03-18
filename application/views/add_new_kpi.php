@@ -1,5 +1,11 @@
 <?php $this->load->view('template/header'); ?>
 
+<style>
+    .selection {
+        display: none;
+    }
+</style>
+
 <div class="mt-5"></div>
 <?php $this->load->view('template/card-head'); ?>
 <div class="be-content">
@@ -24,10 +30,10 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Employees</label>
+                                <label class="col-sm-3">Employees</label>
                                 <div class="col-sm-6">
-                                    <select class="form-control" id="Employees" required="true" name="Employees[]" miltiple >
-                                        <option value="">--- Choose Employees ----</option>
+                                    <select multiple class="form-control" id="Employees" data-parsley-trigger="keyup" required="true" name="Employees[]">
+                                        <!-- <option value="">--- Choose Employees ----</option> -->
                                         <?php
                                         foreach ($Users as $key => $value) {
                                             echo '<option value="' . $value->FullName . '">' . $value->FullName . '</option>';
@@ -98,9 +104,9 @@
                         $('.be-loading').addClass('be-loading-active');
                     });
 
-                    $('#Employees').multiSelect({
-                        noneText: '--- Choose Employee ---'
-                    });
+                    // $('#Employees').multiSelect({
+                    //     noneText: '--- Choose Employee ---'
+                    // });
 
                 });
             </script>

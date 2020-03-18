@@ -34,15 +34,20 @@ class Booking extends CI_Controller
   {
 
     $dateRange = explode('-', $this->input->get('dateRange'));
+    $shiftID = $this->input->get('shiftId');
     $fdate = date('Y-m-d', strtotime($dateRange[0]));
     $tdate = date('Y-m-d', strtotime($dateRange[1]));
-    $data['booking'] = $this->Booking_model->getBookingDetails($fdate, $tdate);
-    $this->getTableDetails($data['booking']);
+    $datesArr = $this->getDatesFromRange($fdate, $tdate);
+    // print_r($datesArr);
+    // exit;
+    // $data['booking'] = $this->Booking_model->getBookingDetails($fdate, $tdate);
+    // print_r($data['booking']);
+    // exit;
+    $this->getTableDetails($datesArr, $shiftID);
   }
 
-  public function getTableDetails($shifData)
+  public function getTableDetails($datesArr, $shiftID)
   {
-
     $columns = array(
       array(
         'headerName' => "Employee Name",
@@ -56,70 +61,91 @@ class Booking extends CI_Controller
       ),
     );
     $rows = [];
-    foreach ($shifData as $key => $value) {
+    $bottomRows = array(
+      array(
+        'employeeName' => 'Empployees Per Day',
+        'icNumber' => '',
+      ),
+      array(
+        'employeeName' => 'Required',
+        'icNumber' => '',
+      ),
+      array(
+        'employeeName' => 'Net',
+        'icNumber' => '',
+      )
+    );
+
+    foreach ($datesArr as $dateStr) {
+      $shifData = $this->Booking_model->getBookingDetails($dateStr, $shiftID);
+      $shiftDetails = $this->Shifts_model->getDataById($shiftID);
+
       $column = array(
-        'headerName' => $value->StartDate,
+        'headerName' => $dateStr,
+        'field' => $dateStr,
         'width' => 100,
-        'children' => array(array(
-          'headerName' => 'IN',
-          'field' => $value->StartDate . '_' . $value->ShiftStartTime,
-          'width' => 80
-        ), array(
-          'headerName' => 'OUT',
-          'field' => $value->StartDate . '_' . $value->ShiftEndTime,
-          'width' => 80
-        ))
+        'cellRenderer' => 'renderCellContent',
+        // 'children' => array(array(
+        //   'headerName' => 'IN',
+        //   'field' => $value->StartDate . '_' . $value->ShiftStartTime,
+        //   'width' => 80
+        // ), array(
+        //   'headerName' => 'OUT',
+        //   'field' => $value->StartDate . '_' . $value->ShiftEndTime,
+        //   'width' => 80
+        // ))
       );
-      if (isset($rows[$value->ICNumber])) {
-        $rows[$value->ICNumber][$value->StartDate . '_' . $value->ShiftStartTime] = $value->ShiftStartTime;
-        $rows[$value->ICNumber][$value->StartDate . '_' . $value->ShiftEndTime] = $value->ShiftEndTime;
-      } else {
-        $rows[$value->ICNumber] = array(
-          'employeeName' => $value->FullName,
-          'icNumber' => $value->ICNumber,
-          $value->StartDate . '_' . $value->ShiftStartTime => $value->ShiftStartTime,
-          $value->StartDate . '_' . $value->ShiftEndTime => $value->ShiftEndTime,
-        );
-      }
-
+      // print_r($shifData);
       array_push($columns, $column);
+      $bottomRows[0][$dateStr] = count($shifData);
+      $bottomRows[1][$dateStr] = $shiftDetails->AvailableBookings;
+      $bottomRows[2][$dateStr] = count($shifData) - $shiftDetails->AvailableBookings;
+      foreach ($shifData as $key => $value) {
+        if (isset($rows[$value->ICNumber])) {
+          $rows[$value->ICNumber][$value->StartDate] = 1;
+          // $rows[$value->ICNumber][$value->StartDate] = $value->ShiftEndTime;
+        } else {
+          $rows[$value->ICNumber] = array(
+            'employeeName' => $value->FullName,
+            'icNumber' => $value->ICNumber,
+            $value->StartDate => 1,
+            // $value->StartDate . '_' . $value->ShiftEndTime => $value->ShiftEndTime,
+          );
+        }
+      }
     }
-    echo json_encode(array('columns' => $columns, 'rows' => array_values($rows)));
+    echo json_encode(array('columns' => $columns, 'rows' => array_values($rows), 'bottomRows' => $bottomRows));
   }
 
-  function Add($Shift_Id)
-  {
-    if (!in_array($this->session->userdata('Role'), array(1, 2, 3))) {
-      redirect('Dashboard');
-      exit;
-    }
-    $data['Title'] = 'Add New Booking';
-    $data['Page'] = 'Add';
-    $data['Shift_Id'] = $Shift_Id;
-    $Role = 2;
-    // $data['Users'] = $this->User_model->GetUsers($Role);
-    $data['ICDetails'] = $this->IC_model->getAll();
-    $data['PassDetails'] = $this->AirportPass_model->getAll();
-    $data['shiftDetails'] = $this->Shifts_model->getDataById($Shift_Id);
-    $data['mode'] = $this->Common_model->getTableData('bookingmode', 'Active');
-    $data['Users'] = $this->Common_model->getTableData('users');
-    $data['company'] = $this->Common_model->getTableData('company', 'Active');
-    $this->load->view('add_booking', $data);
-  }
+  // function Add($Shift_Id)
+  // {
+  //   if (!in_array($this->session->userdata('Role'), array(1, 2, 3))) {
+  //     redirect('Dashboard');
+  //     exit;
+  //   }
+  //   $data['Title'] = 'Add New Booking';
+  //   $data['Page'] = 'Add';
+  //   $data['Shift_Id'] = $Shift_Id;
+  //   $Role = 2;
+  //   // $data['Users'] = $this->User_model->GetUsers($Role);
+  //   $data['ICDetails'] = $this->IC_model->getAll();
+  //   $data['PassDetails'] = $this->AirportPass_model->getAll();
+  //   $data['shiftDetails'] = $this->Shifts_model->getDataById($Shift_Id);
+  //   $data['mode'] = $this->Common_model->getTableData('bookingmode', 'Active');
+  //   $data['Users'] = $this->Common_model->getTableData('users');
+  //   $data['company'] = $this->Common_model->getTableData('company', 'Active');
+  //   $this->load->view('add_booking', $data);
+  // }
 
   function save()
   {
     $data['FullName'] = $this->input->post('FullName');
-    // $data['Emailaddress'] = $this->input->post('EmailAddress');
-    // $data['ShiftNumber'] = $this->input->post('Shift_Id');
     $data['IC_Number'] = $this->input->post('ICNumber');
     $data['UserID'] = $this->input->post('UserId');
     $data['Active'] = 1;
     $data['CreatedBy'] = $this->session->userdata('UserUID');
 
     $selectedDate = $this->input->post('Day');
-    // print_r($selectedDate);
-    // exit;
     $shifts = $this->input->post('shiftSlot');
     $bookingShiftId = $this->input->post('Shift_Id');
     $confirm_page_data = array();
@@ -127,9 +153,7 @@ class Booking extends CI_Controller
     foreach ($selectedDate as $key => $value) {
 
       $booked = $this->Booking_model->getMax();
-      $date = date('Y-m-d', strtotime(str_replace('/', '-', $value)));
-      // print_r($date);
-      // exit;
+      $date = date('Y-d-m', strtotime(str_replace('/', '-', $value)));
       $data['BookingRefNo'] = 'EZ' . date('Y') . str_pad($booked, 4, '0', STR_PAD_LEFT);
       $shiftTimings = explode('-', $shifts[$key]);
       $data['StartDate'] = $date;
@@ -210,18 +234,6 @@ class Booking extends CI_Controller
     redirect($_SERVER['HTTP_REFERER']);
   }
 
-  function Confirm($book = '')
-  {
-    if (empty($book)) {
-      redirect('Booking');
-      exit;
-    }
-    $data['Title'] = 'Booking';
-    $data['Page'] = 'Booking';
-    $data['RefNos'] = $book;
-    $this->load->view('booking_confirmed', $data);
-  }
-
   public function config_email()
   {
     $config = array(
@@ -239,16 +251,9 @@ class Booking extends CI_Controller
   {
 
     $Date = $this->input->post('selectedDate');
-
     $Date = date('Y-m-d', strtotime($Date));
-
     // if(!self::validateDate($Date)) { die(json_encode(['errors'=>1,'message'=>'Invalid Date'])); }
-
     $booked = $this->Booking_model->shiftDetailsOnDate($Date);
-
-    // print_r($booked);
-    // exit;
-
     echo json_encode($booked);
   }
 
@@ -256,5 +261,38 @@ class Booking extends CI_Controller
   {
     $d = DateTime::createFromFormat($format, $date);
     return $d && $d->format($format) === $date;
+  }
+  public function getDatesFromRange($start, $end, $format = 'Y-m-d')
+  {
+    $array = array();
+    $interval = new DateInterval('P1D');
+    $realEnd = new DateTime($end);
+    $realEnd->add($interval);
+    $period = new DatePeriod(new DateTime($start), $interval, $realEnd);
+    foreach ($period as $date) {
+      $array[] = $date->format($format);
+    }
+    return $array;
+  }
+
+  function getUserInfo()
+  {
+    $id = $this->input->post('EmployeeName');
+
+    // print_r($id);
+    // exit;
+
+    if (empty($id)) {
+      echo json_encode(array());
+      exit;
+    }
+    $info = $this->Common_model->getUserInfo($id);
+
+    if (!empty($info)) {
+      $data = json_encode($info);
+    } else {
+      $data = json_encode(array());
+    }
+    echo $data;
   }
 }

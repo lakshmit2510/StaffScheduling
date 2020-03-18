@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 $route['default_controller'] = 'Login';
 $route['default_controller'] = 'HomeScreen';
+$route['Login'] = 'Login';
 $route['Docks'] = 'Slots';
 $route['Docks/add'] = 'Slots/add';
 $route['Docks/addSlotsPost'] = 'Slots/addSlotsPost';

@@ -1,32 +1,30 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Common_model extends CI_Model 
+class Common_model extends CI_Model
 {
 
-    
-  function getTableData($table,$active='')
+
+  function getTableData($table, $active = '')
   {
-    if(!empty($active))
-    {
-      $this->db->where('Active',1);
+    if (!empty($active)) {
+      $this->db->where('Active', 1);
     }
-    $q = $this->db->get($table);  
-    if($q->num_rows()>0)
-    {
+    $q = $this->db->get($table);
+    if ($q->num_rows() > 0) {
       return $q->result();
     } else {
       return 0;
     }
   }
 
-  function getVehicleInfo($vno)
+  function getUserInfo($UserId)
   {
 
     $this->db->select('*');
-    $this->db->where('ID', $vno);
-    $this->db->join('vechicletype','vechicletype.TypeID = vehicle.VehicleTypeID','LEFT');
-    return $this->db->get('vehicle')->row();
+    $this->db->where('UserUID', $UserId);
+    $this->db->join('IC_Details', 'IC_Details.UserID = users.UserUID', 'LEFT');
+    return $this->db->get('users')->row();
   }
 
   function getMax($table)
@@ -43,5 +41,4 @@ class Common_model extends CI_Model
     $q = $this->db->get('status')->row();
     return $q->StatusName;
   }
-
 }

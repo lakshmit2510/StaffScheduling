@@ -23,7 +23,7 @@ class Booking_model extends CI_Model
   {
     $this->db->select('*');
     $this->db->from('booking');
-    $this->db->where ('BookingRefNo',$RefNo);
+    $this->db->where('BookingRefNo', $RefNo);
     $q = $this->db->get();
     if ($q->num_rows() > 0) {
       return $q->row();
@@ -56,15 +56,16 @@ class Booking_model extends CI_Model
     return $this->db->insert_id();
   }
 
-  function getBookingDetails($fdate, $tdate)
+  function getBookingDetails($dateStr,$shiftID)
   {
-    $this->db->select('users.FullName,IC_Details.ICNumber,booking.ShiftStartTime,booking.	ShiftEndTime,booking.StartDate');
+    $this->db->select('users.FullName,Shifts.AvailableBookings, IC_Details.ICNumber,booking.ShiftStartTime,booking.	ShiftEndTime,booking.StartDate');
     $this->db->from('booking');
     $this->db->join('users', 'users.UserUID = booking.UserID', 'LEFT');
+    $this->db->join('Shifts', 'Shifts.ShiftID = booking.ShiftNumber', 'LEFT');
     $this->db->join('IC_Details', 'IC_Details.ID = booking.IC_Number', 'LEFT');
-    $this->db->where('StartDate >=', $fdate);
-    $this->db->where('StartDate <=', $tdate);
-    $this->db->group_by('booking.StartDate');
+    $this->db->where('StartDate =', $dateStr);
+    $this->db->where('ShiftNumber', $shiftID);
+    $this->db->group_by('booking.UserID', 'booking.StartDate');
     $this->db->order_by('booking.StartDate');
 
     $q = $this->db->get();

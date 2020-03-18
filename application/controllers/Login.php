@@ -95,10 +95,10 @@ class Login extends CI_Controller
       $data['Password'] = md5($this->input->post('Password'));
       // $data['VNo'] = $this->input->post('VNo');
       // $data['VType'] = $this->input->post('VType');
-      $data['Supplier'] = $this->input->post('Supplier');
-      $data['UAN'] = $this->input->post('UAN');
+      // $data['Supplier'] = $this->input->post('Supplier');
+      // $data['UAN'] = $this->input->post('UAN');
       $data['Role'] = 2;
-      $data['UniqueID'] = 'SS0000'.$supplier;
+      // $data['UniqueID'] = 'SS0000'.$supplier;
       $auth['UserId'] = $data['UserName'];
       $auth['Password'] = $data['Password'];
       $store = $this->User_model->SaveUser($data);
@@ -110,7 +110,7 @@ class Login extends CI_Controller
         {
           $this->session->set_flashdata('msg',$data['Name'].' has been Create Error');
         } else {
-          $this->session->set_flashdata('msg','Email Already Exit. Try again!.');
+          $this->session->set_flashdata('msg','Kindly try with new E-mail address!.');
         }
         $this->session->set_flashdata('error',1);
         redirect(base_url('Login/Signup'));

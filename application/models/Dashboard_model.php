@@ -44,7 +44,7 @@ class Dashboard_model extends CI_Model
 		$this->db->select('*,users.FullName');
 		$this->db->where('UserUID', $UserUID);
 		$this->db->join('company', 'company.CompanyUID = users.CompanyUID', 'LEFT');
-		$this->db->join(' IC_Details', ' IC_Details.FullName = users.UserUID', 'LEFT');
+		$this->db->join(' IC_Details', ' IC_Details.UserID = users.UserUID', 'LEFT');
 		$q = $this->db->get('users');
 		if ($q->num_rows() > 0) {
 			return $q->row();
