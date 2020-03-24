@@ -12,7 +12,7 @@ class Users extends CI_Controller
     if (!$this->session->userdata('is_loggin')) {
       redirect(base_url('Login'));
     }
-    if (!in_array($this->session->userdata('Role'), array(1, 2))) {
+    if (!in_array($this->session->userdata('Role'), array(1, 2, 3))) {
       redirect(base_url());
     }
   }
@@ -31,7 +31,7 @@ class Users extends CI_Controller
   public function update()
   {
 
-    if (!in_array($this->session->userdata('Role'), array(1))) {
+    if (!in_array($this->session->userdata('Role'), array(1,3))) {
       redirect('Dashboard');
       exit;
     }
@@ -46,7 +46,7 @@ class Users extends CI_Controller
 
   function Add()
   {
-    if (!in_array($this->session->userdata('Role'), array(1))) {
+    if (!in_array($this->session->userdata('Role'), array(1,3))) {
       redirect('Dashboard');
       exit;
     }

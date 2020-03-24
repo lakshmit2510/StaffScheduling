@@ -36,8 +36,8 @@
                       <?php echo $Profile->UserName; ?>
                     </div>
                     <div class="form-group">
-                      <label class="col-sm-3 control-label"><b>ACRA / UN Reg.No</b></label>
-                      <?php echo $Profile->UAN; ?>
+                      <label class="col-sm-3 control-label"><b>Email Address</b></label>
+                      <?php echo $Profile->EmailAddress1; ?>
                     </div>
                   
               </div>

@@ -10,8 +10,8 @@ class KPI_Details extends CI_Controller
     if (!$this->session->userdata('is_loggin')) {
       redirect(base_url('Login'));
     }
-    if (!in_array($this->session->userdata('Role'), array(1, 2))) {
-      redirect('Dashboard');
+    if (!in_array($this->session->userdata('Role'), array(1, 2, 3))) {
+      redirect(base_url());
       exit;
     }
     $this->load->model('KPI_model');

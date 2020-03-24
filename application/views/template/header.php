@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <!-- <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/img/logo-fav.png"> -->
+  <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/img/download.png">
   <title><?php echo $Title; ?> | Staff Scheduling System</title>
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
@@ -66,7 +66,7 @@
             <div class=" dropdown-header noti-title">
               <h6 class="text-overflow m-0">Welcome!</h6>
             </div>
-            <a href="<?= base_url() ?>" class="dropdown-item">
+            <a href="<?= base_url('Dashboard/Profile') ?>" class="dropdown-item">
               <i class="ni ni-single-02"></i>
               <span>My profile</span>
             </a>
@@ -112,9 +112,9 @@
         <!-- Navigation -->
         <?php
         $role = $this->session->userdata('Role');
-
-        $navigations[] = ['text' => 'Dashboard', "url" => base_url('Dashboard'), 'icon' => 'ni ni-tv-2', 'title' => 'Dashboard', 'color' => "#5e72e4"];
-
+        if (in_array($role, [1,2])) {
+          $navigations[] = ['text' => 'Dashboard', "url" => base_url('Dashboard'), 'icon' => 'ni ni-tv-2', 'title' => 'Dashboard', 'color' => "#5e72e4"];
+        }
         if (in_array($role, [1])) {
           // $subs = array();
 
@@ -162,12 +162,17 @@
 
         //   $navigations[] = ['text' => 'My Suppliers', "url" => base_url('Supplier'), 'icon' => 'fa fa-users', 'title' => 'List of Users', 'color' => "#fb6340", 'sub' => $subs];
         // }
-        if (in_array($role, [1])) {
+        if (in_array($role, [1, 3])) {
 
-        $navigations[] = ['text' => 'KPI Details', "url" => base_url('KPI_Details'), 'icon' => 'fa fa-list', 'title' => 'KPI Details', 'color' => "#5e72e4"];
+          $navigations[] = ['text' => 'KPI Details', "url" => base_url('KPI_Details'), 'icon' => 'fa fa-list', 'title' => 'KPI Details', 'color' => "#5e72e4"];
         }
-        
-        if (!in_array($role, array(5, 2, 6))) {
+
+        if (in_array($role, [3])) {
+
+          $navigations[] = ['text' => 'Update Staff Details', "url" => base_url('Users/Update'), 'icon' => 'fa fa-building', 'title' => 'Staff Details', 'color' => "#019486"];
+        }
+
+        if (!in_array($role, array(2, 3))) {
           $subs = array();
           if ($role == 1) {
             $subs[] = ['text' => 'Update Company Details', "url" => base_url('Company'), 'icon' => 'fa fa-building', 'title' => 'Company'];
@@ -259,13 +264,13 @@
               <div class=" dropdown-header noti-title">
                 <h6 class="text-overflow m-0">Welcome!</h6>
               </div>
-              <a href="<?= base_url() ?>" class="dropdown-item">
+              <a href="<?= base_url('Dashboard/Profile') ?>" class="dropdown-item">
                 <i class="ni ni-single-02"></i>
                 <span>My profile</span>
               </a>
-              <a href="<?= base_url() ?>" class="dropdown-item">
-                <i class="ni ni-settings-gear-65"></i>
-                <span>Settings</span>
+              <a href="<?=base_url('Users/Changepassword')?>" class="dropdown-item">
+                <i class="ni ni-key-25"></i>
+                <span>Change Password</span>
               </a>
               <div class="dropdown-divider"></div>
               <a href="<?= base_url('Login/logout') ?>" class="dropdown-item">

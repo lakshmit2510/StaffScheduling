@@ -18,7 +18,7 @@ class Dashboard extends CI_Controller
 
   public function index()
   {
-    $data['Title'] = 'Dashboard';
+    $data['Title'] = 'Add Booking';
     $data['Page'] = 'active';
     $Role = 2;
     $UserUID = $this->session->userdata('UserUID');

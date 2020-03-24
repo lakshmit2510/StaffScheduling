@@ -40,7 +40,7 @@ class User_model extends CI_Model
     $this->db->where('IsApproved', 1);
     $this->db->select('*, users.FullName, IC_Details.	ICNumber');
     $this->db->join('company', 'company.CompanyUID = users.CompanyUID', 'LEFT');
-    $this->db->join('IC_Details', 'IC_Details.FullName = users.UserUID', 'LEFT');
+    $this->db->join('IC_Details', 'IC_Details.UserID = users.UserUID', 'LEFT');
     $q = $this->db->get('users');
     if ($q->num_rows() > 0) {
       return $q->result();

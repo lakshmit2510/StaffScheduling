@@ -18442,7 +18442,7 @@ textarea[resize="horizontal"] {
 
 p {
   font-size: 1rem;
-  font-weight: 300;
+  /* font-weight: 300; */
   line-height: 1.7;
 }
 

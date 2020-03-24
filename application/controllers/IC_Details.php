@@ -1,5 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
 class IC_Details extends CI_Controller
 {
@@ -10,7 +13,7 @@ class IC_Details extends CI_Controller
     if (!$this->session->userdata('is_loggin')) {
       redirect(base_url('Login'));
     }
-    if (!in_array($this->session->userdata('Role'), array(1, 2, 3, 4))) {
+    if (!in_array($this->session->userdata('Role'), array(1, 2))) {
       redirect('Dashboard');
       exit;
     }
@@ -45,11 +48,9 @@ class IC_Details extends CI_Controller
   public function addICDetailsPost()
   {
     $fileUploaded = $this->upload_IC('IC_Documents', false, 'upload_file');
-    // print_r($fileUploaded);
-    // exit;
     $data['ICNumber'] = $this->input->post('ICNumber');
     $data['ICTypeID'] = $this->input->post('Type');
-    $data['FullName'] = $this->input->post('ICName');
+    $data['UserID'] = $this->input->post('ICName');
     $data['DateOfBirth'] = $this->input->post('DOB');
     $data['CountryOfBirth'] = $this->input->post('Nationality');
     $data['DateOfIssue'] = $this->input->post('DateofIssue');
@@ -57,8 +58,6 @@ class IC_Details extends CI_Controller
     $data['Race'] = $this->input->post('race');
     $data['AttachedFiles'] = $fileUploaded['file_path'];
     $data['CreatedBy'] = $this->session->userdata('UserUID');
-    // print_r($data);
-    // exit;
     $this->IC_model->insert($data);
     $this->session->set_flashdata('done', 'IC details added Successfully');
     redirect(base_url('IC_Details/update'));
@@ -83,7 +82,7 @@ class IC_Details extends CI_Controller
     $IC_Details = $this->IC_model->getDataById($IC_id);
     $data['ICNumber'] = $this->input->post('ICNo');
     $data['ICTypeID'] = $this->input->post('Type');
-    $data['FullName'] = $this->input->post('fullname');
+    $data['UserID'] = $this->input->post('fullname');
     $data['DateOfBirth'] = $this->input->post('DOB');
     $data['CountryOfBirth'] = $this->input->post('Nationality');
     $data['DateOfIssue'] = $this->input->post('DateofIssue');
@@ -139,11 +138,14 @@ class IC_Details extends CI_Controller
     $filePath = $this->input->get('filePath');
     $root_folder = $this->config->item('upload_file_path');
     $fullFilePath = $root_folder . $filePath;
-    $data = file_get_contents($fullFilePath); // Read the file's contents
-    $name = explode('/', $filePath);
-    print_r($data);
-    exit;
-    force_download($name[count($name) - 1], $data);
+
+    if (file_exists($fullFilePath)) {
+      $data = file_get_contents($fullFilePath); // Read the file's contents
+      $name = explode('/', $filePath);
+      force_download($name[count($name) - 1], $data);
+    } else {
+      echo 'file does not exist';
+    }
     exit;
   }
 }

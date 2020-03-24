@@ -38,6 +38,13 @@
 
 
     <style type="text/css">
+        p {
+            font-size: 1rem;
+            /* font-weight: 10; */
+            padding: 15px 15px 15px 15px;
+            line-height: 1.7;
+        }
+
         #sandbox-container .datepicker-inline,
         #sandbox-container .table-condensed {
             width: 100%;
@@ -98,8 +105,6 @@
             top: 35%;
             z-index: 1;
             width: 100%;
-            /* color: #fff; */
-            /* text-align: center; */
         }
 
         .footer-top {
@@ -134,6 +139,32 @@
 
         ul.footer-social li a.fb {
             background: #4267B2 none repeat scroll 0 0;
+        }
+
+        .card {
+            padding-bottom: 16px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .card-header-styles {
+            margin-bottom: 14%;
+            border-bottom: 1px solid rgb(221, 221, 221);
+        }
+
+        .columns_wrap {
+            position: relative;
+            z-index: 2;
+        }
+
+        .column_styles {
+            background-color: rgb(255, 255, 255);
+            display: flex;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgb(221, 221, 221);
+            border-image: initial;
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -205,7 +236,7 @@
                         <div class="tp-bannertimer tp-bottom"></div>
                     </div>
                 </div>
-                <div class="banner-text">
+                <!-- <div class="banner-text">
                     <div class="banner-title" style="text-align: center">
                         <h1>Welcome to</h1>
                         <h2>Staff Sheduling System</h2>
@@ -239,7 +270,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </section>
             <div class="page_content_wrap page_paddings_no">
                 <div class="content_wrap">
@@ -276,81 +307,75 @@
                                     </div>
                                 </div>
                                 <div class="vc_row-full-width"></div>
-                                <!-- <div class="vc_row wpb_row vc_row-fluid">
+                                <div class="vc_row wpb_row vc_row-fluid">
                                     <div class="wpb_column vc_column_container vc_col-sm-12">
                                         <div class="vc_column-inner vc_custom_1475066123130">
                                             <div class="wpb_wrapper">
                                                 <div id="sc_services_918_wrap" class="sc_services_wrap">
                                                     <div id="sc_services_918" class="sc_services sc_services_style_services-1 sc_services_type_images  margin_top_large margin_bottom_large fwidth" data-animation="animated fadeInUp normal">
-                                                        <div class="sc_columns columns_wrap">
+                                                        <div class="sc_columns columns_wrap ">
                                                             <div class="column-1_3 column_padding_bottom">
-                                                                <div id="sc_services_918_1" class="sc_services_item sc_services_item_1 odd first">
-                                                                    <div class="sc_services_item_featured post_featured">
-                                                                        <div class="post_thumb" data-image="" data-title="Our Dairy Farm">
-                                                                            <a class="hover_icon hover_icon_link" href="#">
-                                                                                <img alt="" src="assets/images/service3-370x300.jpg">
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
+                                                                <div id="sc_services_918_1" class="sc_services_item column_styles sc_services_item_1 odd first">
                                                                     <div class="sc_services_item_content">
-                                                                        <h4 class="sc_services_item_title">
-                                                                            <a href="#">Our Dairy Farm</a>
-                                                                        </h4>
-                                                                        <div class="sc_services_item_description">
-                                                                            <div class="wpb_text_column wpb_content_element ">
-                                                                                <div class="wpb_wrapper">
-                                                                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta.</p>
+                                                                        <div style="margin: 7% auto;">
+                                                                            <div class="card-header-styles">
+                                                                                <h4 class="sc_services_item_title" style="padding-bottom: 16px;">EMPLOYEE SCHEDULING SOFTWARE</h4>
+                                                                            </div>
+                                                                            <div class="sc_services_item_description">
+                                                                                <div class="wpb_text_column wpb_content_element ">
+                                                                                    <div class="wpb_wrapper">
+                                                                                        <div class="product-info-box__SliderImageWrapper-sc-19uwn34-4 bGKJhT">
+                                                                                            <img src="assets/img/schedule.svg" alt="calendar" class="product-info-box__SliderImage-sc-19uwn34-5 bHcjhX" style="padding-bottom: 25px;">
+                                                                                        </div>
+                                                                                        <h3>Schedule Faster</h3>
+                                                                                        <p>Built for professional usage with working time rules, shift patterns & blazing-fast calendar views.</p>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <a href="#" class="sc_button sc_button_square sc_button_style_filled sc_button_size_small">discover history</a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="column-1_3 column_padding_bottom">
-                                                                <div id="sc_services_918_2" class="sc_services_item sc_services_item_2 even">
-                                                                    <div class="sc_services_item_featured post_featured">
-                                                                        <div class="post_thumb" data-image="" data-title="Meet Our Cows">
-                                                                            <a class="hover_icon hover_icon_link" href="#">
-                                                                                <img alt="" src="assets/images/service2-370x300.jpg">
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
+                                                                <div id="sc_services_918_1" class="sc_services_item column_styles sc_services_item_1 odd first">
                                                                     <div class="sc_services_item_content">
-                                                                        <h4 class="sc_services_item_title">
-                                                                            <a href="#">Meet Our Cows</a>
-                                                                        </h4>
-                                                                        <div class="sc_services_item_description">
-                                                                            <div class="wpb_text_column wpb_content_element ">
-                                                                                <div class="wpb_wrapper">
-                                                                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta.</p>
+                                                                        <div style="margin: 7% auto;">
+                                                                            <div class="card-header-styles">
+                                                                                <h4 class="sc_services_item_title" style="padding-bottom: 16px;">EMPLOYEE TIME TRACKING</h4>
+                                                                            </div>
+                                                                            <div class="sc_services_item_description">
+                                                                                <div class="wpb_text_column wpb_content_element ">
+                                                                                    <div class="wpb_wrapper">
+                                                                                        <div class="product-info-box__SliderImageWrapper-sc-19uwn34-4 bGKJhT">
+                                                                                            <img src="assets/img/timeclock.svg" alt="calendar" class="product-info-box__SliderImage-sc-19uwn34-5 bHcjhX" style="padding-bottom: 25px;">
+                                                                                        </div>
+                                                                                        <h3>Track Time Easier</h3>
+                                                                                        <p>Integrate your schedule with the time clock and reduce labor costs.</p>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <a href="#" class="sc_button sc_button_square sc_button_style_filled sc_button_size_small">view cows</a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="column-1_3 column_padding_bottom">
-                                                                <div id="sc_services_918_3" class="sc_services_item sc_services_item_3 odd">
-                                                                    <div class="sc_services_item_featured post_featured">
-                                                                        <div class="post_thumb" data-image="" data-title="Our Organic Food">
-                                                                            <a class="hover_icon hover_icon_link" href="#">
-                                                                                <img alt="" src="assets/images/service1-370x300.jpg">
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
+                                                                <div id="sc_services_918_1" class="sc_services_item column_styles sc_services_item_1 odd first">
                                                                     <div class="sc_services_item_content">
-                                                                        <h4 class="sc_services_item_title">
-                                                                            <a href="#">Our Organic Food</a>
-                                                                        </h4>
-                                                                        <div class="sc_services_item_description">
-                                                                            <div class="wpb_text_column wpb_content_element ">
-                                                                                <div class="wpb_wrapper">
-                                                                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent vestibulum molestie lacus. Aenean nonummy hendrerit mauris. Phasellus porta.</p>
+                                                                        <div style="margin: 7% auto;">
+                                                                            <div class="card-header-styles">
+                                                                                <h4 class="sc_services_item_title" style="padding-bottom: 16px;">APPLICANT TRACKING SOFTWARE</h4>
+                                                                            </div>
+                                                                            <div class="sc_services_item_description">
+                                                                                <div class="wpb_text_column wpb_content_element ">
+                                                                                    <div class="wpb_wrapper">
+                                                                                        <div class="product-info-box__SliderImageWrapper-sc-19uwn34-4 bGKJhT">
+                                                                                            <img src="assets/img/Hire-Graphic.svg" alt="calendar" class="product-info-box__SliderImage-sc-19uwn34-5 bHcjhX" style="padding-bottom: 25px;">
+                                                                                        </div>
+                                                                                        <h3>Hire Better</h3>
+                                                                                        <p>Post jobs, track applicants, and hire better candidates faster.</p>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <a href="#" class="sc_button sc_button_square sc_button_style_filled sc_button_size_small">shop now</a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -361,7 +386,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div> -->
+                                </div>
                                 <div class="vc_row wpb_row vc_row-fluid">
                                     <div class="wpb_column vc_column_container vc_col-sm-12">
                                         <div class="vc_column-inner ">
@@ -425,54 +450,54 @@
                                                                 </div>
                                                             </div>
                                                         </div> -->
-                                                        <!-- <div class="sc_section_button sc_item_button">
+                                                    <!-- <div class="sc_section_button sc_item_button">
                                                             <a href="#" class="sc_button sc_button_square sc_button_style_filled sc_button_size_large">view all products</a>
                                                         </div> -->
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div data-vc-full-width="true" data-vc-full-width-init="false" class="vc_row wpb_row vc_row-fluid vc_custom_1475048754773 inverse_colors">
-                                    <div class="wpb_column vc_column_container vc_col-sm-1">
-                                        <div class="vc_column-inner ">
-                                            <div class="wpb_wrapper"></div>
-                                        </div>
-                                    </div>
-                                    <div class="wpb_column vc_column_container vc_col-sm-4">
-                                        <div class="vc_column-inner vc_custom_1475049444491">
-                                            <div class="wpb_wrapper">
-                                                <figure class="sc_image sc_image_shape_square margin_top_huge" data-animation="animated fadeInLeft normal">
-                                                    <img src="assets/images/image1_1.webp" alt="" />
-                                                </figure>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="wpb_column vc_column_container vc_col-sm-1">
-                                        <div class="vc_column-inner ">
-                                            <div class="wpb_wrapper"></div>
-                                        </div>
-                                    </div>
-                                    <div class="wpb_column vc_column_container vc_col-sm-6">
-                                        <div class="vc_column-inner vc_custom_1475049863739">
-                                            <div class="wpb_wrapper">
-                                                <div class="sc_section sc_section_block " data-animation="animated fadeInRight normal">
-                                                    <div class="sc_section_inner">
-                                                        <div class="sc_section_content_wrap"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                        </article>
-                        <section class="related_wrap related_wrap_empty"></section>
                     </div>
+                    <div data-vc-full-width="true" data-vc-full-width-init="false" class="vc_row wpb_row vc_row-fluid vc_custom_1475048754773 inverse_colors">
+                        <div class="wpb_column vc_column_container vc_col-sm-1">
+                            <div class="vc_column-inner ">
+                                <div class="wpb_wrapper"></div>
+                            </div>
+                        </div>
+                        <div class="wpb_column vc_column_container vc_col-sm-4">
+                            <div class="vc_column-inner vc_custom_1475049444491">
+                                <div class="wpb_wrapper">
+                                    <figure class="sc_image sc_image_shape_square margin_top_huge" data-animation="animated fadeInLeft normal">
+                                        <img src="assets/images/image1_1.webp" alt="" />
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wpb_column vc_column_container vc_col-sm-1">
+                            <div class="vc_column-inner ">
+                                <div class="wpb_wrapper"></div>
+                            </div>
+                        </div>
+                        <div class="wpb_column vc_column_container vc_col-sm-6">
+                            <div class="vc_column-inner vc_custom_1475049863739">
+                                <div class="wpb_wrapper">
+                                    <div class="sc_section sc_section_block " data-animation="animated fadeInRight normal">
+                                        <div class="sc_section_inner">
+                                            <div class="sc_section_content_wrap"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </section>
+                    </article>
+                    <section class="related_wrap related_wrap_empty"></section>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <footer class="jobguru-footer-area" id="footer">
         <div class="footer-top section_50">
@@ -486,25 +511,14 @@
                                 </a>
                             </div>
                             <p>Elizabeth-Zion Asia Pacific Pte Ltd providing various services across different industries with trending technologies.</p>
-                            <ul class="footer-social">
+                            <!-- <ul class="footer-social">
                                 <li><a href="#" class="fb"><i class="fa fa-facebook"></i></a></li>
                                 <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a></li>
                                 <li><a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a></li>
                                 <li><a href="#" class="gp"><i class="fa fa-google-plus"></i></a></li>
-                            </ul>
+                            </ul> -->
                         </div>
                     </div>
-                    <!-- <div class="col-lg-4 col-md-6">
-                        <div class="single-footer-widget">
-                            <h3>Quick links</h3>
-                            <ul>
-                                <li><a href="http://jobportal.ezdockbooking.com"><i class="fa fa-angle-double-right "></i> Home</a></li>
-                                <li><a href="http://jobportal.ezdockbooking.com/about-us"><i class="fa fa-angle-double-right "></i> About Us</a></li>
-                                <li><a href="http://jobportal.ezdockbooking.com/register"><i class="fa fa-angle-double-right "></i> Sign Up </a></li>
-                                <li><a href="http://jobportal.ezdockbooking.com/login"><i class="fa fa-angle-double-right "></i> login</a></li>
-                            </ul>
-                        </div>
-                    </div> -->
                     <div class="col-lg-6 col-md-12">
                         <div class="single-footer-widget footer-contact">
                             <h3 style="color: #f7f7f7;">Contact Info</h3>

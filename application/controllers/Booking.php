@@ -153,7 +153,8 @@ class Booking extends CI_Controller
     foreach ($selectedDate as $key => $value) {
 
       $booked = $this->Booking_model->getMax();
-      $date = date('Y-d-m', strtotime(str_replace('/', '-', $value)));
+      $date = date('Y-m-d', strtotime($value));
+
       $data['BookingRefNo'] = 'EZ' . date('Y') . str_pad($booked, 4, '0', STR_PAD_LEFT);
       $shiftTimings = explode('-', $shifts[$key]);
       $data['StartDate'] = $date;
@@ -164,9 +165,10 @@ class Booking extends CI_Controller
       if (!empty($store)) {
         array_push($confirm_page_data, $data['BookingRefNo']);
       }
+      $this->session->set_flashdata('done', 'Booking details added Successfully');
+      redirect(base_url('Dashboard'));
     }
-    $this->session->set_flashdata('done', 'Booking details added Successfully');
-    redirect(base_url('Dashboard'));
+    
   }
 
   public function SendEmail()
@@ -187,9 +189,9 @@ class Booking extends CI_Controller
 
     $this->email->from('lakshmi.t2510@gmail.com', 'Test email');
     $this->email->to('lakshmi.t2510@gmail.com');
-
     $this->email->set_newline("\r\n");
-    $this->email->subject('Email Test');
+    $this->email->subject('Thank you. Your Booking Details - EZ Staff Scheduling System');
+    // $mes_body = $this->load->view('email/email-template.php', $data, true);
     $this->email->message('Testing the email class.');
 
     if ($this->email->send()) {
@@ -197,29 +199,6 @@ class Booking extends CI_Controller
     } else {
       show_error($this->email->print_debugger());
     }
-  }
-
-  public function editBooking($Booking_id)
-  {
-    $data['Title'] = 'Edit Booking Details';
-    $data['Page'] = 'Booking';
-    $data['Booking_id'] = $Booking_id;
-    $data['vnumber'] = $this->Common_model->getVehcileNo();
-    $data['booking'] = $this->Booking_model->getBookingDetailID($Booking_id);
-    $this->load->view('edit_booking', $data);
-  }
-
-  public function editBookingPost($id)
-  {
-    if (empty($id)) {
-      redirect($_SERVER['HTTP_REFERER']);
-    };
-    $data['VType'] = $this->input->post('VType');
-    $data['VNo'] = $this->input->post('VNumber');
-    $data['DriverName'] = $this->input->post('Driver');
-    $this->Booking_model->updateBooking($data, $id);
-    $this->session->set_flashdata('done', 'Booking has been Updated Successfully');
-    redirect(base_url('Booking'));
   }
 
   function cancel($id)

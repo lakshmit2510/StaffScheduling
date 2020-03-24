@@ -42,7 +42,7 @@ class AirportPass extends CI_Controller
   {
     $fileUploaded = $this->upload_IC('AirportPass_Doc', false, 'upload_file');
     $data['PassNumber'] = $this->input->post('PassNumber');
-    $data['AirportPassName'] = $this->input->post('PassName');
+    $data['UserID'] = $this->input->post('PassName');
     $data['DateOfExpiry'] = $this->input->post('DOE');
     $data['AccessControlAreas'] = implode( ",", $this->input->post('AccessAreas[]') );
     $data['Attachments'] = $fileUploaded['file_path'];
@@ -68,7 +68,7 @@ class AirportPass extends CI_Controller
     $pass_id = $this->input->post('ID');
     $airportpass = $this->AirportPass_model->getDataById($pass_id);
     $data['PassNumber'] = $this->input->post('PassNumber');
-    $data['AirportPassName'] = $this->input->post('PassName');
+    $data['UserID'] = $this->input->post('PassName');
     $data['DateOfExpiry'] = $this->input->post('DOE');
     $edit = $this->AirportPass_model->update($pass_id, $data);
     if ($edit) {

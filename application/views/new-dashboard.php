@@ -110,10 +110,20 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
     <div class="main-content container-fluid">
         <div class="row wizard-row">
             <div class="col-md-12 fuelux">
+                <h1 class="panel-heading panel-heading-divider my-3"><?= $Title ?> </h1>
+                <hr />
+                <?php if ($this->session->flashdata('done')) { ?>
+                    <div role="alert" class="alert alert-success alert-icon alert-icon-border alert-dismissible">
+                        <div class="icon"><span class="mdi mdi-check"></span></div>
+                        <div class="message">
+                            <button type="button" data-dismiss="alert" aria-label="Close" class="close"><span aria-hidden="true" class="mdi mdi-close"></span></button><strong>Success!</strong> <?php echo $this->session->flashdata('done'); ?>.
+                        </div>
+                    </div>
+                <?php } ?>
                 <?php if ($this->session->flashdata('type') == 'done') { ?>
                     <div role="alert" class="alert alert-success alert-dismissible">
                         <div class="message">
-                            <button type="button" data-dismiss="alert" aria-label="Close" class="close"><span aria-hidden="true" class="mdi mdi-close"></span></button><strong>Success!</strong> <?php echo $this->session->flashdata('msg'); ?>.
+                            <button type="button" data-dismiss="alert" aria-label="Close" class="close"><span aria-hidden="true" class="mdi mdi-close"></span></button><strong>Success!</strong> <?php echo $this->session->flashdata('done'); ?>.
                         </div>
                     </div>
                 <?php } else if ($this->session->flashdata('type') == 'error') { ?>
@@ -123,6 +133,10 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
                         </div>
                     </div>
                 <?php } ?>
+
+                <h4 class="text-primary font-weight-300 mb-4">
+                    <i class="fa fa-info-circle"></i> Inorder to make bookings, Please Check <b>IC Details and Airport Pass Details </b> updated or not.
+                </h4>
                 <h3 class="panel-heading panel-heading-divider my-3">Please Select Date to Create Booking </h3>
 
                 <!-- calender  -->
