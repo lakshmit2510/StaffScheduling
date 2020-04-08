@@ -43,7 +43,7 @@ class KPI_Details extends CI_Controller
 
   public function addKPIDetailsPost()
   {
-    $fileUploaded = $this->upload_IC('KPI_Documents', false, 'upload_file');
+    $fileUploaded = $this->upload_KPI('KPI_Documents', false, 'upload_file');
     $data['FlightNumber'] = $this->input->post('FlightNumber');
     $data['EmployeeID'] = implode(',', $this->input->post('Employees[]'));
     $data['Weight'] = $this->input->post('Weight');
@@ -96,8 +96,11 @@ class KPI_Details extends CI_Controller
   //     redirect(base_url('IC_Details/update'));
   // }
 
-  public function upload_IC($sub_folder, $extensions, $name)
+  public function upload_KPI($sub_folder, $extensions, $name)
   {
+    print_r($name);
+    exit;
+    
     $uploadData = array();
     if (!empty($_FILES[$name]['name'])) {
       $filesCount = count($_FILES[$name]);
@@ -133,8 +136,6 @@ class KPI_Details extends CI_Controller
     $fullFilePath = $root_folder . $filePath;
     $data = file_get_contents($fullFilePath); // Read the file's contents
     $name = explode('/', $filePath);
-    print_r($data);
-    exit;
     force_download($name[count($name) - 1], $data);
     exit;
   }

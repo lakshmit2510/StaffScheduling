@@ -16,6 +16,7 @@ class Shifts extends CI_Controller
     }
     $this->load->model('Shifts_model');
     $this->load->model('Dashboard_model');
+    $this->load->model('Projects_model');
   }
 
   public function index()
@@ -23,6 +24,7 @@ class Shifts extends CI_Controller
     $data['Title'] = 'Shift Details';
     $data['Page'] = 'Shifts';
     $data['Shifts'] = $this->Shifts_model->getAll();
+    $data['Projects'] = $this->Projects_model->getAll();
     $this->load->view('shift_details', $data);
   }
 
@@ -31,14 +33,15 @@ class Shifts extends CI_Controller
     $data['AvailableBookings'] = $this->input->post('Bookingscount');
     $data['StartTime'] = $this->input->post('StartTime');
     $data['EndTime'] = $this->input->post('Endtime');
+    $data['ProjectID'] = $this->input->post('ProjectID');
     $data['Active'] = 1;
     $data['CreatedBy'] = $this->session->userdata('UserUID');
     $bookingCreated = $this->Shifts_model->insert($data);
     if ($bookingCreated) {
-      $msg = array('success' => 200, 'Msg' => 'Booking created successfully.');
+      $msg = array('success' => 200, 'Msg' => 'New Shift created successfully.');
       echo json_encode($msg);
     } else {
-      $msg = array('error' => 100, 'Msg' => 'Error while creating the Booking.');
+      $msg = array('error' => 100, 'Msg' => 'Error while creating the Shift.');
       echo json_encode($msg);
     }
   }

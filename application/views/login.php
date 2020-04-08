@@ -19,7 +19,20 @@
     img {
 
       width: 100px;
-      height: 100px important;
+      height: 100px !important;
+    }
+
+    @media only screen and (max-width: 600px) {
+      .navbar-top .navbar-brand {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .navbar-top .text-white {
+        font-size: 12px !important;
+
+      }
+
     }
   </style>
 </head>
@@ -76,7 +89,7 @@
       <div class="container">
         <div class="header-body text-center mb-5">
           <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-6">
+            <div class="col-lg-5 col-md-6" style="padding-top: 60px;">
               <h1 class="text-white">Welcome to Staff Scheduling System!</h1>
             </div>
           </div>

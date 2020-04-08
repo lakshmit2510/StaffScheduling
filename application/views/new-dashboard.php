@@ -7,7 +7,7 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
     .booking {
         position: relative;
         /* background-color: lightblue; */
-        width: 100%;
+        /* width: 100%; */
         margin-top: 100px;
     }
 
@@ -15,6 +15,14 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
         .col-xl-3 {
             flex: 0 0 25%;
             max-width: 21%;
+        }
+    }
+
+    @media only screen and (max-width: 600px) {
+        .docklegend {
+            display: inline-block;
+            width: 100% !important;
+            float: none !important;
         }
     }
 
@@ -135,7 +143,7 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
                 <?php } ?>
 
                 <h4 class="text-primary font-weight-300 mb-4">
-                    <i class="fa fa-info-circle"></i> Inorder to make bookings, Please Check <b>IC Details and Airport Pass Details </b> updated or not.
+                    <i class="fa fa-info-circle"></i> Inorder to make bookings, Please Check <b>NRIC Details and Airport Pass Details </b> updated or not.
                 </h4>
                 <h3 class="panel-heading panel-heading-divider my-3">Please Select Date to Create Booking </h3>
 
@@ -146,10 +154,10 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
 
                 <form action="<?= base_url('Booking/Save') ?>" class="form-horizontal" method="post" enctype="multipart/form-data" id="booking-form">
 
-                    <input type="hidden" name="FullName" value="<?php echo $UserData->FullName ?>">
-                    <input type="hidden" name="UserId" value="<?php echo $UserData->UserUID ?>">
-                    <input type="hidden" name="ICNumber" value="<?php echo $UserData->ID ?>">
-                    <input type="hidden" name="EmailAddress" value="<?php echo $UserData->EmailAddress1 ?>">
+                    <input type="hidden" required="true" name="FullName" value="<?php echo $UserData->FullName ?>">
+                    <input type="hidden" required="true" name="UserId" value="<?php echo $UserData->UserUID ?>">
+                    <input type="hidden" required="true" name="ICNumber" value="<?php echo $UserData->ID ?>">
+                    <input type="hidden" required="true" name="EmailAddress" value="<?php echo $UserData->EmailAddress1 ?>">
 
                     <!-- Card stats -->
                     <div id="ShiftDetails">

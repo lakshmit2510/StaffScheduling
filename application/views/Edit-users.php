@@ -85,6 +85,12 @@ $detail = $userdetail;
                   <input data-parsley-type="number" name="PhoneNumber" maxlength="10" type="text" placeholder="number" class="form-control" required="" value="<?php echo $detail->PhoneNumber; ?>">
                 </div>
               </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">No of Working Days</label>
+                <div class="col-sm-6">
+                  <input type="number" name="workingDays" required="" placeholder="Please Enter Number of working days per Week" class="form-control" value="<?php echo $detail->WorkingDaysPerWeek; ?>">
+                </div>
+              </div>
               <?php if ($this->session->userdata('Role') <> 2) { ?>
                 <div class="form-group">
                   <label class="col-sm-3 control-label" required="true">Role</label>

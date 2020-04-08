@@ -185,8 +185,8 @@
                             <div class="contact_logo">
                                 <div class="logo">
                                     <a href="<?= base_url() ?>">
-                                        <img src="<?= base_url() ?>assets/img/EZLogo.png" class="logo_main" alt="" width="239" height="59">
-                                        <img src="<?= base_url() ?>assets/img/EZLogo.png" class="logo_fixed" alt="" width="239" height="59">
+                                        <img src="<?= base_url() ?>assets/img/EZLogo.png" class="logo_main" alt="" width="239" height="59" />
+                                        <img src="<?= base_url() ?>assets/img/EZLogo.png" class="logo_fixed" alt="" width="239" height="59" />
                                     </a>
                                 </div>
                             </div>
@@ -194,8 +194,8 @@
                                 <nav class="menu_main_nav_area menu_hover_fade">
                                     <ul id="menu_main" class="menu_main_nav">
                                         <li class="menu-item current-menu-ancestor current-menu-parent"><a href="<?= base_url() ?>"><span>Home</span></a></li>
-                                        <li class="menu-item"><a href="about.html"><span>About Us</span></a></li>
-                                        <li class="menu-item menu-item-has-children"><a href="cheese.html"><span>Our Product</span></a> </li>
+                                        <!-- <li class="menu-item"><a href="about.html"><span>About Us</span></a></li> -->
+                                        <li class="menu-item menu-item-has-children"><a href="#Products"><span>Our Products</span></a> </li>
                                         <li class="menu-item"><a href="#footer"><span>Contacts Us</span></a></li>
                                     </ul>
                                 </nav>
@@ -212,12 +212,47 @@
                     </div>
                 </div>
             </header>
+            <div class="header_mobile">
+                <div class="content_wrap">
+                    <div class="menu_button icon-menu"></div>
+                    <div class="logo">
+                        <a href="index.html">
+                            <img src="<?= base_url() ?>assets/img/EZLogo.png" class="logo_main" alt="" width="239" height="59" />
+                        </a>
+                    </div>
+                </div>
+                <div class="side_wrap">
+                    <div class="close">Close</div>
+                    <div class="panel_top">
+                        <nav class="menu_main_nav_area">
+                            <ul id="menu_mobile" class="menu_main_nav">
+                                <li class="menu-item"><a href="<?= base_url('Login/Signup') ?>"><span><i class="fa fa-user"></i> Signup</span></a></li>
+                                <li class="menu-item"><a href="<?= base_url('Login') ?>"><span><i class="fa fa-lock"></i> Login</span></a></li>
+                                <!-- <li class="menu-item current-menu-ancestor current-menu-parent"><a href="index.html"><span>Home</span></a></li>
+                                <li class="menu-item"><a href="about.html"><span>About Us</span></a></li>
+                                <li class="menu-item menu-item-has-children"><a href="cheese.html"><span>Our Product</span></a>
+                                    <ul class="sub-menu">
+                                        <li class="menu-item"><a href="cheese.html"><span>Cheese</span></a></li>
+                                        <li class="menu-item"><a href="butter.html"> Butter</span></a></li>
+                                        <li class="menu-item"><a href="milk.html">Milk</span></a></li>
+                                        <li class="menu-item"><a href="ghee.html">Ghee</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="menu-item"><a href="contact_us.html"><span>Contacts Us</span></a></li> -->
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="panel_bottom">
+                    </div>
+                </div>
+                <div class="mask"></div>
+            </div>
             <section class="slider_wrap slider_fullwide slider_engine_revo slider_alias_slider-1">
                 <div id="rev_slider_1_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" style="opacity: 0.6;">
                     <div id="rev_slider_1_1" class="rev_slider fullwidthabanner" data-version="5.2.6">
                         <ul>
-                            <li data-index="rs-1" data-transition="cube" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off" data-easein="default" data-easeout="default" data-masterspeed="default" data-thumb="images/baggage.jpg" data-rotate="0" data-saveperformance="off" data-title="Slide">
-                                <img src="assets/homePage/images/baggage.jpg" alt="" title="baggage" width="1903" height="873" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
+                            <li data-index="rs-1" data-transition="cube" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off" data-easein="default" data-easeout="default" data-masterspeed="default" data-thumb="images/ez-airlines.png" data-rotate="0" data-saveperformance="off" data-title="Slide">
+                                <img src="assets/img/ez-airlines.png" alt="" title="baggage" width="1903" height="873" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
 
                             </li>
                             <li data-index="rs-2" data-transition="cube-horizontal" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off" data-easein="default" data-easeout="default" data-masterspeed="default" data-thumb="images/Art 1.8.jpg" data-rotate="0" data-saveperformance="off" data-title="Slide" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
@@ -307,7 +342,7 @@
                                     </div>
                                 </div>
                                 <div class="vc_row-full-width"></div>
-                                <div class="vc_row wpb_row vc_row-fluid">
+                                <div class="vc_row wpb_row vc_row-fluid" id="Products">
                                     <div class="wpb_column vc_column_container vc_col-sm-12">
                                         <div class="vc_column-inner vc_custom_1475066123130">
                                             <div class="wpb_wrapper">

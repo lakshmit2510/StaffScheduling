@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Forgot Your Password | Dock Management System</title>
+  <title>Forgot Your Password | Staff Scheduling System</title>
   <!-- Favicon -->
 
   <!-- Fonts -->
@@ -22,7 +22,8 @@
     <nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
       <div class="container px-4">
         <a class="navbar-brand" href="index.html">
-          <img src="<?=base_url()?>assets/v2/img/brand/logo-white.png" />
+          <img src="<?=base_url()?>assets/img/EZLogo.png" />
+          <span class="text-white" style="font-size: 20px;">Elizabeth-Zion Asia Pacific Pte Ltd</span>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -33,7 +34,7 @@
             <div class="row">
               <div class="col-6 collapse-brand">
                 <a href="index.html">
-                  <img src="<?=base_url()?>assets/v2/img/brand/logo-white.png">
+                  <img src="<?=base_url()?>assets/img/EZLogo.png">
                 </a>
               </div>
               <div class="col-6 collapse-close">
@@ -68,7 +69,7 @@
         <div class="header-body text-center mb-5">
           <div class="row justify-content-center">
             <div class="col-lg-5 col-md-6">
-              <h1 class="text-white">Dock Management System <br> Forgot Your Password</h1>
+              <h1 class="text-white">Staff Scheduling System <br> Forgot Your Password</h1>
             </div>
           </div>
         </div>
@@ -122,7 +123,7 @@
           </div>
           <div class="row mt-3">
             <div class="col-6">
-              <a href="<?php echo base_url()?>" class="text-light"><small>Go back to Login Page?</small></a>
+              <a href="<?php echo base_url('Login')?>" class="text-light"><small>Go back to Login Page?</small></a>
             </div>
           </div>
         </div>

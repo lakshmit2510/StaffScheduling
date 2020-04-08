@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="<?php echo base_url();?>assets/img/logo-fav.png">
-    <title>Signup Success | Dock Management System</title>
+    <link rel="shortcut icon" href="<?php echo base_url();?>assets/img/download.png">
+    <title>Signup Success | Staff Scheduling System</title>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/lib/perfect-scrollbar/css/perfect-scrollbar.min.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/lib/material-design-icons/css/material-design-iconic-font.min.css"/><!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -39,9 +39,8 @@
         <div class="main-content container-fluid">
           <div class="splash-container">
             <div class="panel panel-default panel-border-color panel-border-color-primary be-loading">
-              <div class="panel-heading"><img src="<?php echo base_url('assets/img/logo1.png');?>" style="display: block;" width="100"><br>
-                <strong>Dock Management System <br> Login</strong>
-                <span class="slogo">Integrated Supply Chain</span>
+              <div class="panel-heading"><img src="<?php echo base_url('assets/img/EZLogo.png');?>" style="display: block;margin-left: auto;margin-right: auto;width: 30%;" width="100"><br>
+                <strong>Staff Scheduling System <br> Login</strong>
               </div>
               <div class="panel-body">
                 <?php if($this->session->flashdata('error')==1) { ?>
@@ -64,7 +63,7 @@
                      <p style="font-size: 14px;text-align: left;"><b>Waiting for your account approval from Administrator. Once approve your account you will receive login details via registered email address.</b></p>
                     </div>
                     <div class="form-group login-submit">
-                       <a href="<?php echo base_url(); ?>" class="btn btn-primary btn-lg">Go Back</a>
+                       <a href="<?php echo base_url('Login'); ?>" class="btn btn-primary btn-lg">Go Back</a>
                     </div>
                   </div>
                 </form><hr>

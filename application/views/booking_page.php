@@ -7,7 +7,7 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
     .booking {
         position: relative;
         /* background-color: lightblue; */
-        width: 100%;
+        /* width: 100%; */
         margin-top: 100px;
     }
 
@@ -58,7 +58,13 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
         border: 1px dashed #333;
     }
 
-
+    @media only screen and (max-width: 600px) {
+        .docklegend {
+            display: inline-block;
+            width: 100% !important;
+            float: none !important;
+        }
+    }
 
     .docklegend {
         /* display: inline-block; */
@@ -110,10 +116,12 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
     <div class="main-content container-fluid">
         <div class="row wizard-row">
             <div class="col-md-12 fuelux">
+                <h1 class="panel-heading panel-heading-divider my-3"><?= $Title ?> </h1>
+                <hr />
                 <?php if ($this->session->flashdata('type') == 'done') { ?>
                     <div role="alert" class="alert alert-success alert-dismissible">
                         <div class="message">
-                            <button type="button" data-dismiss="alert" aria-label="Close" class="close"><span aria-hidden="true" class="mdi mdi-close"></span></button><strong>Success!</strong> <?php echo $this->session->flashdata('msg'); ?>.
+                            <button type="button" data-dismiss="alert" aria-label="Close" class="close"><span aria-hidden="true" class="mdi mdi-close"></span></button><strong>Success!</strong> <?php echo $this->session->flashdata('done'); ?>.
                         </div>
                     </div>
                 <?php } else if ($this->session->flashdata('type') == 'error') { ?>

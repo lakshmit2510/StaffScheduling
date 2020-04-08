@@ -9,6 +9,7 @@ class Users extends CI_Controller
     parent::__construct();
     $this->load->model('User_model');
     $this->load->model('Booking_model');
+    $this->load->model('Projects_model');
     if (!$this->session->userdata('is_loggin')) {
       redirect(base_url('Login'));
     }
@@ -53,6 +54,7 @@ class Users extends CI_Controller
     $data['Title'] = 'Add New Employee';
     $data['Page'] = 'adduser';
     $data['company'] = $this->Common_model->getTableData('company', 'Active');
+    $data['Projects'] = $this->Projects_model->getAll();
     // $data['SupplierGroups'] = $this->Common_model->getTableData('supplier_groups');
     $this->load->view('Add-users', $data);
   }
@@ -66,6 +68,7 @@ class Users extends CI_Controller
     $data['Title'] = 'List of Approvals';
     $data['Page'] = 'Approval';
     $data['Users'] = $this->User_model->getApprovalPending();
+    $data['Projects'] = $this->Projects_model->getAll();
     $this->load->view('list_approval', $data);
   }
 
@@ -120,6 +123,8 @@ class Users extends CI_Controller
       redirect(base_url('Dashboard'));
     }
     $data['IsApproved'] = 1;
+    $data['ProjectID'] = $this->input->post('ProjectID');
+    $data['Designation'] = $this->input->post('Designation');
     $approved = $this->User_model->ProcessUpdate($UserUID, $data);
     if ($approved == 1) {
       $usr = $this->User_model->GetUsersDetailsByUserID($UserUID);
@@ -176,8 +181,9 @@ class Users extends CI_Controller
       $data['EmailAddress2'] = $this->input->post('EmailAddress2');
       $data['PhoneNumber'] = $this->input->post('PhoneNumber');
       $data['UserName'] = $this->input->post('userName');
-      $data['Password'] = $this->input->post('Password');
+      $data['Password'] = md5($this->input->post('Password'));
       $data['Role'] = $this->input->post('Role');
+      $data['WorkingDaysPerWeek'] = $this->input->post('workingDays');
       /*$data['VNo'] = $this->input->post('VNo');
      $data['VType'] = $this->input->post('VType');*/
       // $data['Supplier'] = $this->input->post('Supplier');
@@ -205,7 +211,7 @@ class Users extends CI_Controller
         $data['url'] = base_url();
         $this->config_email();
         $data['mail_title'] = 'Your Login Details - EZ Staff Scheduling System';
-        $from_email = "virgil@team-ez.com";
+        $from_email = "support.ez-staff@myezjobs.sg";
         $this->email->from($from_email, '');
         $this->email->to($data['EmailAddress1']); #$Old->EmailAddress1;
         if (!empty($data['EmailAddress2'])) {
@@ -238,6 +244,8 @@ class Users extends CI_Controller
       $data['EmailAddress2'] = $this->input->post('EmailAddress2');
       $data['PhoneNumber'] = $this->input->post('PhoneNumber');
       $data['UserName'] = $this->input->post('UserName');
+      $data['FullName'] = $this->input->post('Name');
+      $data['WorkingDaysPerWeek'] = $this->input->post('workingDays');
       /*$data['Password'] = $this->input->post('Password');*/
       /*$data['VNo'] = $this->input->post('VNo');
      $data['VType'] = $this->input->post('VType');*/

@@ -3,6 +3,16 @@ $Activeusr = $this->Dashboard_model->GetUserCount('Active');
 $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
 ?>
 
+<style>
+  @media only screen and (max-width: 450px) {
+    .shift-card-styles {
+      display: flex;
+      flex-direction: column;
+      width: 300px;
+    }
+  }
+</style>
+
 <?php if (!in_array($this->session->userdata('Role'), array(2))) { ?>
   <div class="mt-5">
     <button type="button" style="float: right;" class="btn btn-warning" data-toggle="modal" data-target="#addShiftModal"><i class="fa fa-plus"></i> New Shift Timings</button>
@@ -21,17 +31,28 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
       <div class="modal-body">
         <form id="booking-form">
           <div class="form-group">
-            <label for="avaialableBookingsField">Available Bookings</label>
-            <input type="number" class="form-control" name="Bookingscount" id="avaialableBookingsField" aria-describedby="availableBookingsHelp" placeholder="Enter available bookings">
-            <small id="availableBookingsHelp" class="form-text text-muted">Please enter the no of bookings available.</small>
+            <label for="avaialableBookingsField">Number Of Employees </label>
+            <input type="number" class="form-control" name="Bookingscount" id="avaialableBookingsField" aria-describedby="availableBookingsHelp" placeholder="Employees Count">
+            <small id="availableBookingsHelp" class="form-text text-muted">Please enter the required employees count.</small>
           </div>
           <div class="form-group">
             <label for="startTime">Start Time</label>
-            <input class="form-control timepicker" name="StartTime" id="startTime" placeholder="Enster start time">
+            <input class="form-control timepicker" name="StartTime" id="startTime" placeholder="Enter start time">
           </div>
           <div class="form-group">
             <label for="endTime">End Time</label>
             <input class="form-control timepicker" name="Endtime" id="endTime" placeholder="Enter end time">
+          </div>
+          <div class="form-group">
+            <label for="endTime">Project Name</label>
+            <select class="form-control" required="true" id="projectId" name="ProjectID">
+              <option value="">--- Choose Project Name ----</option>
+              <?php
+              foreach ($Projects as $key => $value) {
+                echo '<option value="' . $value->ProjectCode . '">' . $value->ProjectName . '</option>';
+              }
+              ?>
+            </select>
           </div>
         </form>
       </div>
@@ -43,7 +64,7 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
   </div>
 </div>
 <!-- Card stats -->
-<div class="row mb-5 pt-5">
+<div class="row mb-5 pt-5 shift-card-styles">
   <?php
   foreach ($Shifts as $value) {
   ?>
@@ -114,7 +135,7 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
 
 <script type="text/javascript">
   $(document).ready(function() {
-    
+
     $('.timepicker').timepicker({
       timeFormat: 'HH:mm',
       interval: 60,

@@ -38,7 +38,7 @@ class Login extends CI_Controller
     if ($this->session->userdata('is_loggin') == TRUE) {
       redirect(base_url('Dashboard'));
     } else {
-      $this->load->view('forgot', $data);
+      $this->load->view('forgot');
     }
   }
 
@@ -47,7 +47,7 @@ class Login extends CI_Controller
     if ($this->session->userdata('is_loggin') == TRUE) {
       redirect(base_url('Dashboard'));
     } else {
-      $this->load->view('signup_confirmed', $data);
+      $this->load->view('signup_confirmed');
     }
   }
 
@@ -119,6 +119,7 @@ class Login extends CI_Controller
         'UserUID' => $row->UserUID,
         'UserName' => $row->UserName,
         'Role' => $row->Role,
+        'ProjectID' => $row->ProjectID,
         'UserType' => $row->UserType,
         'FullName' => $row->Name,
         'is_loggin' => TRUE

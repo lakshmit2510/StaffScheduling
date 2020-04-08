@@ -29,7 +29,7 @@
             <div class="text-right">
               <a href="<?php echo base_url('Company/add'); ?>" class="btn btn-space btn-success"> Add Company</a>
             </div>
-            <table id="table3" class="table table-striped table-hover table-bordered table-fw-widget">
+            <table id="table3" class="table table-striped table-hover table-bordered table-fw-widget" style="width:100%">
               <thead>
                 <tr>
                   <th>S.No</th>
@@ -71,6 +71,7 @@
   $(document).ready(function() {
 
     $("#table3").dataTable({
+      scrollX: true,
       buttons: ["copy",
         {
           extend: 'excel',

@@ -20,7 +20,7 @@
                         <div class="text-right">
                             <a href="<?php echo base_url('AirportPass/add') ?>" class="btn btn-space btn-success"><i class="fa fa-plus"></i> Add New Pass</a>
                         </div>
-                        <table id="table3" class="table table-striped table-bordered table-hover table-fw-widget">
+                        <table id="table3" class="table table-striped table-bordered table-hover table-fw-widget" style="width: 100%">
                             <thead>
                                 <tr>
                                     <th>Airport Pass Number</th>
@@ -62,6 +62,7 @@
             $(document).ready(function() {
 
                 $("#table3").dataTable({
+                    scrollX: true,
                     buttons: ["copy",
                         {
                             extend: 'excel',

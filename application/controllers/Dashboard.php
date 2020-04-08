@@ -22,13 +22,19 @@ class Dashboard extends CI_Controller
     $data['Page'] = 'active';
     $Role = 2;
     $UserUID = $this->session->userdata('UserUID');
+    $ProjectId = $this->session->userdata('ProjectID');
     $data['UserData'] = $this->Dashboard_model->getUserdetailsById($UserUID);
     $data['Booking_data'] = $this->Booking_model->getBookingDetailByUserId($UserUID);
-    $data['Shifts'] = $this->Shifts_model->getAll();
+    
+    // print_r($data['Shifts']);
+    // exit;
+
     $data['Users'] = $this->User_model->GetUsers($Role);
-    if (in_array($this->session->userdata('Role'), array(1))) {
+    if (!in_array($this->session->userdata('Role'), array(2,3))) {
+      $data['Shifts'] = $this->Shifts_model->getAll();
       $this->load->view('booking_page', $data);
     } else {
+      $data['Shifts'] = $this->Shifts_model->getDataByprojectId($ProjectId);
       $this->load->view('new-dashboard', $data);
     }
   }

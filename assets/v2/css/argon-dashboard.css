@@ -2016,6 +2016,12 @@ pre code {
   }
 }
 
+@media only screen and (max-width: 425px) {
+  .card-stats .card-body{
+    padding: 1rem 0rem !important;
+    margin-left: 0px !important;
+  }
+}
 .form-control::-ms-expand {
   background-color: transparent;
   border: 0;

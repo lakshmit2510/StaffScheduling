@@ -134,11 +134,11 @@
           $subs = array();
 
           if (!in_array($role, array(5, 6))) {
-            $subs[] = ['text' => 'Update IC Details', "url" => base_url('IC_Details/update'), 'icon' => 'fa fa-edit', 'title' => 'Update IC Information'];
+            $subs[] = ['text' => 'Update NRIC Details', "url" => base_url('IC_Details/update'), 'icon' => 'fa fa-edit', 'title' => 'Update NRIC Information'];
           }
-          $subs[] = ['text' => 'Add IC Number', "url" => base_url('IC_Details/add'), 'icon' => 'fa fa-plus', 'title' => 'Add IC'];
+          $subs[] = ['text' => 'Add NRIC Number', "url" => base_url('IC_Details/add'), 'icon' => 'fa fa-plus', 'title' => 'Add NRIC'];
 
-          $navigations[] = ['text' => 'IC Details', "url" => base_url('IC_Details'), 'icon' => 'fa fa-truck', 'title' => 'IC Details', 'color' => "#089db8", 'sub' => $subs];
+          $navigations[] = ['text' => 'NRIC Details', "url" => base_url('IC_Details'), 'icon' => 'fa fa-truck', 'title' => 'NRIC Details', 'color' => "#089db8", 'sub' => $subs];
         }
 
         if (in_array($role, [1, 2])) {

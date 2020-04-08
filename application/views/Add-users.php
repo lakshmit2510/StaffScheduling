@@ -69,19 +69,6 @@
                   <input data-parsley-type="number" name="PhoneNumber" maxlength="15" type="text" placeholder="Phone Number" class="form-control" required="">
                 </div>
               </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">Password</label>
-                <div class="col-sm-12">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <input id="pass2" type="password" name="Password" required="" placeholder="New Password" class="form-control">
-                    </div>
-                    <div class="col-sm-3">
-                      <input type="password" name="Password" required="" data-parsley-equalto="#pass2" placeholder="Re-Type Password" class="form-control">
-                    </div>
-                  </div>
-                </div>
-              </div>
               <?php if ($this->session->userdata('Role') <> 2) { ?>
                 <div class="form-group">
                   <label class="col-sm-3 control-label" required="true">Role</label>
@@ -90,7 +77,46 @@
                       <option value="">------ Choose Role ------</option>
                       <option value="1">Admin</option>
                       <option value="2" selected="true">Employee</option>
+                      <option value="3">Incharge</option>
                     </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">No of Working Days</label>
+                  <div class="col-sm-6">
+                    <input type="number" name="workingDays" required="" placeholder="Please Enter Number of working days per Week" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Project Name</label>
+                  <div class="col-sm-6">
+                    <select class="form-control" required="true" name="ProjectID">
+                      <option value="">--- Choose Project Name ----</option>
+                      <?php
+                      foreach ($Projects as $key => $value) {
+                        echo '<option value="' . $value->ProjectCode . '">' . $value->ProjectName . '</option>';
+                      }
+                      ?>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Designation</label>
+                  <div class="col-sm-6">
+                    <input type="text" name="designation" required="" placeholder="Please Enter Designation" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Password</label>
+                  <div class="col-sm-12">
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <input id="pass2" type="password" name="Password" required="" placeholder="New Password" class="form-control">
+                      </div>
+                      <div class="col-sm-3">
+                        <input type="password" name="Password" required="" data-parsley-equalto="#pass2" placeholder="Re-Type Password" class="form-control">
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <!-- <div class="form-group">

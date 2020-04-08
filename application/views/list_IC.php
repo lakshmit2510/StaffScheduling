@@ -8,7 +8,7 @@
     <div class="panel panel-default panel-border-color panel-border-color-primary">
       <div class="panel-heading panel-heading-divider"><?PHP echo $Title; ?></div>
       <div class="panel-body">
-        <table id="table3" class="table table-striped table-bordered table-hover table-fw-widget">
+        <table id="table3" class="table table-striped table-bordered table-hover table-fw-widget" style="width:100%">
           <thead>
             <tr>
               <th>IC Number</th>
@@ -60,6 +60,7 @@
   $(document).ready(function() {
 
     $("#table3").dataTable({
+      scrollX: true,
       buttons: ["copy",
         {
           extend: 'excel',

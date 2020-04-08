@@ -26,6 +26,12 @@ class Shifts_model extends CI_Model
         return $this->db->get('Shifts')->row();
     }
 
+    public function getDataByprojectId($id)
+    {
+        $this->db->where('ProjectID', $id);
+        return $this->db->get('Shifts')->result();
+    }
+
     public function update($id, $data)
     {
         $this->db->where('ShiftID', $id);
