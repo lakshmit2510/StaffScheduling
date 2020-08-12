@@ -55,7 +55,6 @@ class Users extends CI_Controller
     $data['Page'] = 'adduser';
     $data['company'] = $this->Common_model->getTableData('company', 'Active');
     $data['Projects'] = $this->Projects_model->getAll();
-    // $data['SupplierGroups'] = $this->Common_model->getTableData('supplier_groups');
     $this->load->view('Add-users', $data);
   }
 
@@ -91,10 +90,8 @@ class Users extends CI_Controller
    
     $data['Title'] = 'Edit Suppliers';
     $data['Page'] = 'listuser';
-    // $data['vtype'] = $this->Common_model->getTableData('vechicletype', 'Active');
     $data['userdetail'] = $this->User_model->GetUsersDetailsByUserID($UserUID);
     $data['company'] = $this->Common_model->getTableData('company', 'Active');
-    // $data['SupplierGroups'] = $this->Common_model->getTableData('supplier_groups');
     $this->load->view('Edit-users', $data);
   }
 
@@ -130,13 +127,12 @@ class Users extends CI_Controller
       $usr = $this->User_model->GetUsersDetailsByUserID($UserUID);
       $data['UserName'] = $usr->UserName;
       $data['EmailAddress1'] = $usr->EmailAddress1;
-      // $data['UniqueID'] = $usr->UniqueID;
       $data['Password'] = $usr->Password;
       $data['url'] = base_url();
       $this->config_email();
       $data['mail_title'] = 'Your Login Details - EZ Staff Scheduling System';
-      $from_email = "virgil@team-ez.com";
-      $this->email->from($from_email, '');
+      $from_email = "support.ez-staff@myezjobs.sg";
+      $this->email->from($from_email, 'Myezjobs.sg');
       $this->email->to($data['EmailAddress1']); #$Old->EmailAddress1;
       if (!empty($data['EmailAddress2'])) {
         $this->email->cc($data['EmailAddress2']);
@@ -174,7 +170,6 @@ class Users extends CI_Controller
   {
     if ($this->input->post()) {
       $supplier = $this->Common_model->getMax('users');
-      // $data['UserType'] = $this->input->post('UserType');
       $data['CompanyUID'] = $this->input->post('Company');
       $data['FullName'] = $this->input->post('Name');
       $data['EmailAddress1'] = $this->input->post('EmailAddress1');
@@ -212,7 +207,7 @@ class Users extends CI_Controller
         $this->config_email();
         $data['mail_title'] = 'Your Login Details - EZ Staff Scheduling System';
         $from_email = "support.ez-staff@myezjobs.sg";
-        $this->email->from($from_email, '');
+        $this->email->from($from_email, 'Myezjobs.sg');
         $this->email->to($data['EmailAddress1']); #$Old->EmailAddress1;
         if (!empty($data['EmailAddress2'])) {
           $this->email->cc($data['EmailAddress2']);
@@ -236,10 +231,8 @@ class Users extends CI_Controller
   function update_user()
   {
     if ($this->input->post()) {
-      // $data['UserType'] = $this->input->post('UserType');
       $data['CompanyUID'] = $this->input->post('Company');
       $UserUID = $this->input->post('UserUID');
-      /*$data['Name'] = $this->input->post('Name');*/
       $data['EmailAddress1'] = $this->input->post('EmailAddress1');
       $data['EmailAddress2'] = $this->input->post('EmailAddress2');
       $data['PhoneNumber'] = $this->input->post('PhoneNumber');
@@ -262,7 +255,6 @@ class Users extends CI_Controller
       } else {
         $data['Role'] = $this->input->post('Role');
       }
-      // $data['UAN'] = $this->input->post('UAN');
       $store = $this->User_model->UpdateUser($data, $UserUID);
       if ($store == 1) {
         $this->session->set_flashdata('msg', $data['UserName'] . ' has been Updated Successfully');
@@ -283,7 +275,7 @@ class Users extends CI_Controller
   {
     if ($this->input->post()) {
       $UserUID = $this->session->userdata('UserUID');
-      $Password = $this->input->post('Current');
+      $Password = md5($this->input->post('Current'));
       $Pass = $this->input->post('Password');
       $Npass = $this->input->post('NPassword');
       $Old = $this->User_model->getUserdetails($UserUID);
@@ -300,7 +292,7 @@ class Users extends CI_Controller
         }
       }
 
-      $data['Password'] = $Npass;
+      $data['Password'] = md5($Npass);
       $store = $this->User_model->updatepassword($data, $UserUID);
       if ($store == 1) {
         $this->session->set_flashdata('msg', 'Password changed successfully');

@@ -62,11 +62,11 @@ class Login extends CI_Controller
       $data['Password'] = md5($usr->Password);
       $data['url'] = base_url();
       $this->config_email();
-      $data['mail_title'] = 'Your Login Details - SATS Dock Management System';
-      $from_email = "support@satsez.com";
-      $this->email->from($from_email, 'Satsez.com');
+      $data['mail_title'] = 'Your Login Details - Staff Scheduling System';
+      $from_email = "support.ez-staff@myezjobs.sg";
+      $this->email->from($from_email, 'myezjobs.sg');
       $this->email->to($Email);
-      $this->email->subject('Thank you!. Forgot your Password in SATS Dock Management System');
+      $this->email->subject('Thank you!. Forgot your Password in Staff Scheduling System');
       $mes_body = $this->load->view('email/user-template.php', $data, true); // load html templates
       $this->email->message($mes_body);
       $this->email->send();

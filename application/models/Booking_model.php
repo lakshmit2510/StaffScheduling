@@ -58,13 +58,14 @@ class Booking_model extends CI_Model
 
   function getBookingDetails($dateStr,$shiftID)
   {
-    $this->db->select('users.FullName,Shifts.AvailableBookings, IC_Details.ICNumber,booking.ShiftStartTime,booking.	ShiftEndTime,booking.StartDate');
+    $this->db->select('users.FullName,Shifts.AvailableBookings, IC_Details.ICNumber,booking.ShiftStartTime,booking.	ShiftEndTime,booking.StartDate,booking.UserID');
     $this->db->from('booking');
     $this->db->join('users', 'users.UserUID = booking.UserID', 'LEFT');
     $this->db->join('Shifts', 'Shifts.ShiftID = booking.ShiftNumber', 'LEFT');
     $this->db->join('IC_Details', 'IC_Details.ID = booking.IC_Number', 'LEFT');
     $this->db->where('StartDate =', $dateStr);
     $this->db->where('ShiftNumber', $shiftID);
+    // $this->db->where('Active', 1);
     $this->db->group_by('booking.UserID', 'booking.StartDate');
     $this->db->order_by('booking.StartDate');
 

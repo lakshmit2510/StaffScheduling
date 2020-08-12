@@ -11,6 +11,25 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
       width: 300px;
     }
   }
+
+  .outer-card-styles {
+    -webkit-box-shadow: 0px 5px 11px 0px rgba(111, 126, 204, 1);
+    -moz-box-shadow: 0px 5px 11px 0px rgba(111, 126, 204, 1);
+    box-shadow: 0px 5px 11px 0px rgba(111, 126, 204, 1);
+  }
+
+  .card-header-styles {
+    text-align: center;
+    background: #6f7ecc;
+    color: #ffffff;
+  }
+
+  .inner-card-styles {
+    margin: 1rem;
+    -webkit-box-shadow: 0px 5px 16px -5px rgba(111, 126, 204, 1);
+    -moz-box-shadow: 0px 5px 16px -5px rgba(111, 126, 204, 1);
+    box-shadow: 0px 5px 16px -5px rgba(111, 126, 204, 1);
+  }
 </style>
 
 <?php if (!in_array($this->session->userdata('Role'), array(2))) { ?>
@@ -64,71 +83,50 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
   </div>
 </div>
 <!-- Card stats -->
-<div class="row mb-5 pt-5 shift-card-styles">
-  <?php
-  foreach ($Shifts as $value) {
-  ?>
-    <div class="col-xl-3 col-lg-6 card mt-3 mb-4" style="margin: 1rem">
-
-      <?php if (!in_array($this->session->userdata('Role'), array(2))) { ?>
-        <div class="card-header">
-          <a href="<?php echo base_url('Shifts/') ?>deleteShifts/<?php echo $value->ShiftID ?>" onclick="return confirm('Are you sure to delete')"><i style="float: right;" class="fas fa-times"></i></a>
-          <a href="<?= base_url('Shifts/') ?>editShiftDetails/<?php echo $value->ShiftID ?>"><i class="far fa-edit"></i>edit</a>
-        </div>
-      <?php } ?>
-
+<div style="padding-top: 120px !important;flex-direction: column;">
+  <?php foreach ($Projects as $key => $value) { ?>
+    <div class="card outer-card-styles mb-3">
+      <div class="card-header card-header-styles"><?php echo $value->ProjectName; ?></div>
       <div class="card-body">
-        <div>
-          <h3 class="card-title">Available Bookings (<?php echo $value->AvailableBookings ?>)</h3>
+        <div class="row shift-card-styles">
+          <?php
+          $isExists = false;
+          foreach ($Shifts as $value1) {
+            if ($value1->ProjectID === $value->ProjectCode) {
+              $isExists = true;
+          ?>
+              <div class="col-xl-3 col-lg-6 card mt-3 mb-4 inner-card-styles">
+                <?php if (!in_array($this->session->userdata('Role'), array(2))) { ?>
+                  <div class="card-header">
+                    <a href="<?php echo base_url('Shifts/') ?>deleteShifts/<?php echo $value1->ShiftID ?>" onclick="return confirm('Are you sure to delete')"><i style="float: right;" class="fas fa-times"></i></a>
+                    <a href="<?= base_url('Shifts/') ?>editShiftDetails/<?php echo $value1->ShiftID ?>"><i class="far fa-edit"></i>edit</a>
+                  </div>
+                <?php } ?>
+
+                <div class="card-body">
+                  <div>
+                    <h3 class="card-title">Available Bookings (<?php echo $value1->AvailableBookings ?>)</h3>
+                  </div>
+                  <div class="row pt-3 pb-3">
+                    <div class="col">
+                      <span class="h2 font-weight-bold"><?php echo $value1->StartTime ?> - <?php echo $value1->EndTime ?></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <?php
+            }
+          }
+          if (!$isExists) { ?>
+            <div>No Shifts Added for this Project</div>
+          <?php }
+          ?>
         </div>
-        <div class="row pt-3 pb-3">
-          <div class="col">
-            <span class="h2 font-weight-bold"><?php echo $value->StartTime ?> - <?php echo $value->EndTime ?></span>
-          </div>
-        </div>
-        <!-- <div>
-          <a class="btn btn-primary" style="margin-left: 20px;" href="<?= base_url('Booking/Add/' . $value->ShiftID) ?>">Start Booking</a>
-        </div> -->
       </div>
     </div>
 
-  <?php
-  }
-  ?>
-
-  <!-- <div class="col-xl-3 col-lg-6">
-    <a href="<?= base_url('Booking/Add') ?>" class="card card-hover card-stats mb-4 mb-xl-0">
-      <div class="card-body">
-        <h3 class="card-title">Available Bookings (4)</h3>
-        <div class="row pt-3 pb-3">
-          <div class="col">
-            <span class="h2 font-weight-bold">09:00 AM - 21:00 PM</span>
-          </div>
-        </div>
-      </div>
-    </a>
-  </div>
-  <div class="col-xl-3 col-lg-6">
-    <a href="<?= base_url('AirportPass') ?>" class="card card-hover card-stats mb-4 mb-xl-0">
-      <div class="card-body">
-        <div class="row pt-3 pb-3">
-          <div class="col">
-            <span class="h2 font-weight-bold">Manage Airport Pass Details</span>
-          </div>
-          <div class="col-auto">
-            <div class="icon icon-shape text-warning">
-              <i class="fas fa-id-card"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </a>
-  </div> -->
+  <?php } ?>
 </div>
-
-<!-- <div class="row">
-  <div style="background: #F3F3F3;width:100%;height:400px;display: flex;justify-content: center;align-items: center;border:2px solid #E2E2E2;">Content / Advertisement Comes Here</div>
-</div> -->
 
 
 <?php $this->load->view('template/footer'); ?>

@@ -211,7 +211,7 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
 </div>
 
 <?php $this->load->view('template/footer'); ?>
-<script src="<?php echo base_url() ?>assets/js/evo-calendar.js" type="text/javascript"></script>
+<script src="<?php echo base_url() ?>assets/js/evo-calendar.js?random=<?php echo uniqid(); ?>" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/lib/parsley/parsley.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">

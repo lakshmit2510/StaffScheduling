@@ -101,11 +101,11 @@ class Booking extends CI_Controller
       $bottomRows[1][$dateStr] = $shiftDetails->AvailableBookings;
       $bottomRows[2][$dateStr] = count($shifData) - $shiftDetails->AvailableBookings;
       foreach ($shifData as $key => $value) {
-        if (isset($rows[$value->ICNumber])) {
-          $rows[$value->ICNumber][$value->StartDate] = 1;
+        if (isset($rows[$value->UserID])) {
+          $rows[$value->UserID][$value->StartDate] = 1;
           // $rows[$value->ICNumber][$value->StartDate] = $value->ShiftEndTime;
         } else {
-          $rows[$value->ICNumber] = array(
+          $rows[$value->UserID] = array(
             'employeeName' => $value->FullName,
             'icNumber' => $value->ICNumber,
             $value->StartDate => 1,

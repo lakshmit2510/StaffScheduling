@@ -138,7 +138,7 @@
           }
           $subs[] = ['text' => 'Add NRIC Number', "url" => base_url('IC_Details/add'), 'icon' => 'fa fa-plus', 'title' => 'Add NRIC'];
 
-          $navigations[] = ['text' => 'NRIC Details', "url" => base_url('IC_Details'), 'icon' => 'fa fa-truck', 'title' => 'NRIC Details', 'color' => "#089db8", 'sub' => $subs];
+          $navigations[] = ['text' => 'NRIC Details', "url" => base_url('IC_Details'), 'icon' => 'fa fa-user', 'title' => 'NRIC Details', 'color' => "#089db8", 'sub' => $subs];
         }
 
         if (in_array($role, [1, 2])) {
@@ -170,6 +170,16 @@
         if (in_array($role, [3])) {
 
           $navigations[] = ['text' => 'Update Staff Details', "url" => base_url('Users/Update'), 'icon' => 'fa fa-building', 'title' => 'Staff Details', 'color' => "#019486"];
+        }
+
+        if (in_array($role, [1,2])) {
+
+          $navigations[] = ['text' => 'Employee Work Status', "url" => base_url('Employee_Status'), 'icon' => 'fa fa-book', 'title' => 'Work Status Details', 'color' => "#ffc107"];
+        }
+
+        if (in_array($role, [1,2])) {
+
+          $navigations[] = ['text' => 'Employee license Details', "url" => base_url('License_Details'), 'icon' => 'fa fa-id-card', 'title' => 'License Expiry Details', 'color' => "#673ab7"];
         }
 
         if (!in_array($role, array(2, 3))) {

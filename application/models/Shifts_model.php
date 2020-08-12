@@ -6,12 +6,19 @@ class Shifts_model extends CI_Model
 
     public function getAll()
     {
+        $this->db->select('*');
+        $this->db->from('Shifts');
+        // $this->db->join('Projects', 'Projects.ProjectCode = Shifts.ProjectID', 'LEFT');
         $this->db->where('Active', 1);
-        // $this->db->join('users', 'users.UserUID = Shifts.CreatedBy', 'LEFT');
-        // if (in_array($this->session->userdata('Role'), array(2))) {
-        //     $this->db->where('Shifts.CreatedBy', $this->session->userdata('UserUID'));
-        // }
-        return $this->db->get('Shifts')->result();
+        if (in_array($this->session->userdata('Role'), array(2))) {
+            $this->db->where('Shifts.CreatedBy', $this->session->userdata('UserUID'));
+        }
+        $q = $this->db->get();
+        if ($q->num_rows() > 0) {
+            return $q->result();
+        } else {
+            return array();
+        }
     }
 
     public function insert($data)

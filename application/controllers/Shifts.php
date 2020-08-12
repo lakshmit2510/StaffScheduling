@@ -80,5 +80,4 @@ class Shifts extends CI_Controller
     }
     
   }
-
 }

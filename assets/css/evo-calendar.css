@@ -597,28 +597,29 @@ tr.calendar-body .calendar-day .day.calendar-active {
     font-size: 16px;
   }
 }
-
-/* sm 
-/*@media only screen and (max-width: 767px) {
-    .evo-calendar {
-        grid-template-columns: 1fr;
-        width: 100%;
-    }
-    .calendar-sidebar > .calendar-months {
-        display: none;
-    }
-    .calendar-inner {
-        padding: 20px;
-    }
-    .calendar-inner .calendar-table {
-        font-size: 16px;
-    }
-    tr.calendar-body .calendar-day {
-        padding: 5px;
-    }
-    tr.calendar-body .calendar-day .day {
-        padding: 5px;
-        height: 35px;
-        width: 35px;
-    }
-};*/
+/* sm */
+@media only screen and (max-width: 767px) {
+  .calendar-months {
+    height: 330px;
+    overflow: auto;
+  }
+  .evo-calendar {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+  .calendar-inner {
+    padding: 20px;
+    height: 410px;
+  }
+  .calendar-inner .calendar-table {
+    font-size: 16px;
+  }
+  tr.calendar-body .calendar-day {
+    padding: 5px;
+  }
+  tr.calendar-body .calendar-day .day {
+    padding: 5px;
+    height: 35px;
+    width: 35px;
+  }
+}

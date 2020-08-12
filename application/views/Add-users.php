@@ -84,13 +84,13 @@
                 <div class="form-group">
                   <label class="col-sm-3 control-label">No of Working Days</label>
                   <div class="col-sm-6">
-                    <input type="number" name="workingDays" required="" placeholder="Please Enter Number of working days per Week" class="form-control">
+                    <input type="number" name="workingDays" placeholder="Please Enter Number of working days per Week" class="form-control">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-3 control-label">Project Name</label>
                   <div class="col-sm-6">
-                    <select class="form-control" required="true" name="ProjectID">
+                    <select class="form-control" name="ProjectID">
                       <option value="">--- Choose Project Name ----</option>
                       <?php
                       foreach ($Projects as $key => $value) {
@@ -103,7 +103,7 @@
                 <div class="form-group">
                   <label class="col-sm-3 control-label">Designation</label>
                   <div class="col-sm-6">
-                    <input type="text" name="designation" required="" placeholder="Please Enter Designation" class="form-control">
+                    <input type="text" name="designation" placeholder="Please Enter Designation" class="form-control">
                   </div>
                 </div>
                 <div class="form-group">
