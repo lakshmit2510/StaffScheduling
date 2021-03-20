@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
 class Booking extends CI_Controller
 {
@@ -25,24 +25,24 @@ class Booking extends CI_Controller
   {
     $data['Title'] = 'Booking Details';
     $data['Page'] = 'Booking';
-    // $data['booking'] = $this->Booking_model->getBookingDetails();
-    // $shiftDetails = $this->getTableDetails($data['booking']);
     $data["shiftDetails"] = $this->Shifts_model->getAll();
     $this->load->view('list_booking', $data);
   }
+
+  public function reservedBookingDetails()
+  {
+    $data['Title'] = 'Reserved Booking Details';
+    $data['Page'] = 'Booking';
+    $this->load->view('list_reserved_booking_details', $data);
+  }
+
   public function getShiftDetails()
   {
-
     $dateRange = explode('-', $this->input->get('dateRange'));
     $shiftID = $this->input->get('shiftId');
     $fdate = date('Y-m-d', strtotime($dateRange[0]));
     $tdate = date('Y-m-d', strtotime($dateRange[1]));
     $datesArr = $this->getDatesFromRange($fdate, $tdate);
-    // print_r($datesArr);
-    // exit;
-    // $data['booking'] = $this->Booking_model->getBookingDetails($fdate, $tdate);
-    // print_r($data['booking']);
-    // exit;
     $this->getTableDetails($datesArr, $shiftID);
   }
 
@@ -85,17 +85,7 @@ class Booking extends CI_Controller
         'field' => $dateStr,
         'width' => 100,
         'cellRenderer' => 'renderCellContent',
-        // 'children' => array(array(
-        //   'headerName' => 'IN',
-        //   'field' => $value->StartDate . '_' . $value->ShiftStartTime,
-        //   'width' => 80
-        // ), array(
-        //   'headerName' => 'OUT',
-        //   'field' => $value->StartDate . '_' . $value->ShiftEndTime,
-        //   'width' => 80
-        // ))
       );
-      // print_r($shifData);
       array_push($columns, $column);
       $bottomRows[0][$dateStr] = count($shifData);
       $bottomRows[1][$dateStr] = $shiftDetails->AvailableBookings;
@@ -117,31 +107,30 @@ class Booking extends CI_Controller
     echo json_encode(array('columns' => $columns, 'rows' => array_values($rows), 'bottomRows' => $bottomRows));
   }
 
-  // function Add($Shift_Id)
-  // {
-  //   if (!in_array($this->session->userdata('Role'), array(1, 2, 3))) {
-  //     redirect('Dashboard');
-  //     exit;
-  //   }
-  //   $data['Title'] = 'Add New Booking';
-  //   $data['Page'] = 'Add';
-  //   $data['Shift_Id'] = $Shift_Id;
-  //   $Role = 2;
-  //   // $data['Users'] = $this->User_model->GetUsers($Role);
-  //   $data['ICDetails'] = $this->IC_model->getAll();
-  //   $data['PassDetails'] = $this->AirportPass_model->getAll();
-  //   $data['shiftDetails'] = $this->Shifts_model->getDataById($Shift_Id);
-  //   $data['mode'] = $this->Common_model->getTableData('bookingmode', 'Active');
-  //   $data['Users'] = $this->Common_model->getTableData('users');
-  //   $data['company'] = $this->Common_model->getTableData('company', 'Active');
-  //   $this->load->view('add_booking', $data);
-  // }
+  public function getShiftsByDate()
+  {
+    $selectedDate = $this->input->get('selectedDate');
+    $Shifts = $this->Shifts_model->getDataByDate($selectedDate);
+    echo json_encode($Shifts);
+    exit;
+  }
 
+  public function getShiftsByDateProjectId()
+  {
+    $ProjectId = $this->session->userdata('ProjectID');
+    $selectedDate = $this->input->get('selectedDate');
+    $Shifts = $this->Shifts_model->getDataByDateProjectId($selectedDate , $ProjectId);
+    echo json_encode($Shifts);
+    exit;
+  }
+  
   function save()
   {
     $data['FullName'] = $this->input->post('FullName');
     $data['IC_Number'] = $this->input->post('ICNumber');
     $data['UserID'] = $this->input->post('UserId');
+    $data['EmployeementType'] = $this->input->post('employeementType');
+    $data['Reservation'] = $this->input->post('');
     $data['Active'] = 1;
     $data['CreatedBy'] = $this->session->userdata('UserUID');
 
@@ -154,7 +143,6 @@ class Booking extends CI_Controller
 
       $booked = $this->Booking_model->getMax();
       $date = date('Y-m-d', strtotime($value));
-
       $data['BookingRefNo'] = 'EZ' . date('Y') . str_pad($booked, 4, '0', STR_PAD_LEFT);
       $shiftTimings = explode('-', $shifts[$key]);
       $data['StartDate'] = $date;
@@ -186,7 +174,6 @@ class Booking extends CI_Controller
       'wordwrap' => TRUE
     );
     $this->load->library('email', $config);
-
     $this->email->from('lakshmi.t2510@gmail.com', 'Test email');
     $this->email->to('lakshmi.t2510@gmail.com');
     $this->email->set_newline("\r\n");
@@ -241,6 +228,7 @@ class Booking extends CI_Controller
     $d = DateTime::createFromFormat($format, $date);
     return $d && $d->format($format) === $date;
   }
+
   public function getDatesFromRange($start, $end, $format = 'Y-m-d')
   {
     $array = array();
@@ -257,10 +245,6 @@ class Booking extends CI_Controller
   function getUserInfo()
   {
     $id = $this->input->post('EmployeeName');
-
-    // print_r($id);
-    // exit;
-
     if (empty($id)) {
       echo json_encode(array());
       exit;

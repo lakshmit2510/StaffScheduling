@@ -8,6 +8,7 @@ class Login extends CI_Controller
   {
     parent::__construct();
     $this->load->model('Login_model');
+    $this->load->model('User_model');
   }
 
   public function index()
@@ -56,10 +57,12 @@ class Login extends CI_Controller
     $Email = $this->input->post('Email');
     $usr = $this->Login_model->checkEmailExist($Email);
     if (!empty($usr)) {
+      $UserUID = $usr->UserUID;
       $data['UniqueID'] = $usr->UniqueID;
       $data['UserName'] = $usr->UserName;
       $data['EmailAddress1'] = $usr->EmailAddress1;
-      $data['Password'] = md5($usr->Password);
+      $data['Password'] = $this->input->post('Password');
+      $this->updatePassword($UserUID);
       $data['url'] = base_url();
       $this->config_email();
       $data['mail_title'] = 'Your Login Details - Staff Scheduling System';
@@ -75,6 +78,19 @@ class Login extends CI_Controller
       $this->session->set_flashdata('error', 1);
     }
     redirect(base_url('Login/forgot'));
+  }
+
+  function updatePassword($UserUID){
+    $Pass = $this->input->post('Password');
+    $Npass = $this->input->post('NPassword');
+    if($Pass != $Npass) 
+    {
+      $this->session->set_flashdata('msg','Confirm Password do not match.');
+      $this->session->set_flashdata('type','error');
+      redirect($_SERVER['HTTP_REFERER']);        
+    }
+    $data['Password'] = md5($Npass);
+		$this->User_model->updatepassword($data, $UserUID);
   }
 
   function save()

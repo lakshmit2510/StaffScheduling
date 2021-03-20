@@ -65,10 +65,6 @@
               </div>
             </div>
             <div class="table-responsive">
-              <!-- <div class="text-right">
-                <a href="<?php echo base_url('Booking/add') ?>" class="btn btn-space btn-success"><i class="fa fa-plus"></i> Add New Booking</a>
-              </div> -->
-
               <div id="myGrid" style="height: 400px;" class="ag-theme-balham"></div>
               <div id="myGridBottom" style="height: 85px;" class="ag-theme-balham"></div>
             </div>

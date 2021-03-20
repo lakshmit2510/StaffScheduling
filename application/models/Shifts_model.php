@@ -21,6 +21,19 @@ class Shifts_model extends CI_Model
         }
     }
 
+    public function getDataByDate($selectedDate)
+    {
+        $query = $this->db->query("SELECT * FROM Shifts WHERE '$selectedDate' BETWEEN StartDate AND EndDate");
+        return $query->result();
+    }
+
+    public function getDataByDateProjectId($selectedDate, $projectId)
+    {
+        $query = $this->db->query("SELECT * FROM Shifts WHERE '$selectedDate' BETWEEN StartDate AND EndDate AND ProjectID = $projectId");
+        return $query->result();
+    }
+
+
     public function insert($data)
     {
         $this->db->insert('Shifts', $data);

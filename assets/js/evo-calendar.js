@@ -5,16 +5,16 @@
 */
 
 (function (factory) {
-  "use strict";
-  if (typeof define === "function" && define.amd) {
-    define(["jquery"], factory);
-  } else if (typeof exports !== "undefined") {
-    module.exports = factory(require("jquery"));
+  'use strict';
+  if (typeof define === 'function' && define.amd) {
+    define(['jquery'], factory);
+  } else if (typeof exports !== 'undefined') {
+    module.exports = factory(require('jquery'));
   } else {
     factory(jQuery);
   }
 })(function ($) {
-  "use strict";
+  'use strict';
   var EvoCalendar = window.EvoCalendar || {};
 
   EvoCalendar = (function () {
@@ -30,16 +30,16 @@
       var _ = this,
         dataSettings;
       _.defaults = {
-        format: "mm/dd/yyyy",
-        titleFormat: "MM yyyy",
-        eventHeaderFormat: "MM d, yyyy",
-        language: "en",
+        format: 'mm/dd/yyyy',
+        titleFormat: 'MM yyyy',
+        eventHeaderFormat: 'MM d, yyyy',
+        language: 'en',
         todayHighlight: false,
         sidebarToggler: true,
         eventListToggler: true,
         calendarEvents: null,
         canAddEvent: true,
-
+        disabledDate: null,
         onSelectDate: null,
         onAddEvent: null,
       };
@@ -49,43 +49,43 @@
         dates: {
           en: {
             days: [
-              "Sunday",
-              "Monday",
-              "Tuesday",
-              "Wednesday",
-              "Thursday",
-              "Friday",
-              "Saturday",
+              'Sunday',
+              'Monday',
+              'Tuesday',
+              'Wednesday',
+              'Thursday',
+              'Friday',
+              'Saturday',
             ],
-            daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-            daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+            daysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            daysMin: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
             months: [
-              "January",
-              "February",
-              "March",
-              "April",
-              "May",
-              "June",
-              "July",
-              "August",
-              "September",
-              "October",
-              "November",
-              "December",
+              'January',
+              'February',
+              'March',
+              'April',
+              'May',
+              'June',
+              'July',
+              'August',
+              'September',
+              'October',
+              'November',
+              'December',
             ],
             monthsShort: [
-              "Jan",
-              "Feb",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dec",
+              'Jan',
+              'Feb',
+              'Mar',
+              'Apr',
+              'May',
+              'Jun',
+              'Jul',
+              'Aug',
+              'Sep',
+              'Oct',
+              'Nov',
+              'Dec',
             ],
           },
         },
@@ -99,29 +99,29 @@
             _.options.calendarEvents[i].date = _.formatDate(
               new Date(_.options.calendarEvents[i].date),
               _.options.format,
-              "en"
+              'en'
             );
           }
         }
       }
-      console.log(_.options);
+      // console.log(_.options);
 
-      _.$cal_days_labels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      _.$cal_days_labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
       // these are human-readable month name labels, in order
       _.$cal_months_labels = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
       ];
 
       // these are the days of the week for each month, in order
@@ -138,22 +138,22 @@
         isNaN(_.$year) || _.$year == null
           ? _.$cal_current_date.getFullYear()
           : _.$year; // 2020
-      _.$mainHTML = "";
-      _.$sidebarHTML = "";
-      _.$calendarHTML = "";
-      _.$eventHTML = "";
+      _.$mainHTML = '';
+      _.$sidebarHTML = '';
+      _.$calendarHTML = '';
+      _.$eventHTML = '';
 
       _.$active_day_el = null;
-      _.$active_date = _.formatDate(new Date(), _.options.format, "en");
+      _.$active_date = _.formatDate(new Date(), _.options.format, 'en');
       _.$active_month_el = null;
       _.$active_month = _.$month;
       _.$active_year_el = null;
       _.$active_year = _.$year;
 
       _.$calendar = $(element);
-      _.$calendar_sidebar = "";
-      _.$calendar_inner = "";
-      _.$calendar_events = "";
+      _.$calendar_sidebar = '';
+      _.$calendar_inner = '';
+      _.$calendar_events = '';
 
       _.selectDate = $.proxy(_.selectDate, _);
       _.selectMonth = $.proxy(_.selectMonth, _);
@@ -173,10 +173,10 @@
   EvoCalendar.prototype.init = function (creation) {
     var _ = this;
 
-    if (!$(_.$calendar).hasClass("calendar-initialized")) {
-      $(_.$calendar).addClass("evo-calendar calendar-initialized");
+    if (!$(_.$calendar).hasClass('calendar-initialized')) {
+      $(_.$calendar).addClass('evo-calendar calendar-initialized');
 
-      _.buildCalendar("all");
+      _.buildCalendar('all');
     }
   };
 
@@ -204,9 +204,9 @@
 
     var monthName = _.$cal_months_labels[new_month];
 
-    var mainHTML = "";
-    var sidebarHTML = "";
-    var calendarHTML = "";
+    var mainHTML = '';
+    var sidebarHTML = '';
+    var calendarHTML = '';
 
     function buildMainHTML() {
       var mainHTML =
@@ -230,11 +230,11 @@
       sidebarHTML += '<ul class="calendar-months">';
       for (var i = 0; i < _.$cal_months_labels.length; i++) {
         sidebarHTML += '<li class="month';
-        sidebarHTML += parseInt(_.$active_month) === i ? " active-month" : "";
+        sidebarHTML += parseInt(_.$active_month) === i ? ' active-month' : '';
         sidebarHTML +=
-          '" month-val="' + i + '">' + _.$cal_months_labels[i] + "</li>";
+          '" month-val="' + i + '">' + _.$cal_months_labels[i] + '</li>';
       }
-      sidebarHTML += "</ul>";
+      sidebarHTML += '</ul>';
       if (_.options.sidebarToggler) {
         sidebarHTML +=
           '<span id="sidebarToggler" title="Close sidebar"><button class="icon-button"><span class="bars"></span></button></span>';
@@ -248,14 +248,14 @@
       calendarHTML += _.formatDate(
         new Date(new_year, getMonthNumber(monthName)),
         _.options.titleFormat,
-        "en"
+        'en'
       );
-      calendarHTML += "</th></tr>";
+      calendarHTML += '</th></tr>';
       calendarHTML += '<tr class="calendar-header">';
       for (var i = 0; i <= 6; i++) {
         calendarHTML += '<td class="calendar-header-day">';
         calendarHTML += _.$cal_days_labels[i];
-        calendarHTML += "</td>";
+        calendarHTML += '</td>';
       }
       calendarHTML += '</tr><tr class="calendar-body">';
       // fill in the days
@@ -269,19 +269,24 @@
             var thisDay = _.formatDate(
               new Date(new_year, getMonthNumber(monthName), day),
               _.options.format,
-              "en"
+              'en'
             );
             calendarHTML += '<div class="day';
             calendarHTML +=
-              (_.$active_date === thisDay ? " calendar-active" : "") +
+              _.options.disabledDate &&
+              _.options.disabledDate.indexOf(thisDay) > -1
+                ? ' calendar-disabled'
+                : '';
+            calendarHTML +=
+              (_.$active_date === thisDay ? ' calendar-active' : '') +
               '" date-val="' +
               thisDay +
               '">' +
               day +
-              "</div>";
+              '</div>';
             day++;
           }
-          calendarHTML += "</td>";
+          calendarHTML += '</td>';
         }
         // stop making rows if we've run out of days
         if (day > monthLength) {
@@ -290,23 +295,23 @@
           calendarHTML += '</tr><tr class="calendar-body">';
         }
       }
-      calendarHTML += "</tr></table>";
+      calendarHTML += '</tr></table>';
       _.$calendarHTML = calendarHTML;
     }
 
     function buildEventListHTML() {
-      console.log("buildEventListHTML()");
+      // console.log('buildEventListHTML()');
       if (_.options.calendarEvents != null) {
         var eventHTML =
           '<div class="event-header"><p>' +
           _.formatDate(
             new Date(_.$active_date),
             _.options.eventHeaderFormat,
-            "en"
+            'en'
           ) +
-          "</p></div>";
+          '</p></div>';
         var hasEventToday = false;
-        eventHTML += "<div>";
+        eventHTML += '<div>';
         for (var i = 0; i < _.options.calendarEvents.length; i++) {
           if (_.$active_date === _.options.calendarEvents[i].date) {
             hasEventToday = true;
@@ -318,14 +323,14 @@
             eventHTML +=
               '<div class="event-info"><p>' +
               _.options.calendarEvents[i].name +
-              "</p></div>";
-            eventHTML += "</div>";
+              '</p></div>';
+            eventHTML += '</div>';
           } else if (_.options.calendarEvents[i].everyYear) {
-            var d = _.formatDate(new Date(_.$active_date), "mm/dd", "en");
+            var d = _.formatDate(new Date(_.$active_date), 'mm/dd', 'en');
             var dd = _.formatDate(
               new Date(_.options.calendarEvents[i].date),
-              "mm/dd",
-              "en"
+              'mm/dd',
+              'en'
             );
             if (d == dd) {
               hasEventToday = true;
@@ -337,30 +342,30 @@
               eventHTML +=
                 '<div class="event-info"><p>' +
                 _.options.calendarEvents[i].name +
-                "</p></div>";
-              eventHTML += "</div>";
+                '</p></div>';
+              eventHTML += '</div>';
             }
           }
         }
         if (!hasEventToday) {
-          eventHTML += "<p>No event for this day.. so take a rest! :)</p>";
+          eventHTML += '<p>No event for this day.. so take a rest! :)</p>';
         }
-        eventHTML += "</div>";
+        eventHTML += '</div>';
         _.$eventHTML = eventHTML;
       }
     }
 
-    if (val == "all") {
+    if (val == 'all') {
       buildMainHTML();
       buildSidebarHTML();
       buildCalendarHTML();
       buildEventListHTML();
-    } else if (val == "sidebar") {
+    } else if (val == 'sidebar') {
       buildSidebarHTML();
-    } else if (val == "inner") {
-      console.log("buildCalendar---inner", _.options.calendarEvents);
+    } else if (val == 'inner') {
+      // console.log('buildCalendar---inner', _.options.calendarEvents);
       buildCalendarHTML();
-    } else if (val == "events") {
+    } else if (val == 'events') {
       buildEventListHTML();
     }
 
@@ -371,23 +376,23 @@
   EvoCalendar.prototype.setHTML = function (val) {
     var _ = this;
 
-    if (val == "all") {
+    if (val == 'all') {
       _.$calendar.html(_.$mainHTML);
-      _.$calendar_sidebar = $(".calendar-sidebar");
-      _.$calendar_inner = $(".calendar-inner");
-      _.$calendar_events = $(".calendar-events");
+      _.$calendar_sidebar = $('.calendar-sidebar');
+      _.$calendar_inner = $('.calendar-inner');
+      _.$calendar_events = $('.calendar-events');
 
       _.$calendar_sidebar.html(_.$sidebarHTML);
       _.$calendar_inner.html(_.$calendarHTML);
       _.$calendar_events.html(_.$eventHTML);
-    } else if (val == "sidebar") {
-      _.$calendar_sidebar = $(".calendar-sidebar");
+    } else if (val == 'sidebar') {
+      _.$calendar_sidebar = $('.calendar-sidebar');
       _.$calendar_sidebar.html(_.$sidebarHTML);
-    } else if (val == "inner") {
-      _.$calendar_inner = $(".calendar-inner");
+    } else if (val == 'inner') {
+      _.$calendar_inner = $('.calendar-inner');
       _.$calendar_inner.html(_.$calendarHTML);
-    } else if (val == "events") {
-      _.$calendar_events = $(".calendar-events");
+    } else if (val == 'events') {
+      _.$calendar_events = $('.calendar-events');
       _.$calendar_events.html(_.$eventHTML);
     }
 
@@ -405,10 +410,10 @@
               _.$cal_current_date.getDate()
             ),
             _.options.format,
-            "en"
+            'en'
           ) +
           '"]'
-      ).addClass("calendar-today");
+      ).addClass('calendar-today');
     }
 
     _.initEventListener();
@@ -418,7 +423,7 @@
   EvoCalendar.prototype.initCalendarEvents = function () {
     var _ = this;
     // prevent duplication
-    $(".event-indicator").empty();
+    $('.event-indicator').empty();
     // find number of days in month
     var monthLength = _.$cal_days_in_month[_.$active_month];
 
@@ -442,13 +447,13 @@
             x + 1
           ),
           _.options.format,
-          "en"
+          'en'
         );
         // console.log(active_date, _.formatDate(new Date(_.options.calendarEvents[i].date), _.options.format, 'en'))
 
         var thisDate = $('[date-val="' + active_date + '"]');
         if (active_date == _.options.calendarEvents[i].date) {
-          thisDate.addClass("calendar-" + _.options.calendarEvents[i].type);
+          thisDate.addClass('calendar-' + _.options.calendarEvents[i].type);
 
           if (
             $('[date-val="' + active_date + '"] span.event-indicator').length ==
@@ -469,17 +474,17 @@
               '<div class="type-bullet"><div class="type-' +
               _.options.calendarEvents[i].type +
               '"></div></div>';
-            thisDate.find(".event-indicator").append(htmlToAppend);
+            thisDate.find('.event-indicator').append(htmlToAppend);
           }
         } else if (_.options.calendarEvents[i].everyYear) {
-          var d = _.formatDate(new Date(active_date), "mm/dd", "en");
+          var d = _.formatDate(new Date(active_date), 'mm/dd', 'en');
           var dd = _.formatDate(
             new Date(_.options.calendarEvents[i].date),
-            "mm/dd",
-            "en"
+            'mm/dd',
+            'en'
           );
           if (d == dd) {
-            thisDate.addClass("calendar-" + _.options.calendarEvents[i].type);
+            thisDate.addClass('calendar-' + _.options.calendarEvents[i].type);
 
             if (
               $('[date-val="' + active_date + '"] span.event-indicator')
@@ -500,7 +505,7 @@
                 '<div class="type-bullet"><div class="type-' +
                 _.options.calendarEvents[i].type +
                 '"></div></div>';
-              thisDate.find(".event-indicator").append(htmlToAppend);
+              thisDate.find('.event-indicator').append(htmlToAppend);
             }
           }
         }
@@ -513,35 +518,35 @@
     var _ = this;
 
     if (_.options.sidebarToggler) {
-      $("#sidebarToggler")
-        .off("click.evocalendar")
-        .on("click.evocalendar", _.toggleSidebar);
+      $('#sidebarToggler')
+        .off('click.evocalendar')
+        .on('click.evocalendar', _.toggleSidebar);
     }
     if (_.options.eventListToggler) {
-      $("#eventListToggler")
-        .off("click.evocalendar")
-        .on("click.evocalendar", _.toggleEventList);
+      $('#eventListToggler')
+        .off('click.evocalendar')
+        .on('click.evocalendar', _.toggleEventList);
     }
     if (_.options.canAddEvent) {
-      $("#eventAddButton")
-        .off("click.evocalendar")
-        .on("click.evocalendar", _.options.onAddEvent);
+      $('#eventAddButton')
+        .off('click.evocalendar')
+        .on('click.evocalendar', _.options.onAddEvent);
     }
 
-    $("[date-val]")
-      .off("click.evocalendar")
-      .on("click.evocalendar", _.selectDate)
-      .on("click.evocalendar", _.options.onSelectDate);
+    $('[date-val]:not(.calendar-disabled)')
+      .off('click.evocalendar')
+      .on('click.evocalendar', _.selectDate)
+      .on('click.evocalendar', _.options.onSelectDate);
 
     // set event listener for each month
-    $("[month-val]")
-      .off("click.evocalendar")
-      .on("click.evocalendar", _.selectMonth);
+    $('[month-val]')
+      .off('click.evocalendar')
+      .on('click.evocalendar', _.selectMonth);
 
     // set event listener for year
-    $("[year-val]")
-      .off("click.evocalendar")
-      .on("click.evocalendar", _.selectYear);
+    $('[year-val]')
+      .off('click.evocalendar')
+      .on('click.evocalendar', _.selectYear);
   };
 
   // select year
@@ -550,52 +555,51 @@
 
     _.$active_year_el = $(event.currentTarget);
 
-    if ($(event.currentTarget).attr("year-val") == "prev") {
+    if ($(event.currentTarget).attr('year-val') == 'prev') {
       --_.$active_year;
-    } else if ($(event.currentTarget).attr("year-val") == "next") {
+    } else if ($(event.currentTarget).attr('year-val') == 'next') {
       ++_.$active_year;
     } else {
     }
 
-    $("[year-val]").removeClass("active-year");
-    $(_.$active_year_el).addClass("active-year");
+    $('[year-val]').removeClass('active-year');
+    $(_.$active_year_el).addClass('active-year');
 
-    $(".calendar-year p").text(_.$active_year);
-    _.buildCalendar("inner", null, _.$active_year);
+    $('.calendar-year p').text(_.$active_year);
+    _.buildCalendar('inner', null, _.$active_year);
   };
 
   // select month
   EvoCalendar.prototype.selectMonth = function (event) {
     var _ = this;
 
-    _.$active_month = $(event.currentTarget).attr("month-val");
-    _.$active_month_el = $("li[month-val=" + _.$active_month + "]");
-    $(_.$active_month_el).addClass("active-month");
+    _.$active_month = $(event.currentTarget).attr('month-val');
+    _.$active_month_el = $('li[month-val=' + _.$active_month + ']');
+    $(_.$active_month_el).addClass('active-month');
 
-    $("[month-val]").removeClass("active-month");
-    $("[month-val=" + _.$active_month + "]").addClass("active-month");
-    _.buildCalendar("inner", _.$active_month);
+    $('[month-val]').removeClass('active-month');
+    $('[month-val=' + _.$active_month + ']').addClass('active-month');
+    _.buildCalendar('inner', _.$active_month);
   };
 
   // select specific date
   EvoCalendar.prototype.selectDate = function (event) {
     var _ = this;
-
     _.$active_day_el = $(event.currentTarget);
-    _.$active_date = _.$active_day_el.attr("date-val");
-    $(".day").removeClass("calendar-active");
-    $(_.$active_day_el).addClass("calendar-active");
-    _.buildCalendar("events");
+    _.$active_date = _.$active_day_el.attr('date-val');
+    $('.day').removeClass('calendar-active');
+    $(_.$active_day_el).addClass('calendar-active');
+    _.buildCalendar('events');
   };
 
   // toggle sidebar
   EvoCalendar.prototype.toggleSidebar = function (event) {
     var _ = this;
 
-    if ($(_.$calendar).hasClass("sidebar-hide")) {
-      $(_.$calendar).removeClass("sidebar-hide");
+    if ($(_.$calendar).hasClass('sidebar-hide')) {
+      $(_.$calendar).removeClass('sidebar-hide');
     } else {
-      $(_.$calendar).addClass("sidebar-hide");
+      $(_.$calendar).addClass('sidebar-hide');
     }
   };
 
@@ -603,10 +607,10 @@
   EvoCalendar.prototype.toggleEventList = function (event) {
     var _ = this;
 
-    if ($(_.$calendar).hasClass("event-hide")) {
-      $(_.$calendar).removeClass("event-hide");
+    if ($(_.$calendar).hasClass('event-hide')) {
+      $(_.$calendar).removeClass('event-hide');
     } else {
-      $(_.$calendar).addClass("event-hide");
+      $(_.$calendar).addClass('event-hide');
     }
   };
 
@@ -619,29 +623,29 @@
         data[i].date = _.formatDate(
           new Date(data[i].date),
           _.options.format,
-          "en"
+          'en'
         );
         _.options.calendarEvents.push(data[i]);
       }
     }
-    _.buildCalendar("inner");
-    _.buildCalendar("events");
+    _.buildCalendar('inner');
+    _.buildCalendar('events');
   };
 
   EvoCalendar.prototype.parseFormat = function (format) {
     var _ = this;
 
     if (
-      typeof format.toValue === "function" &&
-      typeof format.toDisplay === "function"
+      typeof format.toValue === 'function' &&
+      typeof format.toDisplay === 'function'
     )
       return format;
     // IE treats \0 as a string end in inputs (truncating the value),
     // so it's a bad format delimiter, anyway
-    var separators = format.replace(_.initials.validParts, "\0").split("\0"),
+    var separators = format.replace(_.initials.validParts, '\0').split('\0'),
       parts = format.match(_.initials.validParts);
     if (!separators || !separators.length || !parts || parts.length === 0) {
-      throw new Error("Invalid date format.");
+      throw new Error('Invalid date format.');
     }
     return { separators: separators, parts: parts };
   };
@@ -650,31 +654,31 @@
     return new Date(d) && !isNaN(new Date(d).getTime());
   };
   function capitalize(s) {
-    if (typeof s !== "string") return "";
+    if (typeof s !== 'string') return '';
     return s.charAt(0).toUpperCase() + s.slice(1);
   }
   function getMonthNumber(mStr) {
-    console.log(mStr);
+    // console.log(mStr);
     var monthStr = capitalize(mStr);
     var monthNo = new Array();
-    monthNo["January"] = 0;
-    monthNo["February"] = 1;
-    monthNo["March"] = 2;
-    monthNo["April"] = 3;
-    monthNo["May"] = 4;
-    monthNo["June"] = 5;
-    monthNo["July"] = 6;
-    monthNo["August"] = 7;
-    monthNo["September"] = 8;
-    monthNo["October"] = 9;
-    monthNo["November"] = 10;
-    monthNo["December"] = 11;
+    monthNo['January'] = 0;
+    monthNo['February'] = 1;
+    monthNo['March'] = 2;
+    monthNo['April'] = 3;
+    monthNo['May'] = 4;
+    monthNo['June'] = 5;
+    monthNo['July'] = 6;
+    monthNo['August'] = 7;
+    monthNo['September'] = 8;
+    monthNo['October'] = 9;
+    monthNo['November'] = 10;
+    monthNo['December'] = 11;
     return monthNo[monthStr];
   }
   EvoCalendar.prototype.formatDate = function (date, format, language) {
     var _ = this;
-    if (!date) return "";
-    if (typeof format === "string") format = _.parseFormat(format);
+    if (!date) return '';
+    if (typeof format === 'string') format = _.parseFormat(format);
     if (format.toDisplay) return format.toDisplay(date, format, language);
     var val = {
       d: new Date(date).getDate(),
@@ -686,15 +690,15 @@
       yy: new Date(date).getFullYear().toString().substring(2),
       yyyy: new Date(date).getFullYear(),
     };
-    val.dd = (val.d < 10 ? "0" : "") + val.d;
-    val.mm = (val.m < 10 ? "0" : "") + val.m;
+    val.dd = (val.d < 10 ? '0' : '') + val.d;
+    val.mm = (val.m < 10 ? '0' : '') + val.m;
     date = [];
     var seps = $.extend([], format.separators);
     for (var i = 0, cnt = format.parts.length; i <= cnt; i++) {
       if (seps.length) date.push(seps.shift());
       date.push(val[format.parts[i]]);
     }
-    return date.join("");
+    return date.join('');
   };
 
   $.fn.evoCalendar = function () {
@@ -705,10 +709,10 @@
       i,
       ret;
     for (i = 0; i < l; i++) {
-      if (typeof opt == "object" || typeof opt == "undefined")
+      if (typeof opt == 'object' || typeof opt == 'undefined')
         _[i].evoCalendar = new EvoCalendar(_[i], opt);
       else ret = _[i].evoCalendar[opt].apply(_[i].evoCalendar, args);
-      if (typeof ret != "undefined") return ret;
+      if (typeof ret != 'undefined') return ret;
     }
     return _;
   };

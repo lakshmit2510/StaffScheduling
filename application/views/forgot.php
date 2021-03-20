@@ -99,9 +99,7 @@
               <?php } if($this->session->flashdata('done')==1) { ?>
                 <div role="alert" class="alert alert-success alert-dismissible">
                   <div class="message">
-                    <button type="button" data-dismiss="alert" aria-label="Close" class="close"><span aria-hidden="true" class="fa fa-check"></span></button> Your login details has been send to your email. Please check your e-mail Inbox.
-
-
+                    <button type="button" data-dismiss="alert" aria-label="Close" class="close"><span aria-hidden="true" class="fa fa-check"></span></button> Your Password susscessfully updated. Please try to login with new password.
                   </div>
               </div>
               <?php } ?>
@@ -115,8 +113,24 @@
                     <input class="form-control"  placeholder="Your Email" name="Email" type="text">
                   </div>
                 </div>
+                <div class="form-group mb-3">
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-key-25"></i></span>
+                    </div>
+                    <input type="password" id="pass" required="" placeholder="New Password" name="Password" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group mb-3">
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-key-25"></i></span>
+                    </div>
+                    <input type="password" required="" data-parsley-equalto="#pass" placeholder="Confirm Password" name="NPassword" class="form-control">
+                  </div>
+                </div>
                 <div class="text-center">
-                  <button type="submit" class="btn btn-primary px-5 my-4">Send Email</button>
+                  <button type="submit" class="btn btn-primary px-5 my-4">Submit</button>
                 </div>
               </form>
             </div>

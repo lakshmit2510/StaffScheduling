@@ -2,6 +2,7 @@
 $Activeusr = $this->Dashboard_model->GetUserCount('Active');
 $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
 ?>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/lib/daterangepicker/css/daterangepicker.css" />
 
 <style>
   @media only screen and (max-width: 450px) {
@@ -53,6 +54,10 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
             <label for="avaialableBookingsField">Number Of Employees </label>
             <input type="number" class="form-control" name="Bookingscount" id="avaialableBookingsField" aria-describedby="availableBookingsHelp" placeholder="Employees Count">
             <small id="availableBookingsHelp" class="form-text text-muted">Please enter the required employees count.</small>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Select Week/ Month</label>
+            <input name="ProjectDate" type="text" value="<?php echo date('m/d/Y', strtotime('-7 days')) . ' - ' . date('m/d/Y') ?>" placeholder="number" class="form-control weekMonthPicker">
           </div>
           <div class="form-group">
             <label for="startTime">Start Time</label>
@@ -130,9 +135,11 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
 
 
 <?php $this->load->view('template/footer'); ?>
+<script src="<?php echo base_url() ?>assets/lib/daterangepicker/js/daterangepicker.js" type="text/javascript"></script>
 
 <script type="text/javascript">
   $(document).ready(function() {
+    $('.weekMonthPicker').daterangepicker();
 
     $('.timepicker').timepicker({
       timeFormat: 'HH:mm',
@@ -145,6 +152,7 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
     $('.save-booking').on('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
+      console.log($('#booking-form').serialize())
       $.ajax({
         type: 'post',
         url: '<?php echo base_url('Shifts/addShiftsPost/') ?>',

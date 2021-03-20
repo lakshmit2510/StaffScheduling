@@ -116,13 +116,10 @@
           $navigations[] = ['text' => 'Dashboard', "url" => base_url('Dashboard'), 'icon' => 'ni ni-tv-2', 'title' => 'Dashboard', 'color' => "#5e72e4"];
         }
         if (in_array($role, [1])) {
-          // $subs = array();
-
-          // $subs[] = ['text' => "Today's Shift Details", "url" => base_url('Booking/Today'), 'icon' => 'fa fa-calendar', 'title' => "Today's Shift Details"];
-
-          // $subs[] = ['text' => 'Upcoming Shift Details', "url" => base_url('Booking/Upcoming'), 'icon' => 'fa fa-calendar', 'title' => 'Upcoming Shipments'];
-
+          
           $navigations[] = ['text' => 'Booking Details', "url" => base_url('Booking'), 'icon' => 'fa fa-plus-square', 'title' => 'Booking details', 'color' => "#2dce89"];
+          
+          $navigations[] = ['text' => 'Reserved Booking Details', "url" => base_url('Booking/reservedBookingDetails'), 'icon' => 'fa fa-plus-square', 'title' => 'Reserved Booking details', 'color' => "#2dce89"];
         }
 
         if (in_array($role, [1])) {

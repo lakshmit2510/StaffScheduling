@@ -99,7 +99,7 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
     }
 
     .docklegend>span.NotAvailable::before {
-        background: #e60606;
+        background: #FF9800;
     }
 
     .docklegend>span.booked::before {
@@ -142,15 +142,9 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
                     </div>
                 <?php } ?>
 
-                <h4 class="text-primary font-weight-300 mb-4">
+                <!-- <h4 class="text-primary font-weight-300 mb-4">
                     <i class="fa fa-info-circle"></i> Inorder to make bookings, Please Check <b>NRIC Details and Airport Pass Details </b> updated or not.
-                </h4>
-                <h3 class="panel-heading panel-heading-divider my-3">Please Select Date to Create Booking </h3>
-
-                <!-- calender  -->
-                <div class="row booking">
-                    <div id="evoCalendar" class="sidebar-hide"></div>
-                </div>
+                </h4> -->
 
                 <form action="<?= base_url('Booking/Save') ?>" class="form-horizontal" method="post" enctype="multipart/form-data" id="booking-form">
 
@@ -159,22 +153,50 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
                     <input type="hidden" required="true" name="ICNumber" value="<?php echo $UserData->ID ?>">
                     <input type="hidden" required="true" name="EmailAddress" value="<?php echo $UserData->EmailAddress1 ?>">
 
+                    <div class="form-group">
+                        <h3> Employeement Type</h3>
+                        <div class="row">
+                            <div class='col-sm-3'>
+                                <label  for='fullTime'>
+                                    <input type='radio' name='employeementType' id='fullTime' value='Full Time' required/>&nbsp;
+                                    Full Time
+                                </label>
+                            </div>
+                            <div class='col-sm-3'>
+                                <label  for='fixedFlexi'>
+                                    <input type='radio' name='employeementType' id='fixedFlexi' value='Fixed Flexi'/>&nbsp;
+                                    Fixed Flexi
+                                </label>
+                            </div>
+                            <div class='col-sm-3'>
+                                <label  for='fullTimeFlexi'>
+                                    <input type='radio' name='employeementType' id='fullTimeFlexi' value='Full Time Flexi'/>&nbsp;
+                                    Full Time Flexi
+                                </label>
+                            </div>
+                            <div class='col-sm-3'>
+                                <label  for='partTimeFlexi'>
+                                    <input type='radio' name='employeementType' id='partTimeFlexi' value='Part Time Flexi'/>&nbsp;
+                                    Part Time Flexi
+                                </label>
+                            </div>
+                        </div>   
+                    </div>
+
+                    <h3 class="panel-heading panel-heading-divider my-3">Please Select Date to Create Booking </h3>
+                    <!-- calender  -->
+                    <div class="row booking">
+                        <div id="evoCalendar" class="sidebar-hide"></div>
+                    </div>
+
                     <!-- Card stats -->
                     <div id="ShiftDetails">
                         <h3>Please Select Shift</h3>
                         <div class=" row docklegend"><span class="free"> Available</span><span class="booked"> Booked</span><span class="select">Selected</span><span class="NotAvailable" style="width: 116px">NotAvailable</span>
                         </div>
-                        <div class="row mb-5 pt-5">
-                            <?php foreach ($Shifts as $value) { ?>
-                                <div class="col-xl-3 col-lg-6" id="highlight" style="margin-bottom: 15px">
-                                    <div id="shiftslots-div" data-shift-id="<?php echo $value->ShiftID; ?>">
-                                        <input type="checkbox" name="shiftTiming" class="freeslots" id="<?php echo $value->ShiftID; ?>" value="<?php echo $value->StartTime ?> - <?php echo $value->EndTime ?>" disabled="true">
-                                        <label class="shiftslot" for="<?php echo $value->ShiftID; ?>"><?php echo $value->StartTime ?> - <?php echo $value->EndTime ?></label>
-                                    </div>
-                                </div>
-                            <?php } ?>
-                        </div>
+                        <div class="row mb-5 pt-5" id="shifts-list"></div>
                     </div>
+
                     <!-- table data -->
                     <div class="row mt-4" id="booking-detail-Summary" style="display:none;">
                         <div class="col-sm-8">
@@ -190,12 +212,18 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
                             </table>
                         </div>
                     </div>
-
-                    <!-- <?php
-                            // $data = array();
-                            // $data = "<?php echo $Booking_data->StartDate; 
-                            ?>";
-                    ?> -->
+                    <div class='col-sm-12'>
+                        <label  for='content1'>
+                            <input type='checkBox' name='content1' id='content1' value='Yes' required/>&nbsp;
+                            If you failed to turn up on booking day without informing on before day will result in $200 minus per pay as per LOA.
+                        </label>
+                    </div>
+                    <div class='col-sm-12'>
+                        <label  for='content1'>
+                            <input type='checkBox' name='content1' id='content1' value='Yes' required/>&nbsp;
+                            If you failed to turn up with informing on before day will result in $50 minus per pay as per LOA.
+                        </label>
+                    </div>
                     <div class="row mt-4">
                         <div class="col-sm-12">
                             <div class="col-sm-10" style="padding: 15px 0;">
@@ -203,7 +231,6 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
                             </div>
                         </div>
                     </div>
-
                 </form>
             </div>
         </div>
@@ -249,6 +276,7 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
             eventHeaderFormat: 'MM d, yyyy',
             todayHighlight: true,
             calendarEvents: myEvents,
+            disabledDate: ["09/20/2020","09/21/2020", "09/22/2020", "09/23/2020"],
             onSelectDate: function(date) {
                 var UserID = $("input[name=UserId]").val();
                 var selectedDate = $(date.currentTarget).attr('date-val');
@@ -258,40 +286,66 @@ $InActiveusr = $this->Dashboard_model->GetUserCount('In-Active');
                 datas.append('selectedDate', newDate);
 
                 $.ajax({
-                    type: 'POST',
-                    url: '<?php echo base_url(); ?>Booking/getAvailableShiftTimings',
-                    data: datas,
+                    type: 'get',
+                    url: '<?php echo base_url(); ?>Booking/getShiftsByDateProjectId?selectedDate='+ newDate,
                     contentType: false,
                     processData: false,
                     beforeSend: function() {
                         $('.be-loading').addClass('be-loading-active');
                     },
-                    success: function(data) {
-                        var parseData = JSON.parse(data);
-                        $('.be-loading').addClass('be-loading-active');
-                        $('.freeslots').prop("disabled", false);
-                        $('#ShiftDetails').find('.freeslots').prop('checked', false);
-                        $('#ShiftDetails').find('.freeslots').prop('disabled', false);
-                        $('#ShiftDetails').find('.freeslots').removeClass('highlight-Booked');
-                        if (parseData.length > 0) {
-                            $.each(parseData, function(idx, item) {
-                                var ele = $("[id='" + item.ShiftID + "']");
-
-                                if (parseInt(item.AvailableBookings) == parseInt(item.Count)) {
-                                    ele.prop("disabled", true);
-                                } else {
-                                    if (item.StartDate == newDate && parseInt(item.UserID) == UserID) {
-                                        ele.prop("disabled", true);
-                                        ele.addClass('highlight-Booked');
-                                    } else {
-                                        ele.prop("disabled", false);
-                                        ele.removeClass('highlight-Booked');
-                                    }
-                                }
+                    success: function(res) {
+                        var data = JSON.parse(res);
+                        $('#shifts-list').empty();
+                        if(data.length > 0){
+                            $.each(data, function(i, item){
+                                $('#shifts-list').append(`<div class="col-xl-3 col-lg-6" id="highlight" style="margin-bottom: 15px">
+                                    <div id="shiftslots-div" data-shift-id="${item.ShiftID}">
+                                        <input type="checkbox" name="shiftTiming" class="freeslots" id="${item.ShiftID}" value="${item.StartTime} - ${item.EndTime}" disabled="true">
+                                        <label class="shiftslot" for="${item.ShiftID}">${item.StartTime} - ${item.EndTime}</label>
+                                    </div>
+                                </div>`);
                             });
+                        } else {
+                            $('#shifts-list').html('<h3> No Shifts available for Selected Date </h3>');
                         }
-                        $('#ShiftDetails').show();
-                    },
+                        $.ajax({
+                            type: 'POST',
+                            url: '<?php echo base_url(); ?>Booking/getAvailableShiftTimings',
+                            data: datas,
+                            contentType: false,
+                            processData: false,
+                            beforeSend: function() {
+                                $('.be-loading').addClass('be-loading-active');
+                            },
+                            success: function(data) {
+                                var parseData = JSON.parse(data);
+                                $('.be-loading').addClass('be-loading-active');
+                                $('.freeslots').prop("disabled", false);
+                                $('#ShiftDetails').find('.freeslots').prop('checked', false);
+                                $('#ShiftDetails').find('.freeslots').prop('disabled', false);
+                                $('#ShiftDetails').find('.freeslots').removeClass('highlight-Booked');
+                                if (parseData.length > 0) {
+                                    $.each(parseData, function(idx, item) {
+                                        var ele = $("[id='" + item.ShiftID + "']");
+
+                                        if (parseInt(item.AvailableBookings) == parseInt(item.Count)) {
+                                            ele.prop("disabled", false);
+                                            ele.addClass('total-Booked');
+                                        } else {
+                                            if (item.StartDate == newDate && parseInt(item.UserID) == UserID) {
+                                                ele.prop("disabled", true);
+                                                ele.addClass('highlight-Booked');
+                                            } else {
+                                                ele.prop("disabled", false);
+                                                ele.removeClass('highlight-Booked');
+                                            }
+                                        }
+                                    });
+                                }
+                                $('#ShiftDetails').show();
+                            },
+                        });
+                    }
                 });
             },
         });

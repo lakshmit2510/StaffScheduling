@@ -30,7 +30,12 @@ class Shifts extends CI_Controller
 
   public function addShiftsPost()
   {
+    $projectDate = $this->input->post('ProjectDate');
+    $projectDateArr = explode("-", $projectDate);
+
     $data['AvailableBookings'] = $this->input->post('Bookingscount');
+    $data['StartDate'] = date('Y-m-d', strtotime($projectDateArr[0]));
+    $data['EndDate'] = date('Y-m-d', strtotime($projectDateArr[1]));
     $data['StartTime'] = $this->input->post('StartTime');
     $data['EndTime'] = $this->input->post('Endtime');
     $data['ProjectID'] = $this->input->post('ProjectID');

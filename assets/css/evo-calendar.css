@@ -11,7 +11,7 @@ body {
   margin: 0;
 }
 body {
-  font-family: "Source Sans Pro";
+  font-family: 'Source Sans Pro';
 }
 input:focus,
 textarea:focus,
@@ -80,10 +80,10 @@ button:focus {
   width: 100%;
   height: 100%;
 }
-.calendar-sidebar > .calendar-year > img[year-val="prev"] {
+.calendar-sidebar > .calendar-year > img[year-val='prev'] {
   float: left;
 }
-.calendar-sidebar > .calendar-year > img[year-val="next"] {
+.calendar-sidebar > .calendar-year > img[year-val='next'] {
   float: right;
 }
 .calendar-sidebar > .calendar-months {
@@ -127,7 +127,7 @@ button:focus {
   width: 100%;
   user-select: none;
 }
-th[colspan="7"] {
+th[colspan='7'] {
   text-align: center;
   text-transform: uppercase;
   font-weight: normal;
@@ -157,10 +157,14 @@ tr.calendar-body .calendar-day .day {
   transition: all 0.3s ease, transform 0.5s ease;
   cursor: pointer;
 }
-tr.calendar-body .calendar-day .day:hover {
+tr.calendar-body .calendar-day .day.calendar-disabled {
+  cursor: no-drop;
+  color: #cccccc;
+}
+tr.calendar-body .calendar-day .day:hover:not(.calendar-disabled) {
   background-color: #dadada;
 }
-tr.calendar-body .calendar-day .day:active {
+tr.calendar-body .calendar-day .day:active:not(.calendar-disabled) {
   transform: scale(0.9);
 }
 
@@ -276,7 +280,7 @@ tr.calendar-body .calendar-day .day[disabled] {
   float: left;
 }
 .event-container > .event-icon::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 29px;
@@ -363,7 +367,7 @@ button.icon-button > span.bars {
 }
 button.icon-button > span.bars::before,
 button.icon-button > span.bars::after {
-  content: "";
+  content: '';
   position: absolute;
   width: 100%;
   height: 6px;

@@ -19,7 +19,7 @@ class License_Details extends CI_Controller
 
   public function index()
   {
-    $data['Title'] = 'Empolyee License Details';
+    $data['Title'] = 'Employee License Details';
     $data['Page'] = 'License Details';
     $data["License_Details"] = $this->License_Details_model->getAll();
     $this->load->view('list_license_details', $data);

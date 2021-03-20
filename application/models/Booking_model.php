@@ -6,10 +6,10 @@ class Booking_model extends CI_Model
 
   function shiftDetailsOnDate($date)
   {
-    $this->db->select('*, COUNT(booking.StartDate) as Count');
+    $this->db->select('*, booking.StartDate, COUNT(booking.StartDate) as Count');
     $this->db->from('booking');
     $this->db->join('Shifts', 'booking.ShiftNumber = Shifts.ShiftID', 'INNER');
-    $this->db->where('StartDate', $date);
+    $this->db->where('booking.StartDate', $date);
     $this->db->Group_By('booking.ShiftNumber', 'booking.StartDate');
     $q = $this->db->get();
     if ($q->num_rows() > 0) {
@@ -63,7 +63,7 @@ class Booking_model extends CI_Model
     $this->db->join('users', 'users.UserUID = booking.UserID', 'LEFT');
     $this->db->join('Shifts', 'Shifts.ShiftID = booking.ShiftNumber', 'LEFT');
     $this->db->join('IC_Details', 'IC_Details.ID = booking.IC_Number', 'LEFT');
-    $this->db->where('StartDate =', $dateStr);
+    $this->db->where('booking.StartDate =', $dateStr);
     $this->db->where('ShiftNumber', $shiftID);
     // $this->db->where('Active', 1);
     $this->db->group_by('booking.UserID', 'booking.StartDate');
